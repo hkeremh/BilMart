@@ -10,15 +10,15 @@ At the start of every semester, many students need to purchase new books for the
 - Posting lost items with images. If the owner of the item finds the post, they can message the user to get their item back.
 - Users who post lost items will be instructed to obscure information about the item so that they can verify the users who claim that item.
 - Posting secondhand items they wish to sell or put up for rent.
-- Users can give course tags to their post. For example a book for CS223 can be tagged with that course
-- Users can also categorize their posts by item type such as book, clothing, electronics etc.
+- Users can give course tags to their posts. For example, a book for CS223 can be tagged with that course
+- Users can also categorize their posts by item type such as a book, clothing, electronics, etc.
 - Users can open donations and set a donation goal.
-- There will be a search engine that lets users find the items or posts they are looking for, and the ability to sort posts based on post type, item category, and tags.
-- Sign up and login pages. The users will sign up and be verified by their Bilkent emails.
-- Home feed that reccomends posts to users that they can scroll through.
+- There will be a search engine that lets users find the items or posts they are looking for and the ability to sort posts based on post type, item category, and tags.
+- In sign up and login pages the users will sign up and be verified by their Bilkent emails.
+- Home feed that recommends posts to users that they can scroll through.
 - User profile that contains all posts by category, profile photo
-- Users who purchace items can rate the user that was selling. The avarage rating of users will be visible in their profile.
+- Users who purchase items can later rate the user who was selling. The average rating of users will be visible on their profiles.
 - For communication, the users can share their contact information with each other upon their approval.
-- Notification page that displays updates on their posts, notify when someone is interested in their item, update users upon contact info sharing and more.
+- Notification page that displays updates on their posts, notifies when someone is interested in their item, updates users upon contact info sharing, and more.
 ## Why BilMart?
-BilMart allows Bilkent community members to engage with all the above-mentioned features on one website instead of searching through several of them. Since BilMart only allows Bİlkent University members to join, it is secure and customer-oriented.
+BilMart allows Bilkent community members to engage with all the above-mentioned features on one website instead of searching through several of them. Since BilMart only allows Bilkent University members to join, it is secure and customer-oriented.
