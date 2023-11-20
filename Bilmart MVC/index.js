@@ -8,8 +8,9 @@
  */
 
 const express = require('express');
-const db = require('../database/database.js');
-const controller = require('../controller/controller.js');
+const db = require('./database/database.js');
+const controller = require('./controller/controller.js');
+const cors = require('cors');
 
 
 const app = express();
@@ -26,7 +27,7 @@ db.connect().catch((error) => {
  * inside the controller folder and all methods relating to login there.
 */
 app.use('/', controller);
-
+app.use(cors());
 
 //just prints a message when nodejs server is started.
 app.listen(port, () => {

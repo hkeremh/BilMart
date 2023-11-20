@@ -1,3 +1,4 @@
+
 import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
@@ -6,7 +7,6 @@ function App() {
   const [backendData, setBackendData] = useState([]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const response = await fetch("/listings");
@@ -17,7 +17,6 @@ function App() {
       }
     };
 
-    console.log("in V")
     fetchData();
   }, []);
 
@@ -35,3 +34,4 @@ function App() {
 }
 
 export default App;
+
