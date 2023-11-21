@@ -6,28 +6,20 @@
  * 
  * This is where we initialize the database and connect to one with a link.
  */
+import { MongoClient } from "mongodb";
 
+const connectionString = process.env.ATLAS_URI || "";
 
-const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://dbTestAdmin:123Admin456@cluster0.oap3bzr.mongodb.net/?retryWrites=true&w=majority"
-const client = new MongoClient(uri);
+const client = new MongoClient(connectionString);
 
-//connecting to db
-async function connect() {
-    try {
-      await client.connect();
-      console.log('Connected to MongoDB');
-    } catch (error) {
-      console.error('Error connecting to MongoDB:', error);
-      throw error;
-    }
+let conn;
+try {
+  console.log("Connecting to MongoDB Atlas...");
+  conn = await client.connect();
+} catch(e) {
+  console.error(e);
 }
 
-function getClient() {
-    return client;
-}
-  
-module.exports = {
-    connect,
-    getClient
-}
+let db = conn.db("BilMartDatabase");
+
+export default db;

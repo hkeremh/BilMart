@@ -7,27 +7,24 @@
  * or sometimes "npm start dev" also works. Other wise just "node start"
  */
 
-const express = require('express');
-const db = require('./database/database.js');
-const controller = require('./controller/controller.js');
-const cors = require('cors');
-
+import express from 'express';
+import cors from 'cors';
+import "./loadEnvironment.js";
+import listingController from './controller/listingController.js';
+import userController from './controller/userController.js';
 
 const app = express();
 const port = 5000; //server is established at localhost:5000 by default
-
-//connect to db
-db.connect().catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
-});
 
 /**
  * This means that every link with ">WEBSITE_NAME</" will use the controller.js defined above
  * In the future if need to do something like: bilmart/login, we would need to create a new loginController.js
  * inside the controller folder and all methods relating to login there.
 */
-app.use('/', controller);
 app.use(cors());
+app.use(express.json());
+app.use('/listing', listingController);
+app.use('/user', userController);
 
 //just prints a message when nodejs server is started.
 app.listen(port, () => {
