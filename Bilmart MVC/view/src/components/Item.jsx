@@ -13,6 +13,7 @@ export default function Item() {
    description: "",
    availability: "",
    type: "",
+   src: [],
    records: [],
  });
  const params = useParams();
@@ -44,34 +45,33 @@ export default function Item() {
    return;
  }, [params.id, navigate]);
 
+ function itemPhotos() {
+    console.log(item.src);
+    return item.src.map((source) => {
+        return(
+        <Carousel.Item>
+        <div style={{justifyContent: "center", textAlign: "center"}}>
+            <img className="rounded-3" src="https://picsum.photos/400" width={"700px"} height={"500px"}/> 
+        </div>
+        </Carousel.Item>
+        );
+    });
+ }
+
  // This following section will display the form that takes input from the user to update the data.
  return (
    <Container fluid>
     <LogoBar />
     <Container style={{marginTop: "15px"}} fluid>
         <Row>
-            <Col lg={7}>
-                <Container className="itemCarousel" fluid>
+            <Col lg={6}>
+                <div className="itemCarousel">
                 <Carousel>
-                    <Carousel.Item>
-                        <div style={{justifyContent: "center", textAlign: "center"}}>
-                            <img className="rounded-3" src="https://picsum.photos/500" width={"700px"} height={"500px"}/> 
-                        </div>
-                    </Carousel.Item>
-                    <Carousel.Item >
-                        <div style={{justifyContent: "center", textAlign: "center"}}>
-                            <img className="rounded-3" src="https://picsum.photos/500" width={"700px"} height={"500px"}/> 
-                        </div>
-                    </Carousel.Item>
-                    <Carousel.Item >
-                        <div style={{justifyContent: "center", textAlign: "center"}}>
-                            <img className="rounded-3" src="https://picsum.photos/500" width={"700px"} height={"500px"}/> 
-                        </div>
-                    </Carousel.Item>
+                    {itemPhotos()}
                 </Carousel>
-                </Container>
+                </div>
             </Col>
-            <Col lg={5}>
+            <Col lg={6}>
                 <Container className="itemCardInfo" fluid>
                 <h1>Listing Type</h1>
                 <p>{item.type}</p>

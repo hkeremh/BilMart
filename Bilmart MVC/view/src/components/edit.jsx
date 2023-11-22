@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Form from 'react-bootstrap/Form';
 
 export default function Edit() {
  const [form, setForm] = useState({
@@ -8,8 +9,10 @@ export default function Edit() {
    description: "",
    availability: "",
    type: "",
+   src: [],
    records: [],
  });
+ const [sources, setSources] = useState([]);
  const params = useParams();
  const navigate = useNavigate();
 
@@ -46,19 +49,26 @@ export default function Edit() {
    });
  }
 
+ function updateSources(value) {
+  return setSources((prev) => {
+    return [...prev, value];
+  });
+ }
+
  async function onSubmit(e) {
    e.preventDefault();
-   const editedPerson = {
+   const editedListing = {
      title: form.title,
      description: form.description,
      availability: form.availability,
-     type: form.type
+     type: form.type,
+     src: form.src
    };
 
    // This will send a post request to update the data in the database.
    await fetch(`http://localhost:5000/listing/${params.id}`, {
      method: "PATCH",
-     body: JSON.stringify(editedPerson),
+     body: JSON.stringify(editedListing),
      headers: {
        'Content-Type': 'application/json'
      },
@@ -72,6 +82,21 @@ export default function Edit() {
    <div>
      <h3>Update Listing</h3>
      <form onSubmit={onSubmit}>
+     <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>Upload Pictures</Form.Label>
+        <Form.Control 
+          type="file" 
+          className="form-control"
+          id="src"
+          accept="image/x-png,image/jpeg"
+          onChange={(e) => {updateSources(e.target.value)}}
+        />
+        <h4>Selected Pictures:</h4>
+        <div>{sources.map((source) => {
+            return <img src={source} />
+          })}
+        </div>
+      </Form.Group>
        <div className="form-group">
          <label htmlFor="title">Title: </label>
          <input
@@ -150,6 +175,18 @@ export default function Edit() {
              onChange={(e) => updateForm({ type: e.target.value })}
            />
            <label htmlFor="foundItem" className="form-check-label">Found Item</label>
+       </div>
+       <div className="form-check form-check-inline">
+           <input
+             className="form-check-input"
+             type="radio"
+             name="positionOptions"
+             id="soldItem"
+             value="Sold Item"
+             checked={form.type === "Sold Item"}
+             onChange={(e) => updateForm({ type: e.target.value })}
+           />
+           <label htmlFor="soldItem" className="form-check-label">Sold Item</label>
        </div>
        </div>
        <br />

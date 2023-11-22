@@ -11,8 +11,8 @@ import { Link } from "react-router-dom";
 function ItemCard(props) {
   return (
   <div className="itemCard">
-  <Card style={{ width: '280px' }}>
-    <Card.Img variant="top" src="https://picsum.photos/400" height={210} width={280}/>
+  <Card style={{ width: '280px', height: "500px" }}>
+    <Card.Img variant="top" src={props.record.src[0] || "https://picsum.photos/400"} height={210} width={280}/>
     <Card.Body>
       <Card.Title>{props.record.title}</Card.Title>
       <Card.Text>
@@ -26,9 +26,9 @@ function ItemCard(props) {
     <Card.Body>
       <Container>
       <Row>
-      <Col><Link to={`/item/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>View</Button></Link></Col>
-      <Col><Link to={`/edit/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>
-      <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}>Delete</Button></Col>
+      {!props.record.type.includes("Sold") && <Col><Link to={`/item/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>View</Button></Link></Col>}
+      {props.record.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>}
+      {props.record.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}>Delete</Button></Col>}
       </Row>
       </Container>
     </Card.Body>

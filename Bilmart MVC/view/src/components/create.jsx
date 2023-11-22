@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Form from 'react-bootstrap/Form';
 
 export default function Create() {
  const [form, setForm] = useState({
@@ -9,21 +10,30 @@ export default function Create() {
    availability: "",
    type: "",
  });
+ const [sources, setSources] = useState([]);
  const navigate = useNavigate();
 
  // These methods will update the state properties.
  function updateForm(value) {
+   console.log(form.src)
    return setForm((prev) => {
      return { ...prev, ...value };
    });
  }
 
+ function updateSources(value) {
+   return setSources((prev) => {
+     return [...prev, value];
+   });
+ }
+
  // This function will handle the submission.
  async function onSubmit(e) {
+  if(sources.length !== 0 && sources.length <= 5) {
    e.preventDefault();
 
    // When a post request is sent to the create url, we'll add a new record to the database.
-   const newItem = { ...form };
+   const newItem = { ...form, src: sources };
 
    await fetch("http://localhost:5000/listing", {
      method: "POST",
@@ -37,8 +47,12 @@ export default function Create() {
      return;
    });
 
-   setForm({ title: "", description: "", availability: "", type: "" });
+   setForm({ title: "", description: "", availability: "", type: ""});
    navigate("/");
+  }
+  else{
+    window.alert("Please upload 1-5 pictures");
+  }
  }
 
  // This following section will display the form that takes the input from the user.
@@ -46,6 +60,21 @@ export default function Create() {
    <div>
      <h3>Create New Listing</h3>
      <form onSubmit={onSubmit}>
+     <Form.Group className="mb-3">
+        <Form.Label>Upload Pictures</Form.Label>
+        <Form.Control
+          type="file" 
+          className="form-control"
+          id="src"
+          accept="image/x-png,image/jpeg"
+          onChange={(e) => {updateSources(e.target.value)}}
+        />
+        <h4>Selected Pictures:</h4>
+        <div>{sources.map((source) => {
+            return <img src={source} />
+          })}
+        </div>
+      </Form.Group>
        <div className="form-group">
          <label htmlFor="title">Title</label>
          <input

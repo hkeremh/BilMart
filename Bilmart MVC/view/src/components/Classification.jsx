@@ -23,7 +23,7 @@ function Classification(){
                     className="me-2"
                     aria-label="Search"
                     />
-                    <Button variant="success">Search</Button>
+                    <Button variant="secondary" style={{backgroundColor: "#192655"}}>Search</Button>
                 </Form.Group>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -68,9 +68,9 @@ function Classification(){
             </Form.Group>
         </Container>
         <Container>
-            <Form className="d-flex" style={{justifyContent: "center", textAlign: "center"}}>
-                <Button variant="success">Find Listings</Button>
-            </Form>
+            <Form.Group className="d-flex" style={{justifyContent: "center", textAlign: "center"}}>
+                <Button variant="secondary" style={{backgroundColor: "#192655", marginBottom: "15px"}}>Find Listings</Button>
+            </Form.Group>
         </Container>
         <Container style={{height: "1px"}}></Container>
         </div>
