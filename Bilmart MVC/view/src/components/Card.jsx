@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
+import deleteIcon from "../img/bin.png";
 
 function ItemCard(props) {
   return (
@@ -14,23 +15,23 @@ function ItemCard(props) {
   <Card style={{ width: '280px', height: "500px" }}>
     <Card.Img variant="top" src={props.record.src[0] || "https://picsum.photos/400"} height={210} width={280}/>
     <Card.Body>
-      <Card.Title>{props.record.title}</Card.Title>
+      <Card.Title><div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div></Card.Title>
       <Card.Text>
-        {props.record.description}
+        <div className="text">{props.record.description}</div>
       </Card.Text>
     </Card.Body>
     <ListGroup className="list-group-flush">
-      <ListGroup.Item>{props.record.availability}</ListGroup.Item>
-      <ListGroup.Item>{props.record.type}</ListGroup.Item>
+      <ListGroup.Item><div className="text">{props.record.availability}</div></ListGroup.Item>
+      <ListGroup.Item><div className="text" style={{fontWeight: "bold"}}>{props.record.type}</div></ListGroup.Item>
     </ListGroup>
     <Card.Body>
-      <Container>
+      <div>
       <Row>
-      {!props.record.type.includes("Sold") && <Col><Link to={`/item/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>View</Button></Link></Col>}
-      {props.record.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>}
-      {props.record.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}>Delete</Button></Col>}
+      {!props.record.type.includes("Sold") && <Col><Link to={`/item/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">View</div></Button></Link></Col>}
+      {props.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Edit</div></Button></Link></Col>}
+      {props.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
       </Row>
-      </Container>
+      </div>
     </Card.Body>
   </Card>
   </div>

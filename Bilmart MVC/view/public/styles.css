@@ -1,5 +1,9 @@
 html{
     background-color: #D6C7AE;
+    font-family: 'Montserrat', sans-serif;
+}
+.text{
+  font-family: 'Montserrat', sans-serif;
 }
 .itemCard{
     display: inline-block;
@@ -12,10 +16,16 @@ html{
     background-color: #F3F0CA;
     border-radius: 15px;
 }
+.profileItems{
+  background-color: #F3F0CA;
+  border-radius: 15px;
+  margin-top: 15px;
+}
 .selection{
     justify-content: center;
     background-color: #F3F0CA;
     border-radius: 15px;
+    width: 300px;
 }
 .itemDetail{
     background-color: #FFFFEF;
@@ -32,6 +42,7 @@ html{
 }
 .logoBar h1{
   color: #242760;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-size: 32px;
   font-weight: 600;
@@ -74,7 +85,7 @@ html{
   width: 350px;
   margin-bottom: 15px;
 }
-.userInfo img{
+.profilePhoto{
   border-radius: 50%;
   border: 7px solid #D6C7AE;
   width: 180px;
@@ -83,6 +94,7 @@ html{
 }
 .userInfo h1{
   color: #242760;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -90,6 +102,7 @@ html{
 }
 .userInfo h2{
   color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 87.523%; /* 15.754px */
@@ -97,6 +110,7 @@ html{
 }
 .userInfo h3{
   color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 87.523%; /* 14.004px */

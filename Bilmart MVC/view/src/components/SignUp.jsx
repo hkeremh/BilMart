@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Alert from 'react-bootstrap/Alert';
 
 export default function SignUp() {
  const [form, setForm] = useState({
@@ -8,6 +9,22 @@ export default function SignUp() {
    email: "",
    password: ""
  });
+
+ const [show, setShow] = useState(false);
+ const [message, setMessage] = useState("");
+ function AlertDismissibleExample() {
+  if (show) {
+    return (
+      <Alert transition variant="danger" onClose={() => setShow(false)} dismissible>
+        <Alert.Heading>Sign Up Error</Alert.Heading>
+        <p>
+          {message}
+        </p>
+      </Alert>
+    );
+  }
+}
+
  const navigate = useNavigate();
 
  // These methods will update the state properties.
@@ -40,16 +57,18 @@ export default function SignUp() {
    const res = await result.json();
    console.log(res.message);
    if(res.message === "Verification mail sent successfully"){
-    window.alert(res.message);
     navigate("/");
    }
    else{
-      window.alert(res.message);
+    setShow({show: true});
+    setMessage(res.message);
+    AlertDismissibleExample();
    }
    
  }
     return(
 <div className="container mt-5">
+  {AlertDismissibleExample()}
   <h1>Sign Up</h1>
   <div className="row">
     <div className="col-sm-8">

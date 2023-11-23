@@ -20,9 +20,9 @@ router.get('/:id', async (req, res) => {
     try {
       const user = await userModel.getUser(req.params.id) //access model func.
       if(user === "User not found") {
-        res.status(404).send('User not found')
+        res.status(404).json('User not found')
       } else {
-        res.status(200).send(user) //return value
+        res.status(200).json(user) //return value
       }
     } catch (error) {
       console.error(error)

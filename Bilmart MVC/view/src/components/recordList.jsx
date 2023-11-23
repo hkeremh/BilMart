@@ -55,13 +55,13 @@ export default function Home() {
       <LogoBar />
       <Container style={{marginTop: "15px"}} fluid>
       <Row>
-          <Col lg={2}>
+          <Col xl={3} md={4}>
               <Container className="selection" fluid>
                 <Classification />
               </Container>
           </Col>
-          <Col lg={10}>
-              <Container className="items" fluid>
+          <Col xl={9} md={8}>
+              <Container className="items" style={{textAlign: "center"}} fluid>
                   {recordList()}
               </Container>
           </Col>
