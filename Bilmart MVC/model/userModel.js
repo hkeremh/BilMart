@@ -1,11 +1,24 @@
 import db from '../database/database.js'; //allows the model to access the db client
 
 async function getUser(id) {
-  let collection = await db.collection('Users'); //name of collection
-  let query = {_id: id};
-  let result = await collection.findOne(query);
-  if(!result) {return "User not found";}
-  else {return result;}
+    let collection = await db.collection('Users'); //name of collection
+    let query = {_id: id};
+    let result = await collection.findOne(query);
+    if(!result) {return "User not found";}
+    else {return result;}
+}
+
+async function getUserByEmail(email) {
+    let collection = await db.collection('Users'); //name of collection
+    let query = {email: email};
+    let result = await collection.findOne(query);
+    return result;
+}
+async function getUserByUserName(username) {
+    let collection = await db.collection('Users'); //name of collection
+    let query = {username: username};
+    let result = await collection.findOne(query);
+    return result;
 }
 
 async function login(email, password){
@@ -26,5 +39,7 @@ async function signup(newDocument){
 export default {
     getUser,
     login,
-    signup
+    signup,
+    getUserByEmail,
+    getUserByUserName
 };
