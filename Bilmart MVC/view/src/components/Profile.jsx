@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 import LogoBar from "./LogoBar.jsx";
 import ItemCard from "./Card.jsx";
+import createIcon from "../img/plus.png";
 
 function Profile(props){
   const [records, setRecords] = useState([]);
@@ -56,14 +57,14 @@ function Profile(props){
             <Col lg={3}>
                 <Container fluid className="d-flex justify-content-center align-items-center">
                 <div className="userInfo">
-                  <img src="https://picsum.photos/200"/>
+                  <img className="profilePhoto" src="https://picsum.photos/200"/>
                   <h1>UserName</h1>
                   <h2>Title</h2>
                   <hr/>
                   <h1>PostCount</h1>
                   <h3>Posts</h3>
                   <hr/>
-                  <Link to={`/create`}><Button className="createListing" variant="secondary" style={{backgroundColor: "#192655"}}>Create Listing</Button></Link>
+                  <Link to={`/create`}><Button className="createListing" variant="success" style={{backgroundColor: "#192655"}}><h5>Create Listing <img width={20} height={20} src={createIcon}/></h5></Button></Link>
                 </div>
                 </Container>
             </Col>

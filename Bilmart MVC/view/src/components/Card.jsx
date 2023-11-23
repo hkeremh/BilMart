@@ -28,7 +28,7 @@ function ItemCard(props) {
       <div>
       <Row>
       {!props.record.type.includes("Sold") && <Col><Link to={`/item/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}>View</Button></Link></Col>}
-      {props.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>}
+      {props.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>}
       {props.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
       </Row>
       </div>
