@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import Alert from 'react-bootstrap/Alert';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Login() {
@@ -7,6 +8,21 @@ export default function Login() {
    email: "",
    password: ""
  });
+
+ const [show, setShow] = useState(false);
+ function AlertDismissibleExample() {
+  if (show) {
+    return (
+      <Alert transition variant="danger" onClose={() => setShow(false)} dismissible>
+        <Alert.Heading>Invalid Credentials</Alert.Heading>
+        <p>
+          Incorrect email or password. Please try again.
+        </p>
+      </Alert>
+    );
+  }
+}
+
  const navigate = useNavigate();
 
  // These methods will update the state properties.
@@ -15,7 +31,6 @@ export default function Login() {
      return { ...prev, ...value };
    });
  }
-
  // This function will handle the submission.
  async function onSubmit(e) {
    e.preventDefault();
@@ -38,11 +53,12 @@ export default function Login() {
    console.log(response);
    setForm({email: "", password: ""});
    if(response !== "User not found"){navigate("/");}
-   else{window.alert("Incorrect email or password!");}
+   else{setShow({show: true});}
    
  }
     return(
 <div class="container mt-5">
+  {AlertDismissibleExample()}
   <h1>Login</h1>
   <div class="row">
     <div class="col-sm-8">

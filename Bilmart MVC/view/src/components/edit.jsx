@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from 'react-bootstrap/Form';
+import Image from 'react-bootstrap/Image';
 
 export default function Edit() {
  const [form, setForm] = useState({
@@ -62,7 +63,7 @@ export default function Edit() {
      description: form.description,
      availability: form.availability,
      type: form.type,
-     src: form.src
+     src: sources
    };
 
    // This will send a post request to update the data in the database.
@@ -82,21 +83,30 @@ export default function Edit() {
    <div>
      <h3>Update Listing</h3>
      <form onSubmit={onSubmit}>
-     <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Upload Pictures</Form.Label>
-        <Form.Control 
-          type="file" 
-          className="form-control"
-          id="src"
-          accept="image/x-png,image/jpeg"
-          onChange={(e) => {updateSources(e.target.value)}}
-        />
-        <h4>Selected Pictures:</h4>
-        <div>{sources.map((source) => {
-            return <img src={source} />
+     <Form.Group className="mb-3">
+          <Form.Label>Upload Pictures</Form.Label>
+          <Form.Control
+            type="file"
+            className="form-control"
+            id="image"
+            accept="image/x-png,image/jpeg"
+            onChange={(e) => {
+              let file = e.target.files[0];
+              let reader = new FileReader();
+              reader.onloadend = function () {
+                console.log(reader.result); // This will log the base64 string
+                console.log(file);
+                updateSources(reader.result);
+              }
+              reader.readAsDataURL(file);
+            }}
+          />
+          <h4>Selected Pictures:</h4>
+          <div>{sources.map((source) => {
+            return <Image src={source} thumbnail/>
           })}
-        </div>
-      </Form.Group>
+          </div>
+        </Form.Group>
        <div className="form-group">
          <label htmlFor="title">Title: </label>
          <input
