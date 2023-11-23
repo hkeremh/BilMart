@@ -64,7 +64,7 @@ function Profile(props){
                   <h1>PostCount</h1>
                   <h3>Posts</h3>
                   <hr/>
-                  <Link to={`/create`}><Button className="createListing" variant="success" style={{backgroundColor: "#192655"}}><h5>Create Listing <img width={20} height={20} src={createIcon}/></h5></Button></Link>
+                  <Link to={`/create`}><Button className="createListing" variant="success" style={{backgroundColor: "#192655"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
                 </div>
                 </Container>
             </Col>

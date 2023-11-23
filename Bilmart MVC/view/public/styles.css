@@ -1,5 +1,9 @@
 html{
     background-color: #D6C7AE;
+    font-family: 'Montserrat', sans-serif;
+}
+.text{
+  font-family: 'Montserrat', sans-serif;
 }
 .itemCard{
     display: inline-block;
@@ -37,6 +41,7 @@ html{
 }
 .logoBar h1{
   color: #242760;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-size: 32px;
   font-weight: 600;
@@ -88,6 +93,7 @@ html{
 }
 .userInfo h1{
   color: #242760;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -95,6 +101,7 @@ html{
 }
 .userInfo h2{
   color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 87.523%; /* 15.754px */
@@ -102,6 +109,7 @@ html{
 }
 .userInfo h3{
   color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 87.523%; /* 14.004px */
