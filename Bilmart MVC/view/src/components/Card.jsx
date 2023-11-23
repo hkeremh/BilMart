@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
+import deleteIcon from "../img/bin.png";
 
 function ItemCard(props) {
   return (
@@ -24,13 +25,13 @@ function ItemCard(props) {
       <ListGroup.Item>{props.record.type}</ListGroup.Item>
     </ListGroup>
     <Card.Body>
-      <Container>
+      <div>
       <Row>
-      {!props.record.type.includes("Sold") && <Col><Link to={`/item/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>View</Button></Link></Col>}
-      {props.record.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>}
-      {props.record.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}>Delete</Button></Col>}
+      {!props.record.type.includes("Sold") && <Col><Link to={`/item/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}>View</Button></Link></Col>}
+      {props.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>}
+      {props.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
       </Row>
-      </Container>
+      </div>
     </Card.Body>
   </Card>
   </div>

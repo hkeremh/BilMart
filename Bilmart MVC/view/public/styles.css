@@ -12,6 +12,11 @@ html{
     background-color: #F3F0CA;
     border-radius: 15px;
 }
+.profileItems{
+  background-color: #F3F0CA;
+  border-radius: 15px;
+  margin-top: 15px;
+}
 .selection{
     justify-content: center;
     background-color: #F3F0CA;
