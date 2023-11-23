@@ -35,11 +35,22 @@ async function signup(newDocument){
     return result;
 }
 
+async function remove(username) {
+    let collection = await db.collection('Users'); //name of collection
+    collection.deleteOne({username: username});
+}
+async function create(query) {
+    let collection = await db.collection('Users'); //name of collection
+    let result = await collection.insertOne(query);
+}
+
 //all methods that need to be used by other files (controller) go in here to export.
 export default {
     getUser,
     login,
     signup,
     getUserByEmail,
-    getUserByUserName
+    getUserByUserName,
+    create,
+    remove
 };

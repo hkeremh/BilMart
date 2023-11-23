@@ -14,7 +14,7 @@ import listingController from './controller/listingController.js';
 import userController from './controller/userController.js';
 
 const app = express();
-const port = 4000; //server is established at localhost:5000 by default
+const port = 5000; //server is established at localhost:5000 by default
 
 /**
  * This means that every link with ">WEBSITE_NAME</" will use the controller.js defined above

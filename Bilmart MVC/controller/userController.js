@@ -9,7 +9,6 @@
  */
 import express from 'express';
 import userModel from '../model/userModel.js'; //this line allows controller to use methods from model
-import tempUserModel from '../model/tempUserModel.js';
 import bcrypt from "bcrypt";
 import mailer from "./mailController.js"
 
@@ -80,7 +79,7 @@ router.post("/signup", async (req, res, next) => {
       verificationCodeArr[index] = verificationCodeArr[index] % 10;
       verificationCode = verificationCode + verificationCodeArr[index].toString();
     }
-    const tempUser = tempUserModel.create(newUser);
+    const tempUser = userModel.create(newUser);
     try {
       await mailer.sendMail(newUser.email,"Your Verification Code",
       "<h1>Your verification code is: " + verificationCode + "</h1>");

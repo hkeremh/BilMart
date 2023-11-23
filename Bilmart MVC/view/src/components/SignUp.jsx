@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function SignUp() {
  const [form, setForm] = useState({
+  username: "",
    email: "",
    password: ""
  });
@@ -23,7 +24,7 @@ export default function SignUp() {
    // When a post request is sent to the create url, we'll add a new record to the database.
    const newItem = { ...form };
 
-   await fetch("http://localhost:5000/user/signup", {
+   const result = await fetch("http://localhost:5000/user/signup", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
@@ -35,18 +36,37 @@ export default function SignUp() {
      return;
    });
    
-   setForm({email: "", password: ""});
-   navigate("/");
+   setForm({username: "", email: "", password: ""});
+   const res = await result.json();
+   console.log(res.message);
+   if(res.message === "Verification mail sent successfully"){
+    window.alert(res.message);
+    navigate("/");
+   }
+   else{
+      window.alert(res.message);
+   }
+   
  }
     return(
-<div class="container mt-5">
+<div className="container mt-5">
   <h1>Sign Up</h1>
-  <div class="row">
-    <div class="col-sm-8">
-      <div class="card">
-        <div class="card-body">
+  <div className="row">
+    <div className="col-sm-8">
+      <div className="card">
+        <div className="card-body">
           <form onSubmit={onSubmit}>
-            <div class="form-group">
+            <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input 
+              type="username"
+              className="form-control"
+              id="username"
+              value={form.username}
+              onChange={(e) => updateForm({ username: e.target.value })}
+              />              
+            </div>
+            <div className="form-group">
             <label htmlFor="email">Email</label>
             <input 
               type="email"
@@ -56,7 +76,7 @@ export default function SignUp() {
               onChange={(e) => updateForm({ email: e.target.value })}
               />              
             </div>
-            <div class="form-group">
+            <div className="form-group">
             <label htmlFor="password">Password</label>
             <input 
               type="password"
@@ -66,7 +86,7 @@ export default function SignUp() {
               onChange={(e) => updateForm({ password: e.target.value })}
               />
             </div>
-            <button type="submit" value="SignUp" class="btn btn-dark">Sign Up</button>
+            <button type="submit" value="SignUp" className="btn btn-dark">Sign Up</button>
           </form>
         </div>
       </div>
