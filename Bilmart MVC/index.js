@@ -9,6 +9,7 @@
 
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import "./loadEnvironment.js";
 import listingController from './controller/listingController.js';
 import userController from './controller/userController.js';
@@ -21,6 +22,7 @@ const port = 5000; //server is established at localhost:5000 by default
  * In the future if need to do something like: bilmart/login, we would need to create a new loginController.js
  * inside the controller folder and all methods relating to login there.
 */
+app.use(bodyParser.json({ limit: '25mb' }))
 app.use(cors());
 app.use(express.json());
 app.use('/listing', listingController);
