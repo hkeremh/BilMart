@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card';
 import Button from "react-bootstrap/Button";
 import ListGroup from 'react-bootstrap/ListGroup';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
@@ -13,7 +12,7 @@ function ItemCard(props) {
   return (
   <div className="itemCard">
   <Card style={{ width: '280px', height: "500px" }}>
-    <Card.Img variant="top" src={props.record.src[0] || "https://picsum.photos/400"} height={210} width={280}/>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.src[0] || "https://picsum.photos/400"} height={"220px"} width={"auto"}/>
     <Card.Body>
       <Card.Title><div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div></Card.Title>
       <Card.Text>

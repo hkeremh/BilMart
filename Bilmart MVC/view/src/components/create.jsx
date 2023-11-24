@@ -82,7 +82,7 @@ export default function Create() {
           />
           <h4>Selected Pictures:</h4>
           <div>{sources.map((source) => {
-            return <Image src={source} thumbnail/>
+            return <img className="centered-and-cropped" width="100" height="100" style={{borderRadius: "50%"}} src={source} />
           })}
           </div>
         </Form.Group>
