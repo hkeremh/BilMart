@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Alert from 'react-bootstrap/Alert';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify';
 
 export default function SignUp() {
  const [form, setForm] = useState({
@@ -9,21 +10,6 @@ export default function SignUp() {
    email: "",
    password: ""
  });
-
- const [show, setShow] = useState(false);
- const [message, setMessage] = useState("");
- function AlertDismissibleExample() {
-  if (show) {
-    return (
-      <Alert transition variant="danger" onClose={() => setShow(false)} dismissible>
-        <Alert.Heading>Sign Up Error</Alert.Heading>
-        <p>
-          {message}
-        </p>
-      </Alert>
-    );
-  }
-}
 
  const navigate = useNavigate();
 
@@ -60,15 +46,21 @@ export default function SignUp() {
     navigate("/");
    }
    else{
-    setShow({show: true});
-    setMessage(res.message);
-    AlertDismissibleExample();
+    toast.error(`${res.message}`, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
    }
    
  }
     return(
 <div className="container mt-5">
-  {AlertDismissibleExample()}
   <h1>Sign Up</h1>
   <div className="row">
     <div className="col-sm-8">

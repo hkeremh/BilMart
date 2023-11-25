@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
     try {
         const result = await userModel.login(req.body.email, req.body.password) //access model func.
         if(result === "User not found") {
-          res.status(404).json({messsage: 'User not found'})
+          res.status(404).json('User not found')
         } else {
           res.status(200).json(user) //return value
         }

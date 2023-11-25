@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from 'react-bootstrap/Form';
-import Image from 'react-bootstrap/Image';
+import { toast } from 'react-toastify';
 
 export default function Create() {
   const [form, setForm] = useState({
@@ -13,6 +13,7 @@ export default function Create() {
   });
   const [sources, setSources] = useState([]);
   const navigate = useNavigate();
+  const notify = () => toast("Wow so easy !");
 
   // These methods will update the state properties.
   function updateForm(value) {
@@ -30,10 +31,9 @@ export default function Create() {
 
   // This function will handle the submission.
   async function onSubmit(e) {
+    e.preventDefault();
     console.log(sources);
     if (sources.length !== 0 && sources.length <= 5) {
-      e.preventDefault();
-
       // When a post request is sent to the create url, we'll add a new record to the database.
       const newItem = { ...form, src: sources };
 
@@ -53,7 +53,17 @@ export default function Create() {
       navigate("/");
     }
     else {
-      window.alert("Please upload 1-5 pictures");
+      toast.error('Please upload 1-5 pictures', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setForm({ title: "", description: "", availability: "", type: "" });
     }
   }
 

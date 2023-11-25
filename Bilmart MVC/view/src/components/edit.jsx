@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify';
 
 export default function Edit() {
  const [form, setForm] = useState({
@@ -30,7 +32,16 @@ export default function Edit() {
 
      const record = await response.json();
      if (!record) {
-       window.alert(`Listing with id ${id} not found`);
+      toast.error(`Listing with id ${id} not found`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
        navigate("/");
        return;
      }

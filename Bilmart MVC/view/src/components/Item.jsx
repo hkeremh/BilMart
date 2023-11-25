@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import Container from "react-bootstrap/esm/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify';
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Carousel from 'react-bootstrap/Carousel';
@@ -32,7 +33,16 @@ export default function Item() {
 
      const record = await response.json();
      if (!record) {
-       window.alert(`Listing with id ${id} not found`);
+       toast.error(`Listing with id ${id} not found`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
        navigate("/");
        return;
      }

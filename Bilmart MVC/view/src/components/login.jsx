@@ -1,27 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import Alert from 'react-bootstrap/Alert';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify';
 
 export default function Login() {
  const [form, setForm] = useState({
    email: "",
    password: ""
  });
-
- const [show, setShow] = useState(false);
- function AlertDismissibleExample() {
-  if (show) {
-    return (
-      <Alert transition variant="danger" onClose={() => setShow(false)} dismissible>
-        <Alert.Heading>Invalid Credentials</Alert.Heading>
-        <p>
-          Incorrect email or password. Please try again.
-        </p>
-      </Alert>
-    );
-  }
-}
 
  const navigate = useNavigate();
 
@@ -46,19 +32,37 @@ export default function Login() {
      body: JSON.stringify(newItem),
    })
    .catch(error => {
-     window.alert(error);
+     toast.error(`${error}`, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
      return;
    });
    const response = await result.json();
    console.log(response);
    setForm({email: "", password: ""});
    if(response !== "User not found"){navigate("/");}
-   else{setShow({show: true});}
+   else{ toast.error('Incorrect username or password.', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+   }
    
  }
     return(
 <div class="container mt-5">
-  {AlertDismissibleExample()}
   <h1>Login</h1>
   <div class="row">
     <div class="col-sm-8">
