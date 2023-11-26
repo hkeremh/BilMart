@@ -8,12 +8,12 @@ export default function Create() {
   const [form, setForm] = useState({
     title: "",
     description: "",
-    availability: "",
+    availability: "Available",
     type: "",
+    price: "",
   });
   const [sources, setSources] = useState([]);
   const navigate = useNavigate();
-  const notify = () => toast("Wow so easy !");
 
   // These methods will update the state properties.
   function updateForm(value) {
@@ -33,7 +33,7 @@ export default function Create() {
   async function onSubmit(e) {
     e.preventDefault();
     console.log(sources);
-    if (sources.length !== 0 && sources.length <= 5) {
+    if ((form.type === "Donation") || (sources.length !== 0 && sources.length <= 5)) {
       // When a post request is sent to the create url, we'll add a new record to the database.
       const newItem = { ...form, src: sources };
 
@@ -49,11 +49,11 @@ export default function Create() {
           return;
         });
 
-      setForm({ title: "", description: "", availability: "", type: "" });
+      setForm({ title: "", description: "", availability: "Available", type: "", price: ""});
       navigate("/");
     }
-    else {
-      toast.error('Please upload 1-5 pictures', {
+    else {    
+        toast.error('Please upload 1-5 pictures', {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -62,8 +62,8 @@ export default function Create() {
         draggable: true,
         progress: undefined,
         theme: "colored",
-      });
-      setForm({ title: "", description: "", availability: "", type: "" });
+        });
+      setForm({ title: "", description: "", availability: "Available", type: "", price: ""});
     }
   }
 
@@ -72,7 +72,92 @@ export default function Create() {
     <div>
       <h3>Create New Listing</h3>
       <form onSubmit={onSubmit}>
-        <Form.Group className="mb-3">
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            className="form-control"
+            id="title"
+            value={form.title}
+            onChange={(e) => updateForm({ title: e.target.value })}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            className="form-control"
+            id="description"
+            value={form.description}
+            onChange={(e) => updateForm({ description: e.target.value })}
+          />
+        </div>
+        <div className="form-group">
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="typeOptions"
+              id="saleItem"
+              value="Sale Item"
+              checked={form.type === "Sale Item"}
+              onChange={(e) => updateForm({ type: e.target.value })}
+            />
+            <label htmlFor="saleItem" className="form-check-label">Sale Item</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="typeOptions"
+              id="borrowalItem"
+              value="Borrowal Item"
+              checked={form.type === "Borrowal Item"}
+              onChange={(e) => updateForm({ type: e.target.value })}
+            />
+            <label htmlFor="borrowalItem" className="form-check-label">Borrowal Item</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="typeOptions"
+              id="lostItem"
+              value="Lost Item"
+              checked={form.type === "Lost Item"}
+              onChange={(e) => updateForm({ type: e.target.value })}
+            />
+            <label htmlFor="lostItem" className="form-check-label">Lost Item</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="typeOptions"
+              id="foundItem"
+              value="Found Item"
+              checked={form.type === "Found Item"}
+              onChange={(e) => updateForm({ type: e.target.value })}
+            />
+            <label htmlFor="foundItem" className="form-check-label">Found Item</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="typeOptions"
+              id="donation"
+              value="Donation"
+              checked={form.type === "Donation"}
+              onChange={(e) => updateForm({ type: e.target.value })}
+            />
+            <label htmlFor="Donation" className="form-check-label">Donation</label>
+          </div>
+          {form.type ===  "Sale Item" && <div className="form-group"><label htmlFor="price">Price</label><input type="text" className="form-control" id="price" value={form.price} onChange={(e) => updateForm({ price: e.target.value })}/></div>}
+          {form.type ===  "Borrowal Item" && <div className="form-group"><label htmlFor="price">Price</label><input type="text" className="form-control" id="price" value={form.price} onChange={(e) => updateForm({ price: e.target.value })}/></div>}
+          {form.type ===  "Donation" && <div className="form-group"><label htmlFor="price">Donation Goal</label><input type="text" className="form-control" id="price" value={form.price} onChange={(e) => updateForm({ price: e.target.value })}/></div>}
+          {form.type !== "Donation" &&       
+          <Form.Group className="mb-3">
           <Form.Label>Upload Pictures</Form.Label>
           <Form.Control
             type="file"
@@ -96,85 +181,7 @@ export default function Create() {
           })}
           </div>
         </Form.Group>
-        <div className="form-group">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            value={form.title}
-            onChange={(e) => updateForm({ title: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <input
-            type="text"
-            className="form-control"
-            id="description"
-            value={form.description}
-            onChange={(e) => updateForm({ description: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Availability</label>
-          <input
-            type="text"
-            className="form-control"
-            id="availability"
-            value={form.availability}
-            onChange={(e) => updateForm({ availability: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="positionOptions"
-              id="saleItem"
-              value="Sale Item"
-              checked={form.type === "Sale Item"}
-              onChange={(e) => updateForm({ type: e.target.value })}
-            />
-            <label htmlFor="saleItem" className="form-check-label">Sale Item</label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="positionOptions"
-              id="borrowalItem"
-              value="Borrowal Item"
-              checked={form.type === "Borrowal Item"}
-              onChange={(e) => updateForm({ type: e.target.value })}
-            />
-            <label htmlFor="borrowalItem" className="form-check-label">Borrowal Item</label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="positionOptions"
-              id="lostItem"
-              value="Lost Item"
-              checked={form.type === "Lost Item"}
-              onChange={(e) => updateForm({ type: e.target.value })}
-            />
-            <label htmlFor="lostItem" className="form-check-label">Lost Item</label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="positionOptions"
-              id="foundItem"
-              value="Found Item"
-              checked={form.type === "Found Item"}
-              onChange={(e) => updateForm({ type: e.target.value })}
-            />
-            <label htmlFor="foundItem" className="form-check-label">Found Item</label>
-          </div>
+        }
         </div>
         <div className="form-group">
           <input

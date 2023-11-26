@@ -46,6 +46,7 @@ router.post("/", async (req, res) => {
       description: req.body.description,
       availability: req.body.availability,
       type: req.body.type,
+      price: req.body.price,
       src: req.body.src
     };
     const result = await listingModel.postListing(newDocument) //access model func.
@@ -65,6 +66,7 @@ router.patch("/:id", async (req, res) => {
         description: req.body.description,
         availability: req.body.availability,
         type: req.body.type,
+        price: req.body.price,
         src: req.body.src
       }
     };
