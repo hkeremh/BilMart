@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export default function SignUp() {
  const [form, setForm] = useState({
    email: "",
+   username: "",
    password: ""
  });
  const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function SignUp() {
    // When a post request is sent to the create url, we'll add a new record to the database.
    const newItem = { ...form };
 
-   await fetch("http://localhost:5000/user/signup", {
+   await fetch("http://localhost:4000/user/signup", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
@@ -36,7 +37,7 @@ export default function SignUp() {
    });
    
    setForm({email: "", password: ""});
-   navigate("/");
+   navigate("/verify");
  }
     return(
 <div class="container mt-5">
@@ -55,6 +56,16 @@ export default function SignUp() {
               value={form.email}
               onChange={(e) => updateForm({ email: e.target.value })}
               />              
+            </div>
+            <div class="form-group">
+            <label htmlFor="username">Username</label>
+            <input 
+              type="username"
+              className="form-control"
+              id="password"
+              value={form.username}
+              onChange={(e) => updateForm({ username: e.target.value })}
+              />
             </div>
             <div class="form-group">
             <label htmlFor="password">Password</label>

@@ -12,7 +12,7 @@ import cors from 'cors';
 import "./loadEnvironment.js";
 import listingController from './controller/listingController.js';
 import userController from './controller/userController.js';
-
+import cookieParser from "cookie-parser";
 const app = express();
 const port = 4000; //server is established at localhost:5000 by default
 
@@ -23,6 +23,7 @@ const port = 4000; //server is established at localhost:5000 by default
 */
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use('/listing', listingController);
 app.use('/user', userController);
 

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function Login() {
+export default function SignUp() {
  const [form, setForm] = useState({
-   email: "",
-   password: ""
+   verificationCode: "",
  });
  const navigate = useNavigate();
 
@@ -15,7 +14,7 @@ export default function Login() {
      return { ...prev, ...value };
    });
  }
-
+ 
  // This function will handle the submission.
  async function onSubmit(e) {
    e.preventDefault();
@@ -23,7 +22,7 @@ export default function Login() {
    // When a post request is sent to the create url, we'll add a new record to the database.
    const newItem = { ...form };
 
-   const result = await fetch("http://localhost:4000/user/login", {
+   await fetch("http://localhost:4000/user/verify", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
@@ -34,42 +33,28 @@ export default function Login() {
      window.alert(error);
      return;
    });
-   const response = await result.json();
-   console.log(response);
-   setForm({email: "", password: ""});
-   if(response !== "User not found"){navigate("/");}
-   else{window.alert("Incorrect email or password!");}
    
+   navigate("/");
  }
     return(
 <div class="container mt-5">
-  <h1>Login</h1>
+  <h1>Sign Up</h1>
   <div class="row">
     <div class="col-sm-8">
       <div class="card">
         <div class="card-body">
           <form onSubmit={onSubmit}>
             <div class="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="verificationcode">Enter Verification Code</label>
             <input 
-              type="email"
+              type="verificationcode"
               className="form-control"
-              id="email"
-              value={form.email}
-              onChange={(e) => updateForm({ email: e.target.value })}
+              id="verification code"
+              value={form.verificationCode}
+              onChange={(e) => updateForm({ verificationCode: e.target.value })}
               />              
             </div>
-            <div class="form-group">
-            <label htmlFor="password">Password</label>
-            <input 
-              type="password"
-              className="form-control"
-              id="password"
-              value={form.password}
-              onChange={(e) => updateForm({ password: e.target.value })}
-              />
-            </div>
-            <button type="submit" value="Login" class="btn btn-dark">Login</button>
+            <button type="submit" value="SignUp" class="btn btn-dark">Sign Up</button>
           </form>
         </div>
       </div>
