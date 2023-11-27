@@ -1,5 +1,9 @@
 html{
     background-color: #D6C7AE;
+    font-family: 'Montserrat', sans-serif;
+}
+.text{
+  font-family: 'Montserrat', sans-serif;
 }
 .itemCard{
     display: inline-block;
@@ -11,6 +15,11 @@ html{
 .items{
     background-color: #F3F0CA;
     border-radius: 15px;
+}
+.profileItems{
+  background-color: #F3F0CA;
+  border-radius: 15px;
+  margin-top: 15px;
 }
 .selection{
     justify-content: center;
@@ -30,9 +39,17 @@ html{
   display: flex;
   flex-direction: column;
 }
+.logoBar h1{
+  color: #242760;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: normal;
+}
 .itemCarousel{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color:#0F0E0E;
   border-radius: 15px;
   height: 500px;
 }
@@ -55,6 +72,54 @@ html{
   border-radius: 15px;
   height: 500px;
   margin-top: 20px;
+}
+.createListing{
+  margin-bottom: 15px;
+}
+.userInfo{
+  justify-content: center;
+  text-align: center;
+  background-color: #F3F0CA;
+  border-radius: 15px;
+  width: 350px;
+  margin-bottom: 15px;
+}
+.profilePhoto{
+  border-radius: 50%;
+  border: 7px solid #D6C7AE;
+  width: 180px;
+  height: 180px;
+  margin-top: 15px;
+}
+.userInfo h1{
+  color: #242760;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 15px;
+}
+.userInfo h2{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 15.754px */
+  margin-top: 15px;
+}
+.userInfo h3{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.userInfo hr{
+  border: 1px solid #544C4C;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 .gradient-background {
     background: linear-gradient(300deg, #192655, #D6C7AE, #FFFFEF,#D6C7AE,#192655);
