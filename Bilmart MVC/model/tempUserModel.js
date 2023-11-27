@@ -7,21 +7,25 @@ async function getUserByUserName(username) {
     let result = await collection.findOne(query);
     return result;
 }
+async function getUserByEmail(email) {
+    let query = {email: email};
+    let result = await collection.findOne(query);
+    return result;
+}
 async function getUserByUserId(id) {
     let query = {_id: new ObjectId(id)};
     let result = await collection.findOne(query);
     return result;
 }
-async function remove(username) {
-    collection.deleteOne({username: username});
+async function remove(id) {
+    collection.deleteOne({_id: new ObjectId(id)});
 }
 async function create(query) {
-    let result = await collection.insertOne(query);
-    console.log(result);
-    return result;
+    collection.insertOne(query);
 }
 export default {
     getUserByUserName,
+    getUserByEmail,
     getUserByUserId,
     remove,
     create

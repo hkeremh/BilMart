@@ -8,7 +8,7 @@ exports.createSecretUserToken = (id) => {
 };
 exports.createSecretTempUserToken = (id) => {
 return jwt.sign({ id }, process.env.TEMP_USER_TOKEN_KEY, {
-        expiresIn: 3 * 24 * 60 * 60,
+        expiresIn: 10 * 60,
     });
 };
 
