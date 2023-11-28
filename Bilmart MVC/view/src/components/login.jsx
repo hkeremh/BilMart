@@ -82,7 +82,7 @@ export default function Login() {
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label className="form-label text" htmlFor="email">Email</label>
+                      <label className="form-label fw-bold text" htmlFor="email">Email</label>
                       <input
                         className="form-control text"
                         type="email"
@@ -96,7 +96,7 @@ export default function Login() {
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label className="form-label text" htmlFor="password">Password</label>
+                      <label className="form-label fw-bold text" htmlFor="password">Password</label>
                       <input
                         className="form-control text"
                         type="password"
@@ -118,8 +118,8 @@ export default function Login() {
                 </form>
               </div>
               <div class="d-flex justify-content-center col-md-10 col-lg-6 col-xl-7 align-items-center order-1 order-lg-2">
-                <img src={test}
-                  width="400" height="400" alt="logo" style={{borderRadius: "50%"}}/>
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                  className="img-fluid" alt="logo"/>
               </div>
             </div>
           </div>

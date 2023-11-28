@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 import NavBar from "./navbar.jsx";
-import test from "../img/logo.png";
+import test from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
 
 export default function SignUp() {
@@ -83,7 +83,7 @@ const handleSuccess = (msg) =>
                   <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <label className="form-label text" htmlFor="username">Username</label>
+                        <label className="form-label fw-bold text" htmlFor="username">Username</label>
                         <input
                           className="form-control text"
                           type="username"
@@ -97,7 +97,7 @@ const handleSuccess = (msg) =>
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <label className="form-label text" htmlFor="email">Email</label>
+                        <label className="form-label fw-bold text" htmlFor="email">Email</label>
                         <input
                           className="form-control text"
                           type="email"
@@ -111,7 +111,7 @@ const handleSuccess = (msg) =>
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <label className="form-label text" htmlFor="password">Password</label>
+                        <label className="form-label fw-bold text" htmlFor="password">Password</label>
                         <input
                           className="form-control text"
                           type="password"
@@ -134,7 +134,7 @@ const handleSuccess = (msg) =>
                 </div>
                 <div class="d-flex justify-content-center col-md-10 col-lg-6 col-xl-7 align-items-center order-1 order-lg-2">
                 <img src={test}
-                  width="420" height="420" alt="logo" style={{borderRadius: "50%"}}/>
+                  className="img-fluid" alt="logo"/>
                 </div>
               </div>
             </div>
