@@ -1,0 +1,48 @@
+{
+    "_IMPORTANT": "Don't you fucking dare change this document, copy/paste to use it.",
+    "_comment": "This is a comment, the following is an example of a post structure in json. First are the standard attributes common in all post types, then unique attributes",
+
+    "title": "STR_POST_TITLE",
+    "postDate": "DATE_Type_POST_DATE",
+    "images": "STR_ARR_IMG_URLS",
+    "description": "STR_POST_DESCR",
+    "tags": "STR_ARR_POST_TAGS",
+    "postOwner": "STR_ARR_MONGO_USER_ID",
+    "type": "STR_POST_TYPE: SELL or LEND or DONATE or LOSTFOUND",
+
+
+    "typeSpecific": { },
+
+    "_comment2": "selling example to go in typeSpecific",
+    "ex_selling": {
+        "_comment": "this is for selling",
+        "price": "DOUBLE_ITEM_PRICE",
+        "quality": "INT_1-10_ITEM_QUALITY",
+        "available": "BOOL_ITEM_STATUS"
+    },
+
+    "_comment3": "lending example to go in typeSpecific",
+    "ex_lending": {
+        "_comment": "this is for lending",
+        "price": "DOUBLE_ITEM_PRICE",
+        "quality": "INT_1-10_ITEM_QUALITY",
+        "available": "BOOL_ITEM_STATUS",
+        "lendDuration": "INT_NUM_OF_DAYS"
+    },
+
+    "_comment4": "donation example to go in typeSpecific",
+    "ex_donation": {
+        "_comment": "this is for selling",
+        "IBAN": "STR_IBAN_NUM",
+        "weblink": "STR_LINK_TO_WEBSITE",
+        "organizationName": "STR_NAME_OF_ORG",
+        "monetaryTarget": "DOUBLE_TARGET_$"
+    },
+
+    "_comment5": "Lost and Found (L&F) example to go in typeSpecific",
+    "ex_L&F": {
+        "status": "BOOL FOUND OR STILL LOST"
+    }
+
+
+}

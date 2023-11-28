@@ -1,0 +1,13 @@
+{
+    "_IMPORTANT": "Don't you fucking dare change this document, copy/paste to use it.",
+    
+    "id": "MONGODB_ID",
+    "name": "STR_USER_NAME",
+    "password": "ENCRIPTED_USR_PASS",
+    "email": "STR_USER_EMAIL",
+    "bilkentID": "STR_USER_ID",
+    "department": "STR_USER_DEPARTMENT",
+    "verificationStatus": "BOOL_USER_STATUS",
+    "listings": "POST_ARR_USER_LISTINGS",
+    "wishlist": "STR_ARR_MONGO_POST_ID"
+}
