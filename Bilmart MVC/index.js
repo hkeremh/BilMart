@@ -10,6 +10,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import "./loadEnvironment.js";
 import listingController from './controller/listingController.js';
 import userController from './controller/userController.js';
@@ -30,6 +31,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(express.json());
 app.use('/listing', listingController);
 app.use('/user', userController);

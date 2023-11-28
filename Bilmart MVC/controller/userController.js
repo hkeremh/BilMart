@@ -11,6 +11,7 @@ import express from 'express';
 import userModel from '../model/userModel.js'; //this line allows controller to use methods from model
 import bcrypt from "bcrypt";
 import mailer from "./mailController.js"
+import userVerification from '../middlewares/authMiddleware.js';
 import createSecretToken from "../util/SecretToken.js";
 
 const router = express.Router()
@@ -56,10 +57,10 @@ router.post("/login", async (req, res, next) => {
     console.error(error);
   }
   });
+router.post("/", userVerification);
   
 router.post("/signup", async (req, res, next) => {
   try {
-    console.log(req.body)
     const encryptedPassword = await bcrypt.hash(req.body.password, 12);
     const newUser = {
       email: req.body.email,

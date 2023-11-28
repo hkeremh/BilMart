@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +11,34 @@ import ItemCard from "./Card.jsx";
 import Classification from "./Classification.jsx";
 import LogoBar from "./LogoBar.jsx";
 
-export default function Home() {
+const Home = () => {
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    const verifyCookie = async () => {
+      if (!cookies.token) {
+        navigate("/login");
+      }
+      const { data } = await axios.post(
+        "http://localhost:5000/user/",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+      setUsername(user);
+      return status
+        ? toast.info(`Hello ${user}`, {
+            position: "top-right",
+          })
+        : (removeCookie("token"), navigate("/login"));
+    };
+    verifyCookie();
+  }, [cookies, navigate, removeCookie]);
+  const Logout = () => {
+    removeCookie("token");
+    navigate("/login");
+  };
  const [records, setRecords] = useState([]);
  // This method fetches the records from the database.
  useEffect(() => {
@@ -67,7 +96,10 @@ export default function Home() {
           </Col>
       </Row>
       </Container>
+      <button onClick={Logout}>LOGOUT</button>
   </Container>
 </div>
  );
 }
+
+export default Home;

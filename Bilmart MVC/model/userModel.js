@@ -1,11 +1,12 @@
+import { ObjectId } from 'mongodb';
 import db from '../database/database.js'; //allows the model to access the db client
 
 async function getUser(id) {
     let collection = await db.collection('Users'); //name of collection
-    let query = {_id: id};
+    let query = {_id: new ObjectId(id)};
     let result = await collection.findOne(query);
     if(!result) {return "User not found";}
-    else {return result;}
+    else return result;
 }
 
 async function getUserByEmail(email) {

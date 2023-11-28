@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Edit() {
  const [form, setForm] = useState({
@@ -109,6 +109,17 @@ export default function Edit() {
  // This following section will display the form that takes input from the user to update the data.
  return (
   <div>
+    <ToastContainer
+        position="top-center"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
   <h3>Update Listing</h3>
   <form onSubmit={onSubmit}>
     <div className="form-group">
