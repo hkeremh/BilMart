@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 import NavBar from "./navbar.jsx";
-import logo from "../img/1.png";
+import test from "../img/logo.png";
 import { Link } from "react-router-dom";
 
 export default function SignUp() {
@@ -132,9 +132,9 @@ const handleSuccess = (msg) =>
                     </div>
                   </form>
                 </div>
-                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                  <img src={logo}
-                    class="img-fluid" alt="logo"/>
+                <div class="d-flex justify-content-center col-md-10 col-lg-6 col-xl-7 align-items-center order-1 order-lg-2">
+                <img src={test}
+                  width="420" height="420" alt="logo" style={{borderRadius: "50%"}}/>
                 </div>
               </div>
             </div>

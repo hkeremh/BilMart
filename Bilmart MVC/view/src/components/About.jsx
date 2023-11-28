@@ -5,7 +5,6 @@ import image from "../img/1.png";
 import NavBar from "./navbar.jsx";
 
 function About(){
-
     return(
       <div>
       <NavBar />
