@@ -2,65 +2,54 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from 'react-toastify';
+import axios from "axios";
 
 export default function Login() {
- const [form, setForm] = useState({
-   email: "",
-   password: ""
- });
-
- const navigate = useNavigate();
-
- // These methods will update the state properties.
- function updateForm(value) {
-   return setForm((prev) => {
-     return { ...prev, ...value };
-   });
- }
- // This function will handle the submission.
- async function onSubmit(e) {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "top-center",
+  });
+ const handleSuccess = (msg) =>
+  toast.success(msg, {
+    position: "top-center",
+  });
+  // These methods will update the state properties.
+  function updateForm(value) {
+    return setForm((prev) => {
+      return { ...prev, ...value };
+    });
+  }
+ 
+  // This function will handle the submission.
+  async function onSubmit(e){
    e.preventDefault();
-
-   // When a post request is sent to the create url, we'll add a new record to the database.
-   const newItem = { ...form };
-
-   const result = await fetch("http://localhost:5000/user/login", {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json",
-     },
-     body: JSON.stringify(newItem),
-   })
-   .catch(error => {
-     toast.error(`${error}`, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      });
-     return;
-   });
-   const response = await result.json();
-   console.log(response);
-   setForm({email: "", password: ""});
-   if(response !== "User not found"){navigate("/");}
-   else{ toast.error('Incorrect username or password.', {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      });
+   try {
+     const { data } = await axios.post(
+       "http://localhost:5000/user/login",
+       {
+         ...form,
+       },
+       { withCredentials: true }
+     );
+     const { success, message } = data;
+     if (success) {
+       handleSuccess(message);
+       setTimeout(() => {
+         navigate("/");
+       }, 1500);
+     } else {
+       handleError(message);
+     }
+   } catch (error) {
+     console.log(error);
    }
-   
- }
+   setForm({email: "", password: ""});
+  }
     return(
 <div class="container mt-5">
   <h1>Login</h1>

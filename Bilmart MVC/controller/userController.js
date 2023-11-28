@@ -11,6 +11,7 @@ import express from 'express';
 import userModel from '../model/userModel.js'; //this line allows controller to use methods from model
 import bcrypt from "bcrypt";
 import mailer from "./mailController.js"
+import createSecretToken from "../util/SecretToken.js";
 
 const router = express.Router()
 
@@ -18,7 +19,7 @@ const router = express.Router()
 //from the model.
 router.get('/:id', async (req, res) => {
     try {
-      const user = await userModel.getUser(req.params.id) //access model func.
+      let user = await userModel.getUser(req.params.id);
       if(user === "User not found") {
         res.status(404).json('User not found')
       } else {
@@ -29,18 +30,31 @@ router.get('/:id', async (req, res) => {
       res.status(500).send({ error: 'Internal Server Error' })
     }
 })
-router.post("/login", async (req, res) => {
-    try {
-        const result = await userModel.login(req.body.email, req.body.password) //access model func.
-        if(result === "User not found") {
-          res.status(404).json('User not found')
-        } else {
-          res.status(200).json(user) //return value
-        }
-      } catch (error) {
-        console.error(error)
-        res.status(500).send({ error: 'Internal Server Error' })
-      }
+router.post("/login", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    res.cookie("token", "0")  //no cookie
+    if(!email || !password ){
+      return res.json({message:'All fields are required'})
+    }
+    let user = await userModel.getUserByEmail(email);
+    if(!user){
+      return res.json({message:'Incorrect email' }) 
+    }
+    const auth = await bcrypt.compare(password,user.password)
+    if (!auth) {
+      return res.json({message:'Incorrect password' }) 
+    }
+     const token = createSecretToken(user._id);
+     res.cookie("token", token, {
+       withCredentials: true,
+       httpOnly: false,
+     });
+     res.status(201).json({ message: "User logged in successfully", success: true });
+     next()
+  } catch (error) {
+    console.error(error);
+  }
   });
   
 router.post("/signup", async (req, res, next) => {
@@ -90,23 +104,11 @@ router.post("/signup", async (req, res, next) => {
     } catch (error) {
       console.error(error);
       return res.json({ message: "Email couldn't be sent" });
-
-    
     }
-
-    
   } catch (error) {
     console.error(error);
     return res.json({ message: "Email couldn't be sent" });
   }
-  
-  
-    // let newDocument = {
-    //   email: req.body.email,
-    //   password: req.body.password,
-    // };
-    // const result = await userModel.signup(newDocument) //access model func.
-    // res.send(result).status(204);
 });
   
  export default router; //allows other files to access the routes

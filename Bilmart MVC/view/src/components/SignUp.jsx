@@ -1,63 +1,55 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from 'react-toastify';
+import axios from "axios";
 
 export default function SignUp() {
+const navigate = useNavigate();
  const [form, setForm] = useState({
-  username: "",
+   username: "",
    email: "",
    password: ""
  });
-
- const navigate = useNavigate();
-
+ const handleError = (err) =>
+ toast.error(err, {
+   position: "top-center",
+ });
+const handleSuccess = (msg) =>
+ toast.success(msg, {
+   position: "top-center",
+ });
  // These methods will update the state properties.
  function updateForm(value) {
    return setForm((prev) => {
      return { ...prev, ...value };
    });
  }
- 
+
  // This function will handle the submission.
- async function onSubmit(e) {
-   e.preventDefault();
-
-   // When a post request is sent to the create url, we'll add a new record to the database.
-   const newItem = { ...form };
-
-   const result = await fetch("http://localhost:5000/user/signup", {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json",
-     },
-     body: JSON.stringify(newItem),
-   })
-   .catch(error => {
-     window.alert(error);
-     return;
-   });
-   
-   setForm({username: "", email: "", password: ""});
-   const res = await result.json();
-   console.log(res.message);
-   if(res.message === "Verification mail sent successfully"){
-    navigate("/");
-   }
-   else{
-    toast.error(`${res.message}`, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      });
-   }
-   
+ async function onSubmit(e){
+  e.preventDefault();
+  try {
+    const { data } = await axios.post(
+      "http://localhost:5000/user/signup",
+      {
+        ...form,
+      },
+      { withCredentials: true }
+    );
+    const { success, message } = data;
+    if (success) {
+      handleSuccess(message);
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } else {
+      handleError(message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  setForm({username: "", email: "", password: ""});
  }
     return(
 <div className="container mt-5">

@@ -42,6 +42,7 @@ async function remove(username) {
 async function create(query) {
     let collection = await db.collection('Users'); //name of collection
     let result = await collection.insertOne(query);
+    return result;
 }
 
 //all methods that need to be used by other files (controller) go in here to export.
