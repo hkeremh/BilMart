@@ -8,6 +8,7 @@ import Button from "react-bootstrap/esm/Button";
 import LogoBar from "./LogoBar.jsx";
 import ItemCard from "./Card.jsx";
 import createIcon from "../img/plus.png";
+import NavBar from "./navbar.jsx";
 
 function Profile(props){
   const [records, setRecords] = useState([]);
@@ -49,7 +50,9 @@ function Profile(props){
   }
   
   return (
-    <div style={{ backgroundColor: "#D6C7AE" }}>
+    <div>
+    <NavBar />
+    <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
     <Container fluid>
         <LogoBar />
         <Container style={{marginTop: "15px"}} fluid>
@@ -83,6 +86,7 @@ function Profile(props){
         </Row>
         </Container>
     </Container>
+    </div>
     </div>
   );
 };

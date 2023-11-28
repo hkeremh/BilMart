@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^1.6.2",
     "bootstrap": "^4.6.2",
+    "bootstrap-icons": "^1.11.2",
     "cypress": "^4.2.0",
     "react": "^18.0.2",
     "react-bootstrap": "^2.9.1",

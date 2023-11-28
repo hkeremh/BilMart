@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,6 +10,7 @@ import Col from 'react-bootstrap/Col';
 import ItemCard from "./Card.jsx";
 import Classification from "./Classification.jsx";
 import LogoBar from "./LogoBar.jsx";
+import NavBar from "./navbar.jsx";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -28,24 +29,11 @@ const Home = () => {
       const { status, user } = data;
       setUsername(user);
       return status
-        ? (toast.info(`Hello ${user}`, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          }), console.log(user))
+        ?  console.log(user)
         : (removeCookie("token"), navigate("/login"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
-  const Logout = () => {
-    removeCookie("token");
-    navigate("/login");
-  };
  const [records, setRecords] = useState([]);
  // This method fetches the records from the database.
  useEffect(() => {
@@ -86,8 +74,10 @@ const Home = () => {
 
  // This following section will display the table with the records of individuals.
  return (
-  <div style={{ backgroundColor: "#D6C7AE" }}>
-  <Container fluid>
+  <div>
+  <NavBar />
+  <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
+  <Container fluid style={{marginTop: "15px"}}>
       <LogoBar />
       <Container style={{marginTop: "15px"}} fluid>
       <Row>
@@ -103,8 +93,9 @@ const Home = () => {
           </Col>
       </Row>
       </Container>
-      <button onClick={Logout}>LOGOUT</button>
   </Container>
+  <ToastContainer />
+</div>
 </div>
  );
 }

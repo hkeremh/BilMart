@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import Container from "react-bootstrap/esm/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Carousel from 'react-bootstrap/Carousel';
 import LogoBar from "./LogoBar";
+import NavBar from "./navbar";
 
 export default function Item() {
  const [item, setItem] = useState({
@@ -70,7 +71,9 @@ export default function Item() {
 
  // This following section will display the form that takes input from the user to update the data.
  return (
-   <Container fluid>
+  <div>
+   <NavBar />
+   <Container fluid style={{ marginTop: 15 }}>
     <LogoBar />
     <Container style={{marginTop: "15px"}} fluid>
         <Row>
@@ -103,6 +106,8 @@ export default function Item() {
             </Col>
         </Row>
     </Container>
+    <ToastContainer />
    </Container>
+   </div>
  );
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -9,6 +11,12 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../img/BilMart-logos_transparent.png';
 
 function NavBar() {
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const Logout = () => {
+    removeCookie("token");
+    navigate("/login");
+  };
   return (
     <Navbar className="navbar-dark" expand="lg" style={{backgroundColor: "#192655"}}>
       <Container fluid>
@@ -25,8 +33,8 @@ function NavBar() {
                 Another action
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action6">
-                Something else here
+              <NavDropdown.Item>
+              <a onClick={Logout}>Logout</a>
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/profile">Profile</Nav.Link>

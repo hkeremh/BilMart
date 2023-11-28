@@ -2,10 +2,13 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import image from "../img/1.png";
+import NavBar from "./navbar.jsx";
 
 function About(){
 
     return(
+      <div>
+      <NavBar />
         <div style={{ margin: "-50px" }}>
         <div className="gradient-background px-4 pt-5 my-5 text-center border-bottom " >
         <h1 className="display-4 fw-bold text-body-emphasis">Welcome to BilMart!</h1>
@@ -78,6 +81,7 @@ function About(){
       </div>
     </footer>
   </div>
+      </div>
       </div>
     );
 }

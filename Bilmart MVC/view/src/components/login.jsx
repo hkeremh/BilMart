@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
+import NavBar from "./navbar.jsx";
+import { Link } from "react-router-dom";
+import logo from "../img/1.png";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -65,39 +68,66 @@ export default function Login() {
    setForm({email: "", password: ""});
   }
     return(
-<div class="container mt-5">
-  <h1>Login</h1>
-  <div class="row">
-    <div class="col-sm-8">
-      <div class="card">
-        <div class="card-body">
-          <form onSubmit={onSubmit}>
-            <div class="form-group">
-            <label htmlFor="email">Email</label>
-            <input 
-              type="email"
-              className="form-control"
-              id="email"
-              value={form.email}
-              onChange={(e) => updateForm({ email: e.target.value })}
-              />              
+    <div>
+    <NavBar />
+  <div class="container h-100" style={{marginTop: "100px"}}>
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style={{borderRadius: "25px"}}>
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Login Account</p>
+                <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <label className="form-label text" htmlFor="email">Email</label>
+                      <input
+                        className="form-control text"
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        placeholder="Enter your email"
+                        onChange={(e) => updateForm({ email: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <label className="form-label text" htmlFor="password">Password</label>
+                      <input
+                        className="form-control text"
+                        type="password"
+                        name="password"
+                        value={form.password}
+                        placeholder="Enter your password"
+                        onChange={(e) => updateForm({ password: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="submit" value="login" className="btn btn-dark"><span className="text">Log In</span></button>
+                  </div>
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <span className="text">
+                      Don't have an account? <Link to={"/signup"}>Sign Up</Link>
+                    </span>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                <img src={logo}
+                  class="img-fluid" alt="logo"/>
+              </div>
             </div>
-            <div class="form-group">
-            <label htmlFor="password">Password</label>
-            <input 
-              type="password"
-              className="form-control"
-              id="password"
-              value={form.password}
-              onChange={(e) => updateForm({ password: e.target.value })}
-              />
-            </div>
-            <button type="submit" value="Login" class="btn btn-dark">Login</button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
+<ToastContainer />
 </div>
     );
 }

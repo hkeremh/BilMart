@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from 'react-bootstrap/Form';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+import NavBar from "./navbar.jsx";
 
 export default function Create() {
   const [form, setForm] = useState({
@@ -70,6 +71,8 @@ export default function Create() {
   // This following section will display the form that takes the input from the user.
   return (
     <div>
+    <NavBar />
+    <div style={{ marginTop: 15 }}>
       <h3>Create New Listing</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group">
@@ -191,6 +194,8 @@ export default function Create() {
           />
         </div>
       </form>
+      <ToastContainer />
+    </div>
     </div>
   );
 }

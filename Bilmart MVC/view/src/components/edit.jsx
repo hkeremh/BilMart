@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
+import NavBar from "./navbar.jsx";
 
 export default function Edit() {
  const [form, setForm] = useState({
@@ -109,17 +110,8 @@ export default function Edit() {
  // This following section will display the form that takes input from the user to update the data.
  return (
   <div>
-    <ToastContainer
-        position="top-center"
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+  <NavBar />
+  <div style={{ marginTop: 15 }}>
   <h3>Update Listing</h3>
   <form onSubmit={onSubmit}>
     <div className="form-group">
@@ -267,6 +259,8 @@ export default function Edit() {
     </Row>
     </Container>
   </form>
+  <ToastContainer />
+  </div>
 </div>
  );
 }

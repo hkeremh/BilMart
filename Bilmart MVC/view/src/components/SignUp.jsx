@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
+import NavBar from "./navbar.jsx";
+import logo from "../img/1.png";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
 const navigate = useNavigate();
@@ -14,10 +17,24 @@ const navigate = useNavigate();
  const handleError = (err) =>
  toast.error(err, {
    position: "top-center",
+   autoClose: 3000,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+   theme: "colored",
  });
 const handleSuccess = (msg) =>
  toast.success(msg, {
    position: "top-center",
+   autoClose: 3000,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+   theme: "colored",
  });
  // These methods will update the state properties.
  function updateForm(value) {
@@ -52,49 +69,80 @@ const handleSuccess = (msg) =>
   setForm({username: "", email: "", password: ""});
  }
     return(
-<div className="container mt-5">
-  <h1>Sign Up</h1>
-  <div className="row">
-    <div className="col-sm-8">
-      <div className="card">
-        <div className="card-body">
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input 
-              type="username"
-              className="form-control"
-              id="username"
-              value={form.username}
-              onChange={(e) => updateForm({ username: e.target.value })}
-              />              
+      <div>
+      <NavBar />
+    <div class="container h-100" style={{marginTop: "100px"}}>
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card text-black" style={{borderRadius: "25px"}}>
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Sign Up</p>
+                  <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <label className="form-label text" htmlFor="username">Username</label>
+                        <input
+                          className="form-control text"
+                          type="username"
+                          name="username"
+                          value={form.username}
+                          placeholder="Enter your username"
+                          onChange={(e) => updateForm({ username: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <label className="form-label text" htmlFor="email">Email</label>
+                        <input
+                          className="form-control text"
+                          type="email"
+                          name="email"
+                          value={form.email}
+                          placeholder="Enter your email"
+                          onChange={(e) => updateForm({ email: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <label className="form-label text" htmlFor="password">Password</label>
+                        <input
+                          className="form-control text"
+                          type="password"
+                          name="password"
+                          value={form.password}
+                          placeholder="Enter your password"
+                          onChange={(e) => updateForm({ password: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <button type="submit" value="SignUp" className="btn btn-dark"><span className="text">Sign Up</span></button>
+                    </div>
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <span className="text">
+                        Already have an account? <Link to={"/login"}>Log In</Link>
+                      </span>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                  <img src={logo}
+                    class="img-fluid" alt="logo"/>
+                </div>
+              </div>
             </div>
-            <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input 
-              type="email"
-              className="form-control"
-              id="email"
-              value={form.email}
-              onChange={(e) => updateForm({ email: e.target.value })}
-              />              
-            </div>
-            <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input 
-              type="password"
-              className="form-control"
-              id="password"
-              value={form.password}
-              onChange={(e) => updateForm({ password: e.target.value })}
-              />
-            </div>
-            <button type="submit" value="SignUp" className="btn btn-dark">Sign Up</button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
+  <ToastContainer />
   </div>
-</div>
     );
 }
