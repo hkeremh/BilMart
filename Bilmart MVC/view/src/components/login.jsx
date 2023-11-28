@@ -13,10 +13,24 @@ export default function Login() {
   const handleError = (err) =>
   toast.error(err, {
     position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
   });
  const handleSuccess = (msg) =>
   toast.success(msg, {
     position: "top-center",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
   });
   // These methods will update the state properties.
   function updateForm(value) {

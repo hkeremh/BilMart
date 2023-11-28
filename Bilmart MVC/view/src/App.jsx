@@ -11,6 +11,7 @@ import Login from "./components/login.jsx";
 import Profile from "./components/Profile.jsx";
 import About from "./components/About.jsx";
 import Item from "./components/Item.jsx";
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
@@ -28,6 +29,17 @@ const App = () => {
         <Route path="/item/:id" element={<Item />} />
       </Routes>
       </div>
+      <ToastContainer
+        position="top-center"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

@@ -28,9 +28,16 @@ const Home = () => {
       const { status, user } = data;
       setUsername(user);
       return status
-        ? toast.info(`Hello ${user}`, {
+        ? (toast.info(`Hello ${user}`, {
             position: "top-right",
-          })
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }), console.log(user))
         : (removeCookie("token"), navigate("/login"));
     };
     verifyCookie();
