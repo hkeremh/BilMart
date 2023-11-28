@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -10,9 +11,27 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../img/BilMart-logos_transparent.png';
 
-function NavBar() {
+function NavBar(props) {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
+  const [disabled, setDisabled] = useState(true);
+  useEffect(() => {
+    const verifyCookie = async () => {
+      if (!cookies.token) {
+        setDisabled(true);
+      }
+      const { data } = await axios.post(
+        "http://localhost:5000/user/",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+      return status
+        ?  setDisabled(false)
+        : (removeCookie("token"));
+    };
+    verifyCookie();
+  }, [cookies, navigate, removeCookie]);
   const Logout = () => {
     removeCookie("token");
     navigate("/login");
@@ -25,9 +44,9 @@ function NavBar() {
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px'}} navbarScroll>
             <Nav.Link href="/about">About</Nav.Link>
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/wishlist">Wishlist</Nav.Link>
-            <NavDropdown title="Settings" id="navbarScrollingDropdown">
+            <Nav.Link href="/" disabled={disabled}>Home</Nav.Link>
+            <Nav.Link href="/wishlist" disabled={disabled}>Wishlist</Nav.Link>
+            <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled}>
               <NavDropdown.Item href="#action4">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action5">
                 Another action
@@ -37,7 +56,7 @@ function NavBar() {
               <a onClick={Logout}>Logout</a>
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/profile">Profile</Nav.Link>
+            <Nav.Link href="/profile" disabled={disabled}>Profile</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control
@@ -46,7 +65,7 @@ function NavBar() {
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="secondary">Search</Button>
+            <Button variant="secondary" disabled={disabled}>Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>

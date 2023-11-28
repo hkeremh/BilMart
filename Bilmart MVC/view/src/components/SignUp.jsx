@@ -6,6 +6,7 @@ import axios from "axios";
 import NavBar from "./navbar.jsx";
 import signUp from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
+import logo from "../img/1.png";
 
 export default function SignUp() {
 const navigate = useNavigate();
@@ -58,7 +59,7 @@ const handleSuccess = (msg) =>
     if (success) {
       handleSuccess(message);
       setTimeout(() => {
-        navigate("/");
+        navigate("/login");
       }, 1500);
     } else {
       handleError(message);
@@ -78,7 +79,7 @@ const handleSuccess = (msg) =>
             <div class="card-body p-md-5">
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Sign Up</p>
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Sign up to <img src={logo} width="220" height="auto" style={{marginTop: "10px"}}/></p>
                   <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
                   <div class="d-flex flex-row align-items-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
@@ -142,7 +143,7 @@ const handleSuccess = (msg) =>
                 </div>
                 <div class="d-flex justify-content-center col-md-10 col-lg-6 col-xl-7 align-items-center order-1 order-lg-2">
                 <img src={signUp}
-                  className="img-fluid" alt="logo"/>
+                  className="img-fluid" width="300" alt="logo"/>
                 </div>
               </div>
             </div>

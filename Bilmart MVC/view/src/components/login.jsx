@@ -76,7 +76,7 @@ export default function Login() {
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Login Account</p>
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Log in to your account</p>
                 <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
                   <div class="d-flex flex-row align-items-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-at-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">

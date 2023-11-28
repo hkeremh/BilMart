@@ -18,9 +18,9 @@ const router = express.Router()
 
 //this is an example of a specific route which calls a "getAllListings" function
 //from the model.
-router.get('/:id', async (req, res) => {
+router.get('/:username', async (req, res) => {
     try {
-      let user = await userModel.getUser(req.params.id);
+      let user = await userModel.getUserByUserName(req.params.username);
       if(user === "User not found") {
         res.status(404).json('User not found')
       } else {

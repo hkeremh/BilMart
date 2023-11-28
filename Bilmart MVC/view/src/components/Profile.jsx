@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer, toast } from "react-toastify";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from "react-bootstrap/esm/Col";
@@ -10,7 +14,42 @@ import ItemCard from "./Card.jsx";
 import createIcon from "../img/plus.png";
 import NavBar from "./navbar.jsx";
 
-function Profile(props){
+function Profile(){
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const [profileUser, setProfileUser] = useState({});
+  async function fetchData(username) {
+    const response = await fetch(`http://localhost:5000/user/${username}`);
+    if (!response.ok) {
+      const message = `An error has occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+    const user = await response.json();
+    if (!user) {
+      return;
+    }
+    setProfileUser(user);
+  }
+  useEffect(() => {
+    const verifyCookie = async () => {
+      if (!cookies.token) {
+        navigate("/login");
+      }
+      const { data } = await axios.post(
+        "http://localhost:5000/user/",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+      await fetchData(user);
+      return status
+        ?  console.log(user)
+        : (removeCookie("token"), navigate("/login"));
+    };
+    verifyCookie();
+  }, [cookies, navigate, removeCookie]);
+
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
@@ -61,7 +100,7 @@ function Profile(props){
                 <Container fluid className="d-flex justify-content-center align-items-center">
                 <div className="userInfo">
                   <img className="profilePhoto" src="https://picsum.photos/200"/>
-                  <h1>UserName</h1>
+                  <h1>{profileUser.username}</h1>
                   <h2>Title</h2>
                   <hr/>
                   <h1>PostCount</h1>
