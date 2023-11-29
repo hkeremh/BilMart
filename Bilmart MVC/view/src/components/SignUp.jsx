@@ -72,14 +72,14 @@ const handleSuccess = (msg) =>
     return(
       <div>
       <NavBar />
-    <div class="container h-100" style={{marginTop: "100px"}}>
+    <div class="container h-100" style={{marginTop: "3rem"}}>
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-11">
           <div class="card text-black" style={{borderRadius: "25px"}}>
             <div class="card-body p-md-5">
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Sign up to <img src={logo} width="220" height="auto" style={{marginTop: "10px"}}/></p>
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Sign up to <img src={logo} width="220" height="auto" style={{marginTop: "5px", marginBottom: "10px"}}/></p>
                   <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
                   <div class="d-flex flex-row align-items-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">

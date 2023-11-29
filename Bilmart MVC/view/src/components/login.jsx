@@ -69,7 +69,7 @@ export default function Login() {
     return(
     <div>
     <NavBar />
-  <div class="container h-100" style={{marginTop: "100px"}}>
+  <div class="container" style={{marginTop: "5rem"}}>
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-11">
         <div class="card text-black" style={{borderRadius: "25px"}}>

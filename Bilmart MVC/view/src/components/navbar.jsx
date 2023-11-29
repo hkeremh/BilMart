@@ -53,7 +53,7 @@ function NavBar(props) {
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item>
-              <a onClick={Logout}>Logout</a>
+              <a onClick={Logout}>Log out</a>
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/profile" disabled={disabled}>Profile</Nav.Link>
