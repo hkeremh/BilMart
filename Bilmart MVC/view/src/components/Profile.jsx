@@ -19,19 +19,6 @@ function Profile(){
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [profileUser, setProfileUser] = useState({});
-  useEffect(()=>{
-    async function fetchPosts() {
-      const response = await fetch(`http://localhost:5000/listing/userPosts/65677c71ae55de0be1693d3f`);
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
-      const userPosts = await response.json();
-      console.log(userPosts);
-    }
-    fetchPosts();
-  })
   async function fetchData(username) {
     const response = await fetch(`http://localhost:5000/user/${username}`);
     if (!response.ok) {
@@ -63,8 +50,20 @@ function Profile(){
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
-
   const [records, setRecords] = useState([]);
+  useEffect(()=>{
+    async function fetchPosts() {
+      const response = await fetch(`http://localhost:5000/listing/userPosts/${profileUser._id}`);
+      if (!response.ok) {
+        const message = `An error has occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const userPosts = await response.json();
+      console.log(userPosts);
+    }
+    fetchPosts();
+  })
 
   useEffect(() => {
     async function getRecords() {
