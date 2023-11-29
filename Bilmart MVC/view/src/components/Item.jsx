@@ -62,7 +62,7 @@ export default function Item() {
         return(
         <Carousel.Item>
         <div style={{justifyContent: "center", textAlign: "center"}}>
-            <img className="rounded-3" src={source} width={"auto"} height={"500px"}/> 
+            <img className="rounded-3" src={source} width={"auto"} height={"500px"} style={{maxWidth: "700px"}}/> 
         </div>
         </Carousel.Item>
         );
