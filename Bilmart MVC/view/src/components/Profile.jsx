@@ -13,11 +13,25 @@ import LogoBar from "./LogoBar.jsx";
 import ItemCard from "./Card.jsx";
 import createIcon from "../img/plus.png";
 import NavBar from "./navbar.jsx";
+import personIcon from  "../img/person-circle.png";
 
 function Profile(){
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [profileUser, setProfileUser] = useState({});
+  useEffect(()=>{
+    async function fetchPosts() {
+      const response = await fetch(`http://localhost:5000/listing/userPosts/65677c71ae55de0be1693d3f`);
+      if (!response.ok) {
+        const message = `An error has occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const userPosts = await response.json();
+      console.log(userPosts);
+    }
+    fetchPosts();
+  })
   async function fetchData(username) {
     const response = await fetch(`http://localhost:5000/user/${username}`);
     if (!response.ok) {
@@ -99,7 +113,10 @@ function Profile(){
             <Col lg={3}>
                 <Container fluid className="d-flex justify-content-center align-items-center">
                 <div className="userInfo">
-                  <img className="profilePhoto" src="https://picsum.photos/200"/>
+                  {profileUser.profilePhoto === "" ? <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="profilePhoto bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                  </svg> : <img className="profilePhoto" src={profileUser.profilePhoto}/>}
                   <h1>{profileUser.username}</h1>
                   <h2>Title</h2>
                   <hr/>

@@ -68,6 +68,7 @@ router.post("/signup", async (req, res, next) => {
       password: encryptedPassword,
       posts: {},
       settings: {},
+      profilePhoto: "",
       wishlist: {},
       description: "",
       rating: 0,

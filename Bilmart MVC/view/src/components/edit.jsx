@@ -12,11 +12,13 @@ import NavBar from "./navbar.jsx";
 export default function Edit() {
  const [form, setForm] = useState({
    title: "",
+   postDate: {},
    description: "",
    availability: "",
    type: "",
+   postOwner: 0,
    price: "",
-   src: [],
+   images: [],
  });
  const [sources, setSources] = useState([]);
  const params = useParams();
@@ -49,7 +51,7 @@ export default function Edit() {
        return;
      }
      setForm(record);
-     setSources(record.src);
+     setSources(record.images);
    }
 
    fetchData();
@@ -72,13 +74,16 @@ export default function Edit() {
 
  async function onSubmit(e) {
    e.preventDefault();
+   console.log(sources);
    const editedListing = {
      title: form.title,
+     postDate: form.postDate,
      description: form.description,
      availability: form.availability,
      type: form.type,
+     postOwner: form.postOwner,
      price: form.price,
-     src: sources
+     images: sources
    };
    if ((form.type === "Donation") || (sources.length !== 0 && sources.length <= 5)){
     // This will send a post request to update the data in the database.

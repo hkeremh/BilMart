@@ -12,7 +12,7 @@ function ItemCard(props) {
   return (
   <div className="itemCard">
   <Card style={{ width: '280px', height: "500px" }}>
-    <Card.Img className="centered-and-cropped" variant="top" src={props.record.src[0]} height={"220px"} width={"auto"}/>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"}/>
     <Card.Body>
       <Card.Title><div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div></Card.Title>
       <Card.Text>

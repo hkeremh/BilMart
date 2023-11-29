@@ -1,24 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from 'react-bootstrap/Form';
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 import NavBar from "./navbar.jsx";
 
 export default function Create() {
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const [owner, setOwner] = useState({});
   const [form, setForm] = useState({
     title: "",
+    postDate: new Date(),
     description: "",
     availability: "Available",
     type: "",
     price: "",
   });
+  async function fetchData(username) {
+    const response = await fetch(`http://localhost:5000/user/${username}`);
+    if (!response.ok) {
+      const message = `An error has occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+    const user = await response.json();
+    if (!user) {
+      return;
+    }
+    setOwner(user);
+  }
+  useEffect(() => {
+    const verifyCookie = async () => {
+      if (!cookies.token) {
+        navigate("/login");
+      }
+      const { data } = await axios.post(
+        "http://localhost:5000/user/",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+      await fetchData(user);
+      return status
+        ?  console.log(user)
+        : (removeCookie("token"), navigate("/login"));
+    };
+    verifyCookie();
+  }, [cookies, navigate, removeCookie]);
   const [sources, setSources] = useState([]);
-  const navigate = useNavigate();
 
   // These methods will update the state properties.
   function updateForm(value) {
-    console.log(form.src)
     return setForm((prev) => {
       return { ...prev, ...value };
     });
@@ -33,11 +68,10 @@ export default function Create() {
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
-    console.log(sources);
     if ((form.type === "Donation") || (sources.length !== 0 && sources.length <= 5)) {
       // When a post request is sent to the create url, we'll add a new record to the database.
-      const newItem = { ...form, src: sources };
-
+      const userID = owner._id;
+      const newItem = { ...form, postOwner: userID, images: sources };
       await fetch("http://localhost:5000/listing", {
         method: "POST",
         headers: {
@@ -50,7 +84,7 @@ export default function Create() {
           return;
         });
 
-      setForm({ title: "", description: "", availability: "Available", type: "", price: ""});
+      setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
       navigate("/");
     }
     else {    
@@ -172,7 +206,6 @@ export default function Create() {
               let reader = new FileReader();
               reader.onloadend = function () {
                 console.log(reader.result); // This will log the base64 string
-                console.log(file);
                 updateSources(reader.result);
               }
               reader.readAsDataURL(file);

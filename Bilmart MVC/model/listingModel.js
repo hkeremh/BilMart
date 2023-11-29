@@ -17,6 +17,12 @@ async function getListing(query) {
   else {return result;}
 }
 
+async function getUserListings(query) {
+  let collection = await db.collection('Posts'); //name of collection
+  let result = await collection.find({postOwner: query}).toArray();
+  return result;
+}
+
 async function getAllListings() {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.find({}).toArray();
@@ -45,6 +51,7 @@ async function deleteListing(query) {
 export default {
     getAllListings,
     getListing,
+    getUserListings,
     postListing,
     updateListing,
     deleteListing

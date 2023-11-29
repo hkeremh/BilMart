@@ -39,15 +39,27 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.get('/userPosts/:id', async (req, res) => {
+  try {
+    const listing = await listingModel.getUserListings(req.params.id); //access model func.
+    res.status(200).json(listing) //return value
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 router.post("/", async (req, res) => {
   try {
     let newDocument = {
       title: req.body.title,
+      postDate: req.body.postDate,
+      images: req.body.images,
       description: req.body.description,
       availability: req.body.availability,
       type: req.body.type,
+      postOwner: req.body.postOwner,
       price: req.body.price,
-      src: req.body.src
     };
     const result = await listingModel.postListing(newDocument) //access model func.
     res.send(result).status(204);
@@ -63,11 +75,13 @@ router.patch("/:id", async (req, res) => {
     const updates =  {
       $set: {
         title: req.body.title,
+        postDate: req.body.postDate,
+        images: req.body.images,
         description: req.body.description,
         availability: req.body.availability,
         type: req.body.type,
+        postOwner: req.body.postOwner,
         price: req.body.price,
-        src: req.body.src
       }
     };
     const result = await listingModel.updateListing(query, updates) //access model func.

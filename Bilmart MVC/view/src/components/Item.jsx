@@ -10,12 +10,15 @@ import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
 
 export default function Item() {
+ const [owner, setOwner] = useState({});
  const [item, setItem] = useState({
    title: "",
+   postDate: {},
    description: "",
    availability: "",
    type: "",
-   src: [],
+   postOwner: "",
+   images: [],
    records: [],
  });
  const params = useParams();
@@ -57,8 +60,8 @@ export default function Item() {
  }, [params.id, navigate]);
 
  function itemPhotos() {
-    console.log(item.src);
-    return item.src.map((source) => {
+    console.log(item.images);
+    return item.images.map((source) => {
         return(
         <Carousel.Item>
         <div style={{justifyContent: "center", textAlign: "center"}}>

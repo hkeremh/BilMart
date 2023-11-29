@@ -47,25 +47,30 @@ const handleSuccess = (msg) =>
  // This function will handle the submission.
  async function onSubmit(e){
   e.preventDefault();
-  try {
-    const { data } = await axios.post(
-      "http://localhost:5000/user/signup",
-      {
-        ...form,
-      },
-      { withCredentials: true }
-    );
-    const { success, message } = data;
-    if (success) {
-      handleSuccess(message);
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
-    } else {
-      handleError(message);
-    }
-  } catch (error) {
-    console.log(error);
+  if(form.email.substring(form.email.indexOf("@")).includes("bilkent")){
+    console.log("Bilkent mail!")
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/user/signup",
+        {
+          ...form,
+        },
+        { withCredentials: true }
+      );
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      console.log(error);
+    }    
+  } else{
+    handleError("Please enter a Bilkent mail.");
   }
   setForm({username: "", email: "", password: ""});
  }
