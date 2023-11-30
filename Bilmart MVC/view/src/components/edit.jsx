@@ -27,7 +27,7 @@ export default function Edit() {
  useEffect(() => {
    async function fetchData() {
      const id = params.id.toString();
-     const response = await fetch(`http://localhost:5000/listing/${params.id.toString()}`);
+     const response = await fetch(`http://localhost:4000/listing/${params.id.toString()}`);
 
      if (!response.ok) {
        const message = `An error has occurred: ${response.statusText}`;
@@ -87,7 +87,7 @@ export default function Edit() {
    };
    if ((form.type === "Donation") || (sources.length !== 0 && sources.length <= 5)){
     // This will send a post request to update the data in the database.
-    await fetch(`http://localhost:5000/listing/${params.id}`, {
+    await fetch(`http://localhost:4000/listing/${params.id}`, {
       method: "PATCH",
       body: JSON.stringify(editedListing),
       headers: {

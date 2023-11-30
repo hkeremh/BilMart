@@ -20,7 +20,7 @@ function Profile(){
   const [cookies, removeCookie] = useCookies([]);
   const [profileUser, setProfileUser] = useState({});
   async function fetchData(username) {
-    const response = await fetch(`http://localhost:5000/user/${username}`);
+    const response = await fetch(`http://localhost:4000/user/${username}`);
     if (!response.ok) {
       const message = `An error has occurred: ${response.statusText}`;
       window.alert(message);
@@ -34,11 +34,11 @@ function Profile(){
   }
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token) {
+      if (!cookies.userToken) {
         navigate("/login");
       }
       const { data } = await axios.post(
-        "http://localhost:5000/user/",
+        "http://localhost:4000/user/",
         {},
         { withCredentials: true }
       );
@@ -46,14 +46,14 @@ function Profile(){
       await fetchData(user);
       return status
         ?  console.log(user)
-        : (removeCookie("token"), navigate("/login"));
+        : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
   const [records, setRecords] = useState([]);
   useEffect(()=>{
     async function fetchPosts() {
-      const response = await fetch(`http://localhost:5000/listing/userPosts/${profileUser._id}`);
+      const response = await fetch(`http://localhost:4000/listing/userPosts/${profileUser._id}`);
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         window.alert(message);
@@ -67,7 +67,7 @@ function Profile(){
 
   useEffect(() => {
     async function getRecords() {
-      const response = await fetch(`http://localhost:5000/listing/`);
+      const response = await fetch(`http://localhost:4000/listing/`);
  
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
@@ -86,7 +86,7 @@ function Profile(){
  
   // This method will delete a record
   async function deleteRecord(id) {
-    await fetch(`http://localhost:5000/listing/${id}`, {
+    await fetch(`http://localhost:4000/listing/${id}`, {
       method: "DELETE"
     });
  

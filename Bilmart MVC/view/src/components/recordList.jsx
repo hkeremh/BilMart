@@ -18,11 +18,13 @@ const Home = () => {
   const [username, setUsername] = useState("");
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token) {
+      console.log(cookies)
+      if (!cookies.userToken) {
+        console.log("test")
         navigate("/login");
       }
       const { data } = await axios.post(
-        "http://localhost:5000/user/",
+        "http://localhost:4000/user/",
         {},
         { withCredentials: true }
       );
@@ -30,7 +32,7 @@ const Home = () => {
       setUsername(user);
       return status
         ?  console.log(user)
-        : (removeCookie("token"), navigate("/login"));
+        : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);

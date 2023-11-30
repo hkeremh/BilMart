@@ -15,7 +15,8 @@ import mailer from "./mailController.js"
 import secretToken from "./secretToken.js"
 import  jwt from "jsonwebtoken";
 import cookieParser from 'cookie-parser';
-import { passwordStrength } from 'check-password-strength'
+import { passwordStrength } from 'check-password-strength';
+import userVerification from '../middlewares/authMiddleware.js';
 cookieParser()
 const router = express.Router()
 const mailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -44,13 +45,11 @@ router.post("/login", async (req, res) => {
     try {
         const user = await userModel.getUserByEmail(req.body.email)
         if(!user) {
-          return res.status(404).json({messsage: 'User not found'})
+          return res.status(404).json({message: 'User not found'})
         }
-        console.log(req.body.password)
-        console.log(user)
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
-          return res.status(404).json({messsage: 'Invalid password'})
+          return res.status(404).json({message: 'Invalid password'})
         }
         const userToken = await secretToken.createSecretUserToken(user._id);
         res.cookie("userToken", userToken, {
@@ -58,7 +57,7 @@ router.post("/login", async (req, res) => {
           httpOnly: false,
         })
 
-        return res.status(200).json({ messgae: "Logged in successfully"})
+        return res.status(200).json({success: true, message: "Logged in successfully"})
 
 
       } catch (error) {
@@ -159,7 +158,6 @@ router.post("/signup", async (req, res, next) => {
     console.error(error);
     return res.json({ message: "Internal server error" });
   }
-});
 });
 
 /**

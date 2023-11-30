@@ -38,12 +38,7 @@ async function create(newDocument){
 
 async function remove(username) {
     let collection = await db.collection('Users'); //name of collection
-    collection.deleteOne({username: username});
-}
-async function create(query) {
-    let collection = await db.collection('Users'); //name of collection
-    let result = await collection.insertOne(query);
-    return result;
+    await collection.deleteOne({username: username});
 }
 
 //all methods that need to be used by other files (controller) go in here to export.
@@ -53,6 +48,5 @@ export default {
     create,
     getUserByEmail,
     getUserByUserName,
-    create,
     remove
 };

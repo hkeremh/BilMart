@@ -18,10 +18,10 @@ async function getUserByUserId(id) {
     return result;
 }
 async function remove(id) {
-    collection.deleteOne({_id: new ObjectId(id)});
+    await collection.deleteOne({_id: new ObjectId(id)});
 }
 async function create(query) {
-    collection.insertOne(query);
+    await collection.insertOne(query);
 }
 export default {
     getUserByUserName,

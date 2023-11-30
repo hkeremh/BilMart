@@ -17,23 +17,23 @@ function NavBar(props) {
   const [disabled, setDisabled] = useState(true);
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token) {
+      if (!cookies.userToken) {
         setDisabled(true);
       }
       const { data } = await axios.post(
-        "http://localhost:5000/user/",
+        "http://localhost:4000/user/",
         {},
         { withCredentials: true }
       );
       const { status, user } = data;
       return status
         ?  setDisabled(false)
-        : (removeCookie("token"));
+        : (removeCookie("userToken"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
   const Logout = () => {
-    removeCookie("token");
+    removeCookie("userToken");
     navigate("/login");
   };
   return (

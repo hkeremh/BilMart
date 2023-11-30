@@ -20,7 +20,7 @@ export default function Create() {
     price: "",
   });
   async function fetchData(username) {
-    const response = await fetch(`http://localhost:5000/user/${username}`);
+    const response = await fetch(`http://localhost:4000/user/${username}`);
     if (!response.ok) {
       const message = `An error has occurred: ${response.statusText}`;
       window.alert(message);
@@ -38,7 +38,7 @@ export default function Create() {
         navigate("/login");
       }
       const { data } = await axios.post(
-        "http://localhost:5000/user/",
+        "http://localhost:4000/user/",
         {},
         { withCredentials: true }
       );
@@ -72,7 +72,7 @@ export default function Create() {
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
       const newItem = { ...form, postOwner: userID, images: sources };
-      await fetch("http://localhost:5000/listing", {
+      await fetch("http://localhost:4000/listing", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -46,13 +46,14 @@ export default function Login() {
    e.preventDefault();
    try {
      const { data } = await axios.post(
-       "http://localhost:5000/user/login",
+       "http://localhost:4000/user/login",
        {
          ...form,
        },
        { withCredentials: true }
      );
      const { success, message } = data;
+     console.log(data)
      if (success) {
        handleSuccess(message);
        setTimeout(() => {

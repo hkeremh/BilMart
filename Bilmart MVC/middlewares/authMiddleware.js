@@ -4,11 +4,11 @@ dotenv.config({ path: "./config.env" });
 import jwt from "jsonwebtoken";
 
 const userVerification = (req, res) => {
-  const token = req.cookies.token
+  const token = req.cookies.userToken
   if (!token) {
     return res.json({ status: false })
   }
-  jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+  jwt.verify(token, process.env.USER_TOKEN_KEY, async (err, data) => {
     if (err) {
      return res.json({ status: false })
     } else {

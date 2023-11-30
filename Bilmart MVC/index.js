@@ -14,9 +14,8 @@ import cookieParser from 'cookie-parser';
 import "./loadEnvironment.js";
 import listingController from './controller/listingController.js';
 import userController from './controller/userController.js';
-import cookieParser from "cookie-parser";
 const app = express();
-const port = 5000; //server is established at localhost:5000 by default
+const port = 4000; //server is established at localhost:4000 by default
 
 /**
  * This means that every link with ">WEBSITE_NAME</" will use the controller.js defined above
@@ -33,7 +32,6 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
-app.use(cookieParser());
 app.use('/listing', listingController);
 app.use('/user', userController);
 
