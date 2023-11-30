@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 export default function SignUp() {
  const [form, setForm] = useState({
@@ -24,21 +25,33 @@ export default function SignUp() {
    // When a post request is sent to the create url, we'll add a new record to the database.
    const newItem = { ...form };
 
-   await fetch("http://localhost:4000/user/signup", {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json",
-     },
-     body: JSON.stringify(newItem),
-   })
-   .catch(error => {
-     window.alert(error);
-     return;
-   });
-   
-   setForm({email: "", password: ""});
-   navigate("/verify");
- }
+  //  await fetch("http://localhost:4000/user/signup/", {
+  //    method: "POST",
+  //    headers: {
+  //      "Content-Type": "application/json",
+       
+  //    },
+  //    credentials: 'include',
+  //    body: JSON.stringify(newItem),
+  //  })
+  //  .catch(error => {
+  //    window.alert(error);
+  //    return;
+  //  });
+ //
+    try{
+    const {data} = await axios.post(
+      "http://localhost:4000/user/signup/",
+      newItem, 
+      { withCredentials: true })
+    
+    setForm({email: "", password: ""});
+    navigate("/verify");
+    }
+    catch(error) {
+      window.alert(error);
+    }
+  }
     return(
 <div class="container mt-5">
   <h1>Sign Up</h1>

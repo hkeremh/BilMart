@@ -40,7 +40,9 @@ router.get('/:id', async (req, res) => {
     }
 })
 /**
- * 
+ * Logs in the user
+ * @param req.body.email The email of the user
+ * @param req.body.password The password oof the user
  */
 router.post("/login", async (req, res) => {
     try {
@@ -174,12 +176,14 @@ router.post("/verify", async (req, res, next) => {
   try {
     const token = req.cookies.tempUserToken;
     const verificationCode = req.body.verificationCode;
+    console.log(token)
+    console.log(verificationCode)
     jwt.verify(token, process.env.TEMP_USER_TOKEN_KEY, async (err, data) => {
       if (err) {
        return res.json({ message: "Token couldn't be verified" })
       } else {
         //check if user exists
-        const tempUser = await tempUserModel.getUserByUserId(data.id);
+        const tempUser = await tempUserModel.getUserByUserId(data.id)
         if(!tempUser) {
           return res.json({message: "User Does not exist" })
         }
@@ -202,8 +206,10 @@ router.post("/verify", async (req, res, next) => {
           createdAt: new Date()
         })
         const user = await userModel.getUserByEmail(tempUser.email)
+        //delete temp user
+        tempUserModel.remove(tempUser._id)
         //send user token
-        const userToken = await secretToken.createSecretUserToken(user._id);
+        const userToken = await secretToken.createSecretUserToken(user._id)
         res.cookie("userToken", userToken, {
           withCredentials: true,
           httpOnly: false,

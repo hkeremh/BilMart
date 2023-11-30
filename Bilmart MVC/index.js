@@ -12,6 +12,7 @@ import cors from 'cors';
 import "./loadEnvironment.js";
 import listingController from './controller/listingController.js';
 import userController from './controller/userController.js';
+import homeController from './controller/homeController.js'
 import cookieParser from "cookie-parser";
 const app = express();
 const port = 4000; //server is established at localhost:5000 by default
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/listing', listingController);
 app.use('/user', userController);
+app.use('/home', homeController);
 
 //just prints a message when nodejs server is started.
 app.listen(port, () => {
