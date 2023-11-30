@@ -39,7 +39,10 @@ router.get('/:username', async (req, res) => {
     }
 })
 /**
- *
+ * 
+ * Logs in the user
+ * @param req.body.email The email of the user
+ * @param req.body.password The password oof the user
  */
 router.post("/login", async (req, res) => {
     try {
@@ -172,17 +175,17 @@ router.post("/verify", async (req, res, next) => {
     const verificationCode = req.body.verificationCode;
     jwt.verify(token, process.env.TEMP_USER_TOKEN_KEY, async (err, data) => {
       if (err) {
-       return res.json({ message: "Token couldn't be verified" })
+       return res.json({ success: false, message: "Token couldn't be verified" })
       } else {
         //check if user exists
         const tempUser = await tempUserModel.getUserByUserId(data.id);
         if(!tempUser) {
-          return res.json({message: "User Does not exist" })
+          return res.json({ success: false, message: "User Does not exist" })
         }
         //check if verification code is valid
         const validCode = await bcrypt.compare(verificationCode, tempUser.verificationCode);
         if(!validCode) {
-          return res.json({message: "Verification code is wrong"})
+          return res.json({ success: false, message: "Verification code is wrong"})
         }
         //create actual user
         await userModel.create({
@@ -198,14 +201,17 @@ router.post("/verify", async (req, res, next) => {
           createdAt: new Date()
         })
         const user = await userModel.getUserByEmail(tempUser.email)
+        //delete temp user
+        tempUserModel.remove(tempUser._id)
         //send user token
         const userToken = await secretToken.createSecretUserToken(user._id);
         res.cookie("userToken", userToken, {
           withCredentials: true,
           httpOnly: false,
         })
+        
 
-        return res.json({ message: "User is verified"})
+        return res.json({ success: true, message: "User is verified"})
       }
     })
 

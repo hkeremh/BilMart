@@ -7,6 +7,7 @@ import NavBar from "./navbar.jsx";
 import signUp from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
 import logo from "../img/1.png";
+const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/
 
 export default function SignUp() {
 const navigate = useNavigate();
@@ -47,7 +48,7 @@ const handleSuccess = (msg) =>
  // This function will handle the submission.
  async function onSubmit(e){
   e.preventDefault();
-  if(form.email.substring(form.email.indexOf("@")).includes("bilkent")){
+  if(bilkentMailRegex.test(form.email)){
     console.log("Bilkent mail!")
     try {
       const { data } = await axios.post(
@@ -72,7 +73,7 @@ const handleSuccess = (msg) =>
   } else{
     handleError("Please enter a Bilkent mail.");
   }
-  setForm({username: "", email: "", password: ""});
+  //setForm({username: "", email: "", password: ""});
  }
     return(
       <div>

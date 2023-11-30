@@ -5,8 +5,7 @@ async function getUser(id) {
     let collection = await db.collection('Users'); //name of collection
     let query = {_id: new ObjectId(id)};
     let result = await collection.findOne(query);
-    if(!result) {return "User not found";}
-    else return result;
+    return result;
 }
 
 async function getUserByEmail(email) {
