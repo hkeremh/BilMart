@@ -30,7 +30,7 @@ async function login(email, password){
     else return user;
 }
 
-async function signup(newDocument){
+async function create(newDocument){
     let collection = await db.collection("Users");
     let result = await collection.insertOne(newDocument);
     return result;
@@ -50,7 +50,7 @@ async function create(query) {
 export default {
     getUser,
     login,
-    signup,
+    create,
     getUserByEmail,
     getUserByUserName,
     create,
