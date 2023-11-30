@@ -17,12 +17,16 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
       const listings = await listingModel.getAllListings() //access model func.
+      //console.log(listings)
       res.send(listings) //return value
     } catch (error) {
       console.error(error)
       res.status(500).send({ error: 'Internal Server Error' })
     }
 })
+
+
+
 
 router.get('/:id', async (req, res) => {
   try {
@@ -49,6 +53,7 @@ router.get('/userPosts/:id', async (req, res) => {
   }
 })
 
+//creates new listing
 router.post("/", async (req, res) => {
   try {
     let newDocument = {

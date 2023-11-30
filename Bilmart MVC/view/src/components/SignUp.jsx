@@ -61,7 +61,7 @@ const handleSuccess = (msg) =>
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/login");
+          navigate("/verify");
         }, 1500);
       } else {
         handleError(message);
