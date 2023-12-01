@@ -48,11 +48,11 @@ router.post("/login", async (req, res) => {
     try {
         const user = await userModel.getUserByEmail(req.body.email)
         if(!user) {
-          return res.json({message: 'User not found'})
+          return res.json({success: false, message: 'User not found'})
         }
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
-          return res.json({message: 'Invalid password'})
+          return res.json({success: false, message: 'Invalid password'})
         }
         const userToken = await secretToken.createSecretUserToken(user._id);
         res.cookie("userToken", userToken, {
@@ -60,12 +60,12 @@ router.post("/login", async (req, res) => {
           httpOnly: false,
         })
 
-        return res.status(200).json({success: true, message: "Logged in successfully"})
+        return res.json({success: true, message: "Logged in successfully"})
 
 
       } catch (error) {
         console.error(error)
-        res.status(500).send({ error: 'Internal Server Error' })
+        res.status(500).send({success: false, message: 'Internal Server Error' })
       }
   });
 router.post("/", userVerification);

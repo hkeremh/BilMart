@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import NavBar from "./navbar.jsx";
+import compress from "lz-string"
 
 export default function Create() {
   const navigate = useNavigate();
@@ -19,6 +20,36 @@ export default function Create() {
     type: "",
     price: "",
   });
+  function compressImage(inputImage, compressionQuality, callback) {
+
+    var img = new Image();
+  
+    // Load the image
+    img.src = inputImage;
+  
+    // Handle the image onload event
+    img.onload = function () {
+      // Create a canvas element
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+      
+      const reduceRatio = 10000000.0 / (img.width * img.height)
+      // Set the canvas size to the image size
+      canvas.width = img.width * reduceRatio;
+      canvas.height = img.height * reduceRatio;
+      
+  
+      // Draw the image on the canvas
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+      // Get the compressed image data as a base64-encoded string
+      var compressedImageData = canvas.toDataURL('image/jpeg', compressionQuality);
+
+  
+      // Pass the compressed image data to the callback function
+      callback(compressedImageData);
+    };
+  }
   async function fetchData(username) {
     const response = await fetch(`http://localhost:4000/user/${username}`);
     if (!response.ok) {
@@ -68,6 +99,7 @@ export default function Create() {
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
+
     if ((form.type === "Donation") || (sources.length !== 0 && sources.length <= 5)) {
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
@@ -205,15 +237,19 @@ export default function Create() {
               let file = e.target.files[0];
               let reader = new FileReader();
               reader.onloadend = function () {
-                console.log(reader.result); // This will log the base64 string
-                updateSources(reader.result);
+                compressImage(reader.result, 0.1, (compress) => {
+                    updateSources(compress);
+                  //updateSources(compress);
+                })
+                
+                //updateSources(reader.result);
               }
               reader.readAsDataURL(file);
             }}
           />
           <h4>Selected Pictures:</h4>
           <div>{sources.map((source) => {
-            return <img className="centered-and-cropped" width="100" height="100" style={{borderRadius: "50%"}} src={source} />
+            return <img className="centered-and-cropped" width={source.width * (100 / source.height)} height="100" style={{borderRadius: "5%"}} src={source} />
           })}
           </div>
         </Form.Group>
