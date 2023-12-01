@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from "react-bootstrap/esm/Col";
@@ -13,12 +13,12 @@ import LogoBar from "./LogoBar.jsx";
 import ItemCard from "./Card.jsx";
 import createIcon from "../img/plus.png";
 import NavBar from "./navbar.jsx";
-import personIcon from  "../img/person-circle.png";
 
 function Profile(){
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [profileUser, setProfileUser] = useState({});
+  const [userPosts, setUserPosts] = useState([]);
   async function fetchData(username) {
     const response = await fetch(`http://localhost:4000/user/${username}`);
     if (!response.ok) {
@@ -50,39 +50,28 @@ function Profile(){
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
-  const [records, setRecords] = useState([]);
   useEffect(()=>{
     async function fetchPosts() {
       const response = await fetch(`http://localhost:4000/listing/userPosts/${profileUser._id}`);
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
-        window.alert(message);
+        toast.error(`${message}`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
         return;
       }
       const userPosts = await response.json();
-      console.log(userPosts);
+      setUserPosts(userPosts);  
     }
     fetchPosts();
-  })
-
-  useEffect(() => {
-    async function getRecords() {
-      const response = await fetch(`http://localhost:4000/listing/`);
- 
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
- 
-      const records = await response.json();
-      setRecords(records);
-    }
- 
-    getRecords();
- 
-    return;
-  }, [records.length]);
+  });
  
   // This method will delete a record
   async function deleteRecord(id) {
@@ -90,13 +79,13 @@ function Profile(){
       method: "DELETE"
     });
  
-    const newRecords = records.filter((el) => el._id !== id);
-    setRecords(newRecords);
+    const newRecords = userPosts.filter((el) => el._id !== id);
+    setUserPosts(newRecords);
   }
  
   // This method will map out the records on the table
   function recordList() {
-    return records.map((record) => {
+    return userPosts.map((record) => {
         return <ItemCard record={record} key={record._id} deleteRecord={deleteRecord} onProfile={true} />
     });
   }
@@ -119,7 +108,7 @@ function Profile(){
                   <h1>{profileUser.username}</h1>
                   <h2>Title</h2>
                   <hr/>
-                  <h1>PostCount</h1>
+                  <h1>{userPosts.length}</h1>
                   <h3>Posts</h3>
                   <hr/>
                   <Link to={`/create`}><Button className="createListing" variant="success" style={{backgroundColor: "#192655"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>

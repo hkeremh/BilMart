@@ -53,7 +53,6 @@ export default function Login() {
        { withCredentials: true }
      );
      const { success, message } = data;
-     console.log(data)
      if (success) {
        handleSuccess(message);
        setTimeout(() => {

@@ -6,7 +6,6 @@ import axios from "axios";
 import NavBar from "./navbar.jsx";
 import signUp from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
-import logo from "../img/1.png";
 const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/
 
 export default function SignUp() {
@@ -81,7 +80,15 @@ const handleSuccess = (msg) =>
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Almost there... </p>
                   <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
                   <div class="d-flex flex-row align-items-center mb-4">
-                      
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-info-square-fill" viewBox="0 0 16 16">
+                          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.93 4.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-check-fill fa-lg me-3" viewBox="0 0 16 16" style={{marginTop: "40px"}}>
+                          <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                          <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                        </svg>
+                      </div>
                       <div class="form-outline flex-fill mb-0">
                         <label className="form-label fw-bold text" htmlFor="verification code">We have sent a verification code to your email. Please check your inbox.</label>
                         <input

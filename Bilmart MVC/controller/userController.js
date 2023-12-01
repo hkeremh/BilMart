@@ -48,11 +48,11 @@ router.post("/login", async (req, res) => {
     try {
         const user = await userModel.getUserByEmail(req.body.email)
         if(!user) {
-          return res.status(404).json({message: 'User not found'})
+          return res.json({message: 'User not found'})
         }
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
-          return res.status(404).json({message: 'Invalid password'})
+          return res.json({message: 'Invalid password'})
         }
         const userToken = await secretToken.createSecretUserToken(user._id);
         res.cookie("userToken", userToken, {
@@ -194,6 +194,7 @@ router.post("/verify", async (req, res, next) => {
           password: tempUser.password,
           posts: {},
           settings: {},
+          profilePhoto: "",
           wishlist: {},
           description: "",
           rating: 0,

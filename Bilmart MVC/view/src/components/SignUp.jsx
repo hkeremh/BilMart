@@ -49,7 +49,6 @@ const handleSuccess = (msg) =>
  async function onSubmit(e){
   e.preventDefault();
   if(bilkentMailRegex.test(form.email)){
-    console.log("Bilkent mail!")
     try {
       const { data } = await axios.post(
         "http://localhost:4000/user/signup",

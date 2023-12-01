@@ -34,7 +34,7 @@ export default function Create() {
   }
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token) {
+      if (!cookies.userToken) {
         navigate("/login");
       }
       const { data } = await axios.post(
@@ -46,7 +46,7 @@ export default function Create() {
       await fetchData(user);
       return status
         ?  console.log(user)
-        : (removeCookie("token"), navigate("/login"));
+        : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
