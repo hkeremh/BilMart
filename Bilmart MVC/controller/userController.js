@@ -25,10 +25,10 @@ const usernameRegex = /^[\w-\.]+$/
 
 //this is an example of a specific route which calls a "getAllListings" function
 //from the model.
-router.get('/:username', async (req, res) => {
+router.get('/username/:username', async (req, res) => {
     try {
       let user = await userModel.getUserByUserName(req.params.username);
-      if(user === "User not found") {
+      if(!user) {
         res.status(404).json('User not found')
       } else {
         res.status(200).json(user) //return value
@@ -37,6 +37,19 @@ router.get('/:username', async (req, res) => {
       console.error(error)
       res.status(500).send({ error: 'Internal Server Error' })
     }
+})
+router.get('/id/:id', async (req, res) => {
+  try {
+    let user = await userModel.getUser(req.params.id);
+    if(!user) {
+      res.status(404).json('User not found')
+    } else {
+      res.status(200).json(user) //return value
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
 })
 /**
  * 

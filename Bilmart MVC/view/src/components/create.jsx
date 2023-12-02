@@ -51,7 +51,7 @@ export default function Create() {
     };
   }
   async function fetchData(username) {
-    const response = await fetch(`http://localhost:4000/user/${username}`);
+    const response = await fetch(`http://localhost:4000/user/username/${username}`);
     if (!response.ok) {
       const message = `An error has occurred: ${response.statusText}`;
       window.alert(message);
