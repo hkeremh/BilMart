@@ -130,7 +130,7 @@ export default function Item() {
                     {owner.profilePhoto === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                    </svg> : <img className="itemProfilePhoto" width="auto" height="150" style={{borderRadius: "50%", maxWidth: "500px"}} src={owner.profilePhoto}/>}
+                    </svg> : <img className="itemProfilePhoto" width="auto" height="150" style={{borderRadius: "50%"}} src={owner.profilePhoto}/>}
                     </div>
                     <div className="itemUserInfo" style={{marginLeft: "10px"}}>
                       <h1>{owner.username}</h1>
@@ -144,7 +144,7 @@ export default function Item() {
                   </div>
                   <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                    <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>
+                    {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
                   </div>   
                 </Container>
             </Col>
