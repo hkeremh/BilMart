@@ -12,6 +12,7 @@ import EditProfile from "./components/EditProfile.jsx";
 import About from "./components/About.jsx";
 import Item from "./components/Item.jsx";
 import Verify from "./components/Verify.jsx"
+import Wishlist from "./components/Wishlist.jsx"
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/item/:id" element={<Item />} />
+        <Route path="/wishlist/:username" element={<Wishlist />} />
       </Routes>
       </div>
     </div>

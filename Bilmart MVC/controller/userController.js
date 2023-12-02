@@ -51,6 +51,44 @@ router.get('/id/:id', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
+router.get('/wishlist/:username', async (req, res) => {
+  try {
+    let user = await userModel.getUserByUserName(req.params.username);
+    if(!user) {
+      res.status(404).json('User not found')
+    } else {
+      res.status(200).json(user.wishlist) //return value
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+})
+router.patch('/wishlist/:username', async (req, res) => {
+  try {
+    const username = req.params.username;
+    const updates =  {
+      $set: {
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+        posts: req.body.posts,
+        settings: req.body.settings,
+        profilePhoto: req.body.profilePhoto,
+        wishlist: req.body.wishlist,
+        description: req.body.description,
+        rating: req.body.rating,
+        ratedamount: req.body.ratedamount,
+        createdAt: req.body.createdAt
+      }
+    };
+    const result = await userModel.addToWishlist(username, updates) //access model func.
+    res.send(result).status(200);
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+})
 router.patch('/editprofile/:username', async (req, res) => {
   try {
     const username = req.params.username;
@@ -131,7 +169,7 @@ router.post("/signup", async (req, res, next) => {
       posts: {},
       settings: {},
       profilePhoto: "",
-      wishlist: {},
+      wishlist: [],
       description: "",
       rating: 0,
       ratedamount: 0,
@@ -233,7 +271,7 @@ router.post("/verify", async (req, res, next) => {
           posts: {},
           settings: {},
           profilePhoto: "",
-          wishlist: {},
+          wishlist: [],
           description: "",
           rating: 0,
           ratedamount: 0,

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 import Container from "react-bootstrap/esm/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,6 +13,8 @@ import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
 
 export default function Item() {
+ const navigate = useNavigate();
+ const [cookies, removeCookie] = useCookies([]);
  const [owner, setOwner] = useState({});
  const [item, setItem] = useState({
    title: "",
@@ -22,8 +26,51 @@ export default function Item() {
    images: [],
    records: [],
  });
+ const [profileUser, setProfileUser] = useState({
+  email: "",
+  username: "",
+  password: "",
+  posts: {},
+  settings: {},
+  profilePhoto: "",
+  wishlist: [],
+  description: "",
+  rating: 0,
+  ratedamount: 0,
+  createdAt: ""
+ });
+ async function fetchData(username) {
+  const response = await fetch(`http://localhost:4000/user/username/${username}`);
+  if (!response.ok) {
+    const message = `An error has occurred: ${response.statusText}`;
+    window.alert(message);
+    return;
+  }
+  const user = await response.json();
+  if (!user) {
+    return;
+  }
+  setProfileUser(user);
+}
+useEffect(() => {
+  const verifyCookie = async () => {
+    if (!cookies.userToken) {
+      navigate("/login");
+    }
+    const { data } = await axios.post(
+      "http://localhost:4000/user/",
+      {},
+      { withCredentials: true }
+    );
+    const { status, user } = data;
+    await fetchData(user);
+    return status
+      ?  console.log(user)
+      : (removeCookie("userToken"), navigate("/login"));
+  };
+  verifyCookie();
+}, [cookies, navigate, removeCookie]);
  const params = useParams();
- const navigate = useNavigate();
  async function fetchUserData(id) {
   const response = await fetch(`http://localhost:4000/user/id/${id}`);
   if (!response.ok) {
@@ -73,9 +120,77 @@ export default function Item() {
 
    return;
  }, [params.id, navigate]);
-
+ function addToWishlist() {
+  async function wishlist() {
+    if (profileUser.wishlist.includes(item._id)) {
+      toast.error(`Listing is already in wishlist`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      return;
+    } else{
+      const editedUser = {
+        email: profileUser.email,
+        username: profileUser.username,
+        password: profileUser.password,
+        posts: profileUser.posts,
+        settings: profileUser.settings,
+        profilePhoto: profileUser.profilePhoto,
+        wishlist: [...profileUser.wishlist, item._id],
+        description: profileUser.description,
+        rating: profileUser.rating,
+        ratedamount: profileUser.ratedamount,
+        createdAt: profileUser.createdAt
+      };
+      const response = await fetch(`http://localhost:4000/user/wishlist/${profileUser.username}`, {
+        method: "PATCH",
+        body: JSON.stringify(editedUser),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      if (!response.ok) {
+        const message = `An error has occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const result = await response.json();
+      console.log(result);
+      if (!result) {
+        toast.error(`Listing couldn't be added to wishlist`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      } else{
+        toast.success(`Listing added to wishlist`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+      }      
+    }
+  }
+  wishlist();
+  return;
+ }
  function itemPhotos() {
-    console.log(item.images);
     return item.images.map((source) => {
         return(
         <Carousel.Item>
@@ -86,7 +201,6 @@ export default function Item() {
         );
     });
  }
-
  // This following section will display the form that takes input from the user to update the data.
  return (
   <div>
@@ -106,7 +220,7 @@ export default function Item() {
                 <Container className="itemCardInfo" fluid>
                   <div style={{display: "flex", alignItems: "center"}}>
                     {item.type === "Donation" ? <h1 className="itemPrice">{item.price + "₺ Goal"}</h1> : <h1 className="itemPrice">{item.price}₺</h1>}
-                    <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}}>
+                    <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={addToWishlist}>
                       <div className="text" style={{alignItems: "center"}}>Add to Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                           <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                         </svg></span>
@@ -125,7 +239,6 @@ export default function Item() {
                 </Container>
                 <Container className="itemCardUserInfo" fluid>   
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                  {console.log(owner)}
                     <div style={{marginRight: "10px"}}>
                     {owner.profilePhoto === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>

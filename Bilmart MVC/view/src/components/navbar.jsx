@@ -40,6 +40,9 @@ function NavBar(props) {
   const ChangeProfilePhoto = () => {
     navigate(`/editprofile/${username}`);
   };
+  const Wishlist = () => {
+    navigate(`/wishlist/${username}`);
+  };
   return (
     <Navbar className="navbar-dark" expand="lg" style={{backgroundColor: "#192655"}}>
       <Container fluid>
@@ -49,7 +52,7 @@ function NavBar(props) {
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px'}} navbarScroll>
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/" disabled={disabled}>Home</Nav.Link>
-            <Nav.Link href="/wishlist" disabled={disabled}>Wishlist</Nav.Link>
+            <Nav.Link onClick={Wishlist} disabled={disabled}>Wishlist</Nav.Link>
             <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled}>
               <NavDropdown.Item href="#action4">Action</NavDropdown.Item>
               <NavDropdown.Item >

@@ -24,10 +24,6 @@ router.get('/', async (req, res) => {
       res.status(500).send({ error: 'Internal Server Error' })
     }
 })
-
-
-
-
 router.get('/:id', async (req, res) => {
   try {
     const query = {_id: new ObjectId(req.params.id)};

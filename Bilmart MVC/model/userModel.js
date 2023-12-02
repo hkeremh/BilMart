@@ -25,6 +25,12 @@ async function editProfile(username, updates) {
     let result = await collection.updateOne(query, updates);
     return result;
 }
+async function addToWishlist(username, updates) {
+    let collection = await db.collection('Users'); //name of collection
+    let query = {username: username};
+    let result = await collection.updateOne(query, updates);
+    return result;
+}
 async function login(email, password){
     let collection = await db.collection("Users");
     let results = await collection.find({}).toArray();
@@ -52,5 +58,6 @@ export default {
     getUserByEmail,
     getUserByUserName,
     editProfile,
+    addToWishlist,
     remove
 };

@@ -8,15 +8,6 @@ import NavBar from "./navbar.jsx";
 import compress from "lz-string";
 
 export default function EditProfile() {
-    const [form, setForm] = useState({
-        email: "",
-        password: ""
-      });
-      function updateForm(value) {
-        return setForm((prev) => {
-          return { ...prev, ...value };
-        });
-      }
  const [user, setUser] = useState({
     email: "",
     username: "",
@@ -24,7 +15,7 @@ export default function EditProfile() {
     posts: {},
     settings: {},
     profilePhoto: "",
-    wishlist: {},
+    wishlist: [],
     description: "",
     rating: 0,
     ratedamount: 0,
