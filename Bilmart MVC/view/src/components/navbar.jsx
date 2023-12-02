@@ -15,6 +15,7 @@ function NavBar(props) {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [disabled, setDisabled] = useState(true);
+  const [username, setUsername] = useState(""); 
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.userToken) {
@@ -27,7 +28,7 @@ function NavBar(props) {
       );
       const { status, user } = data;
       return status
-        ?  setDisabled(false)
+        ?  (setDisabled(false), setUsername(user))
         : (removeCookie("userToken"));
     };
     verifyCookie();
@@ -35,6 +36,9 @@ function NavBar(props) {
   const Logout = () => {
     removeCookie("userToken");
     navigate("/login");
+  };
+  const ChangeProfilePhoto = () => {
+    navigate(`/editprofile/${username}`);
   };
   return (
     <Navbar className="navbar-dark" expand="lg" style={{backgroundColor: "#192655"}}>
@@ -48,8 +52,8 @@ function NavBar(props) {
             <Nav.Link href="/wishlist" disabled={disabled}>Wishlist</Nav.Link>
             <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled}>
               <NavDropdown.Item href="#action4">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action5">
-                Another action
+              <NavDropdown.Item >
+              <a onClick={ChangeProfilePhoto}>Edit Profile</a>
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item>

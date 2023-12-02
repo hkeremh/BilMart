@@ -7,7 +7,6 @@ async function getUser(id) {
     let result = await collection.findOne(query);
     return result;
 }
-
 async function getUserByEmail(email) {
     let collection = await db.collection('Users'); //name of collection
     let query = {email: email};
@@ -20,7 +19,12 @@ async function getUserByUserName(username) {
     let result = await collection.findOne(query);
     return result;
 }
-
+async function editProfile(username, updates) {
+    let collection = await db.collection('Users'); //name of collection
+    let query = {username: username};
+    let result = await collection.updateOne(query, updates);
+    return result;
+}
 async function login(email, password){
     let collection = await db.collection("Users");
     let results = await collection.find({}).toArray();
@@ -47,5 +51,6 @@ export default {
     create,
     getUserByEmail,
     getUserByUserName,
+    editProfile,
     remove
 };

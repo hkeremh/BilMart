@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import NavBar from "./navbar.jsx";
-import compress from "lz-string"
+import compress from "lz-string";
 
 export default function Create() {
   const navigate = useNavigate();
@@ -232,7 +232,7 @@ export default function Create() {
             type="file"
             className="form-control"
             id="image"
-            accept="image/x-png,image/jpeg"
+            accept="image/x-png,image/jpeg,image/jpg"
             onChange={(e) => {
               let file = e.target.files[0];
               let reader = new FileReader();

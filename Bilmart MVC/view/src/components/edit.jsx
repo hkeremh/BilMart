@@ -210,7 +210,7 @@ export default function Edit() {
         type="file"
         className="form-control"
         id="image"
-        accept="image/x-png,image/jpeg"
+        accept="image/x-png,image/jpeg,image/jpg"
         onChange={(e) => {
           let file = e.target.files[0];
           let reader = new FileReader();
