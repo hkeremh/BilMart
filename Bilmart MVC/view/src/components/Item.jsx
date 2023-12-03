@@ -292,7 +292,7 @@ useEffect(() => {
             </Col>
             <Col xl={5}>
                 <Container className="itemCardInfo" fluid>
-                  <div style={{display: "flex", alignItems: "center"}}>
+                  {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center"}}>
                     {item.type === "Donation" ? <h1 className="itemPrice">{item.price + "₺ Goal"}</h1> : <h1 className="itemPrice">{item.price}₺</h1>}
                     {userWishlist.includes(item._id) ? <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
                       <div className="text" style={{alignItems: "center"}}>Remove from Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
@@ -305,7 +305,9 @@ useEffect(() => {
                         </svg></span>
                       </div>
                     </Button>}
-                  </div>
+                  </div> : <div style={{display: "flex", alignItems: "center"}}>
+                    {item.type === "Donation" ? <h1 className="itemPrice">{item.price + "₺ Goal"}</h1> : <h1 className="itemPrice">{item.price}₺</h1>}
+                  </div>}
                   <hr style={{border: "1px solid #544C4C", marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                     <h3>{item.title || "Title"}</h3>
@@ -335,9 +337,11 @@ useEffect(() => {
                     </div>
                   </div>
                   <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
-                  <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                  {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                     {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
-                  </div>   
+                  </div> : <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                    <Button variant="secondary" style={{backgroundColor: "#192655"}} href="/profile"><div className="text">Go to Profile</div></Button>
+                  </div>  }
                 </Container>
             </Col>
         </Row>
@@ -352,7 +356,7 @@ useEffect(() => {
                   <div style={{alignItems: "center", display: "flex"}}>
                       <h3 style={{color: "#E1AA74"}}>Condition: </h3>
                       <h3 style={{color: "black", marginLeft: "10px"}}>{item.availability}</h3>
-                      <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>
+                      {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}
                   </div>
                 </div>
                 <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>

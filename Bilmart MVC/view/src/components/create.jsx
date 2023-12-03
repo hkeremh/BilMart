@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import NavBar from "./navbar.jsx";
 import compress from "lz-string";
+import deleteIcon from "../img/bin.png";
 
 export default function Create() {
   const navigate = useNavigate();
@@ -281,6 +282,9 @@ export default function Create() {
                         reader.readAsDataURL(file);
                         }}
                       />
+                      <div style={{marginTop: "10px"}}>
+                        <Button className="text" variant="secondary" onClick={() => {setSources([])}}>Clear Selected Pictures <img width={23} height={23} src={deleteIcon}/></Button>
+                      </div>
                     </div>
                   </div>
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">

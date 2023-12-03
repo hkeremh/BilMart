@@ -170,7 +170,7 @@ router.post("/signup", async (req, res, next) => {
       settings: {},
       profilePhoto: "",
       wishlist: [],
-      description: "",
+      description: req.body.description,
       rating: 0,
       ratedamount: 0,
       createdAt: new Date()

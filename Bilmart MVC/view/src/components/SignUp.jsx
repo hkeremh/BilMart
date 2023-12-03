@@ -6,6 +6,7 @@ import axios from "axios";
 import NavBar from "./navbar.jsx";
 import signUp from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
 import logo from "../img/1.png";
 const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/
 
@@ -13,6 +14,7 @@ export default function SignUp() {
 const navigate = useNavigate();
  const [form, setForm] = useState({
    username: "",
+   description: "",
    email: "",
    password: ""
  });
@@ -101,6 +103,34 @@ const handleSuccess = (msg) =>
                           placeholder="Enter your username"
                           onChange={(e) => updateForm({ username: e.target.value })}
                         />
+                      </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                      </svg>
+                      <div class="form-outline flex-fill mb-0">
+                        <label className="form-label fw-bold text" htmlFor="description">Title at Bilkent University</label>
+                        <Dropdown>
+                          <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                            Select Title
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu onChange={(e) => updateForm({ description: e.target.value })}>
+                            <Dropdown.Item value={form.description}>Undergraduate Student</Dropdown.Item>
+                            <Dropdown.Item value={form.description}>Graduate Student</Dropdown.Item>
+                            <Dropdown.Item value={form.description}>Instructor</Dropdown.Item>
+                            <Dropdown.Item value={form.description}>Staff Member</Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                        {/* <input
+                          className="form-control text"
+                          type="text"
+                          name="description"
+                          value={form.description}
+                          placeholder="Enter your title"
+                          onChange={(e) => updateForm({ description: e.target.value })}
+                        /> */}
                       </div>
                     </div>
                     <div class="d-flex flex-row align-items-center mb-4">
