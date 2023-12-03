@@ -39,6 +39,7 @@ export default function Item() {
   ratedamount: 0,
   createdAt: ""
  });
+ const [userWishlist, setUserWishlist] = useState([]);
  async function fetchData(username) {
   const response = await fetch(`http://localhost:4000/user/username/${username}`);
   if (!response.ok) {
@@ -51,6 +52,7 @@ export default function Item() {
     return;
   }
   setProfileUser(user);
+  setUserWishlist(user.wishlist);
 }
 useEffect(() => {
   const verifyCookie = async () => {
@@ -115,17 +117,16 @@ useEffect(() => {
      const userID = record.postOwner;
      fetchUserData(userID);
    }
-
    fetchPostData();
-
    return;
  }, [params.id, navigate]);
+ 
  function addToWishlist() {
   async function wishlist() {
-    if (profileUser.wishlist.includes(item._id)) {
+    if (userWishlist.includes(item._id)) {
       toast.error(`Listing is already in wishlist`, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -135,6 +136,7 @@ useEffect(() => {
         });
       return;
     } else{
+      const updatedWishlist = [...userWishlist, item._id];
       const editedUser = {
         email: profileUser.email,
         username: profileUser.username,
@@ -142,7 +144,7 @@ useEffect(() => {
         posts: profileUser.posts,
         settings: profileUser.settings,
         profilePhoto: profileUser.profilePhoto,
-        wishlist: [...profileUser.wishlist, item._id],
+        wishlist: updatedWishlist,
         description: profileUser.description,
         rating: profileUser.rating,
         ratedamount: profileUser.ratedamount,
@@ -165,7 +167,7 @@ useEffect(() => {
       if (!result) {
         toast.error(`Listing couldn't be added to wishlist`, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -174,9 +176,10 @@ useEffect(() => {
         theme: "colored",
         });
       } else{
+        setUserWishlist(updatedWishlist);
         toast.success(`Listing added to wishlist`, {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -185,6 +188,77 @@ useEffect(() => {
           theme: "colored",
           });
       }      
+    }
+  }
+  wishlist();
+  return;
+ }
+ function removeFromWishlist() {
+  async function wishlist() {
+    if (userWishlist.includes(item._id)) {
+      const updatedWishlist = userWishlist.filter((listing) => listing !== item._id);
+      const editedUser = {
+        email: profileUser.email,
+        username: profileUser.username,
+        password: profileUser.password,
+        posts: profileUser.posts,
+        settings: profileUser.settings,
+        profilePhoto: profileUser.profilePhoto,
+        wishlist: updatedWishlist,
+        description: profileUser.description,
+        rating: profileUser.rating,
+        ratedamount: profileUser.ratedamount,
+        createdAt: profileUser.createdAt
+      };
+      const response = await fetch(`http://localhost:4000/user/wishlist/${profileUser.username}`, {
+        method: "PATCH",
+        body: JSON.stringify(editedUser),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      if (!response.ok) {
+        const message = `An error has occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const result = await response.json();
+      if (!result) {
+        toast.error(`Listing couldn't be removed from wishlist`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      } else{
+        setUserWishlist(updatedWishlist);
+        toast.success(`Listing removed from wishlist`, {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+      } 
+    } else {
+      toast.error(`Listing is not in wishlist`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
     }
   }
   wishlist();
@@ -220,12 +294,17 @@ useEffect(() => {
                 <Container className="itemCardInfo" fluid>
                   <div style={{display: "flex", alignItems: "center"}}>
                     {item.type === "Donation" ? <h1 className="itemPrice">{item.price + "₺ Goal"}</h1> : <h1 className="itemPrice">{item.price}₺</h1>}
-                    <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={addToWishlist}>
+                    {userWishlist.includes(item._id) ? <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
+                      <div className="text" style={{alignItems: "center"}}>Remove from Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
+                          <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+                        </svg></span>
+                      </div>
+                    </Button>: <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={addToWishlist}>
                       <div className="text" style={{alignItems: "center"}}>Add to Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                           <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                         </svg></span>
                       </div>
-                    </Button>
+                    </Button>}
                   </div>
                   <hr style={{border: "1px solid #544C4C", marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
