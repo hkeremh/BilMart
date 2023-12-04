@@ -12,11 +12,15 @@ function ItemCard(props) {
   return (
   <div className="itemCard">
   <Card style={{ width: '280px', height: "500px" }}>
-    <Card.Img className="centered-and-cropped" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"}/>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"} style={{maxWidth: "280px"}}/>
     <Card.Body>
-      <Card.Title><div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div></Card.Title>
+      <Card.Title>
+      {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
+      {props.record.title.toString().length >= 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title.toString().substring(0, 17) + "..." }</div>}
+      </Card.Title>
       <Card.Text>
-        <div className="text">{props.record.description}</div>
+        {props.record.description.toString().length < 40 && <div className="text">{props.record.description}</div>}
+        {props.record.description.toString().length >= 40 && <div className="text">{props.record.description.toString().substring(0, 37) + "..." }</div>}
       </Card.Text>
     </Card.Body>
     <ListGroup className="list-group-flush">

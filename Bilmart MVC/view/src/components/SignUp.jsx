@@ -52,6 +52,7 @@ const handleSuccess = (msg) =>
   e.preventDefault();
   if(bilkentMailRegex.test(form.email)){
     try {
+      console.log(form);
       const { data } = await axios.post(
         "http://localhost:4000/user/signup",
         {
@@ -91,7 +92,7 @@ const handleSuccess = (msg) =>
                   <div class="d-flex flex-row align-items-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                       </svg>
                       <div class="form-outline flex-fill mb-0">
                         <label className="form-label fw-bold text" htmlFor="username">Username</label>
@@ -108,29 +109,21 @@ const handleSuccess = (msg) =>
                     <div class="d-flex flex-row align-items-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                       </svg>
                       <div class="form-outline flex-fill mb-0">
                         <label className="form-label fw-bold text" htmlFor="description">Title at Bilkent University</label>
-                        <Dropdown>
-                          <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                            Select Title
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu onChange={(e) => updateForm({ description: e.target.value })}>
-                            <Dropdown.Item value={form.description}>Undergraduate Student</Dropdown.Item>
-                            <Dropdown.Item value={form.description}>Graduate Student</Dropdown.Item>
-                            <Dropdown.Item value={form.description}>Instructor</Dropdown.Item>
-                            <Dropdown.Item value={form.description}>Staff Member</Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                        {/* <input
-                          className="form-control text"
-                          type="text"
-                          name="description"
-                          value={form.description}
-                          placeholder="Enter your title"
-                          onChange={(e) => updateForm({ description: e.target.value })}
-                        /> */}
+                        <Dropdown onSelect={(eventKey) => updateForm({ description: eventKey })}>
+                        <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                          {form.description || "Select Title"}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item eventKey="Undergraduate Student">Undergraduate Student</Dropdown.Item>
+                          <Dropdown.Item eventKey="Graduate Student">Graduate Student</Dropdown.Item>
+                          <Dropdown.Item eventKey="Instructor">Instructor</Dropdown.Item>
+                          <Dropdown.Item eventKey="Staff Member">Staff Member</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                       </div>
                     </div>
                     <div class="d-flex flex-row align-items-center mb-4">

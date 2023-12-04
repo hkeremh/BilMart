@@ -272,7 +272,7 @@ router.post("/verify", async (req, res, next) => {
           settings: {},
           profilePhoto: "",
           wishlist: [],
-          description: "",
+          description: tempUser.description,
           rating: 0,
           ratedamount: 0,
           createdAt: new Date()
