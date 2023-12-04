@@ -72,7 +72,6 @@ export default function Edit() {
 
  async function onSubmit(e) {
    e.preventDefault();
-   console.log(sources);
    const editedListing = {
      title: form.title,
      postDate: form.postDate,
@@ -268,7 +267,7 @@ export default function Edit() {
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     {form.availability !== "Available" ? 
                       <button type="submit" value="Mark Available" className="btn btn-success" onClick={(e) => updateForm({ availability: "Available" })}><span className="text">Mark as Available</span></button>
-                    : <button type="submit" value="Mark as Sold" className="btn btn-danger" onClick={(e) => updateForm({ availability: "Sold" })}><span className="text">Mark as Sold</span></button>}
+                    : <button type="submit" value="Mark as Unavailable" className="btn btn-danger" onClick={(e) => updateForm({ availability: "Unavailable" })}><span className="text">Mark as Unavailable</span></button>}
                   </div>
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <span className="text">

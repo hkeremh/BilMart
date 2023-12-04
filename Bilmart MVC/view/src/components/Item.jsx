@@ -293,7 +293,10 @@ useEffect(() => {
             <Col xl={5}>
                 <Container className="itemCardInfo" fluid>
                   {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center"}}>
-                    {item.type === "Donation" ? <h1 className="itemPrice">{item.price + "₺ Goal"}</h1> : <h1 className="itemPrice">{item.price}₺</h1>}
+                    {item.type === "Donation" && <h1 className="itemPrice">{item.price + "₺ Goal"}</h1>}
+                    {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.price}₺</h1>}
+                    {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
+                    {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
                     {userWishlist.includes(item._id) ? <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
                       <div className="text" style={{alignItems: "center"}}>Remove from Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                           <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
@@ -306,7 +309,10 @@ useEffect(() => {
                       </div>
                     </Button>}
                   </div> : <div style={{display: "flex", alignItems: "center"}}>
-                    {item.type === "Donation" ? <h1 className="itemPrice">{item.price + "₺ Goal"}</h1> : <h1 className="itemPrice">{item.price}₺</h1>}
+                    {item.type === "Donation" && <h1 className="itemPrice">{item.price + "₺ Goal"}</h1>}
+                    {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.price}₺</h1>}
+                    {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
+                    {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
                   </div>}
                   <hr style={{border: "1px solid #544C4C", marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
