@@ -11,24 +11,24 @@ import express from 'express';
 import { ObjectId } from "mongodb";
 import listingModel from '../model/listingModel.js'; //this line allows controller to use methods from model
 const router = express.Router();
- 
+
 //this is an example of a specific route which calls a "getAllListings" function
 //from the model.
 router.get('/', async (req, res) => {
-    try {
-      const listings = await listingModel.getAllListings() //access model func.
-      res.send(listings) //return value
-    } catch (error) {
-      console.error(error)
-      res.status(500).send({ error: 'Internal Server Error' })
-    }
+  try {
+    const listings = await listingModel.getAllListings() //access model func.
+    res.send(listings) //return value
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
 })
 
 router.get('/:id', async (req, res) => {
   try {
-    const query = {_id: new ObjectId(req.params.id)};
+    const query = { _id: new ObjectId(req.params.id) };
     const listing = await listingModel.getListing(query) //access model func.
-    if(listing === "Listing not found") {
+    if (listing === "Listing not found") {
       res.status(404).send('Listing not found')
     } else {
       res.status(200).send(listing) //return value
@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
-    const updates =  {
+    const updates = {
       $set: {
         title: req.body.title,
         description: req.body.description,
@@ -81,5 +81,17 @@ router.delete("/:id", async (req, res) => {
   const result = await listingModel.deleteListing(query) //access model func.
   res.send(result).status(200);
 });
-  
-  export default router; //allows other files to access the routes
+
+router.post('/search', async (req, res) => {
+
+  try {
+    const listings = await listingModel.searchListings(req.body) //access model func.
+    res.send(listings) //return value
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+
+})
+
+export default router; //allows other files to access the routes

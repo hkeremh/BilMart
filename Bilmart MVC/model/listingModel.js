@@ -13,8 +13,8 @@ import db from '../database/database.js'; //allows the model to access the db cl
 async function getListing(query) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.findOne(query);
-  if(!result) {return "Listing not found";}
-  else {return result;}
+  if (!result) { return "Listing not found"; }
+  else { return result; }
 }
 
 async function getAllListings() {
@@ -41,11 +41,23 @@ async function deleteListing(query) {
   return result;
 }
 
+async function searchListings(searchQuery) {
+  let collection = await db.collection('Posts'); //name of collection
+  let result = await collection.find({
+    "$or": [
+      { "title": { $regex: searchQuery.text, $options: "i" } },
+      { "description": { $regex: searchQuery.text, $options: "i" } }
+    ]
+  }).toArray();
+  return result;
+}
+
 //all methods that need to be used by other files (controller) go in here to export.
 export default {
-    getAllListings,
-    getListing,
-    postListing,
-    updateListing,
-    deleteListing
+  getAllListings,
+  getListing,
+  postListing,
+  updateListing,
+  deleteListing,
+  searchListings
 };
