@@ -14,9 +14,12 @@ import bcrypt from "bcrypt";
 import mailer from "./mailController.js"
 import secretToken from "./secretToken.js"
 import  jwt from "jsonwebtoken";
+import crypto from 'crypto'
 import cookieParser from 'cookie-parser';
 import { passwordStrength } from 'check-password-strength';
 import userVerification from '../middlewares/authMiddleware.js';
+import TempUser from "../model/Classes/tempUserClass.js"
+
 cookieParser()
 const router = express.Router()
 const mailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -170,7 +173,7 @@ router.post("/signup", async (req, res, next) => {
   try {
     console.log(req.body)
     const encryptedPassword = await bcrypt.hash(req.body.password, 12);
-    const newUser = {
+/*    const newUser = {
       email: req.body.email,
       username: req.body.username,
       password: encryptedPassword,
@@ -182,7 +185,23 @@ router.post("/signup", async (req, res, next) => {
       rating: 0,
       ratedamount: 0,
       createdAt: new Date()
-    }
+    }*/
+    const newUser = new TempUser(
+        req.body.username,
+        encryptedPassword,
+        req.body.email,
+        '',
+        '',
+        false,
+        null,
+        {},
+        req.body.title,
+        {},
+        [],
+        [],
+        new Date(),
+        null
+    )
     if(!bilkentMailRegex.test(newUser.email)) {
       return res.json({ message: "This is not a valid bilkent email" });
     }
@@ -196,15 +215,15 @@ router.post("/signup", async (req, res, next) => {
     //TODO check that email, username, password is valid
     let existingUser = await userModel.getUserByEmail(newUser.email);
     if(existingUser) {
-      return res.json({ message: "This email is taken" });
+      return res.json({ message: `The email: ${newUser.email} is already used. Cannot create a new account.` });
     }
     existingUser = await userModel.getUserByUserName(newUser.username);
     if(existingUser) {
-      return res.json({ message: "This username is taken" });
+      return res.json({ message: `The username: ${newUser.username} is already taken. Cannot create a new account.` });
     }
     existingUser = await tempUserModel.getUserByUserName(newUser.username);
     if(existingUser && existingUser.email != newUser.email) {
-      return res.json({ message: "This username is taken" });
+      return res.json({ message: `The username: ${newUser.username} is already taken. Cannot create a new account.` });
     }
     existingUser = await tempUserModel.getUserByEmail(newUser.email);
     if(existingUser) {
@@ -215,14 +234,22 @@ router.post("/signup", async (req, res, next) => {
     const verificationCodeArr = new Uint16Array(verificationLength);
     let verificationCode = "";
     //get 6 random numbers
-    crypto.getRandomValues(verificationCodeArr);
+    //-------------------------
+    function getRandomValues(array) {
+      return crypto.webcrypto.getRandomValues(array)
+    }
+    //-------------------------
+    getRandomValues(verificationCodeArr);
     for (let index = 0; index < verificationCodeArr.length; index++) {
       //turn numbers to digits and put in a string
       verificationCodeArr[index] = verificationCodeArr[index] % 10;
       verificationCode = verificationCode + verificationCodeArr[index].toString();
     }
     newUser.verificationCode = await bcrypt.hash(verificationCode, 12);
-    await tempUserModel.create(newUser);
+
+    console.log(newUser.toJSON())
+
+    await tempUserModel.create(newUser.toJSON());
     const tempUser = await tempUserModel.getUserByUserName(newUser.username);
     try {
       await mailer.sendMail(newUser.email,"Your Verification Code",
@@ -267,6 +294,7 @@ router.post("/verify", async (req, res, next) => {
           return res.json({ success: false, message: "User Does not exist" })
         }
         //check if verification code is valid
+        //const validCode = await bcrypt.compare(verificationCode, tempUser.verificationCode);
         const validCode = await bcrypt.compare(verificationCode, tempUser.verificationCode);
         if(!validCode) {
           return res.json({ success: false, message: "Verification code is wrong"})

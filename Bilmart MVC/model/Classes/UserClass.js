@@ -1,9 +1,7 @@
 class User {
-    // MongoDB id
-    _id;
 
     // Properties
-    name;
+    username;
     password;
     email;
     bilkentID;
@@ -18,13 +16,26 @@ class User {
     createdAt;
 
     // Constructor
-    constructor() { }
+    constructor(username, password, email, bilkentID, department, verification, rating, settings, description, postList, wishList, profileImage, createdAt) {
+        this.username = username || '';
+        this.password = password || '';
+        this.email = email || '';
+        this.bilkentID = bilkentID || '';
+        this.department = department || '';
+        this.verification = verification || false;
+        this.rating = rating || 0;
+        this.settings = settings || {};
+        this.description = description || '';
+        this.postList = postList || [];
+        this.wishList = wishList || [];
+        this.profileImage = profileImage || '';
+        this.createdAt = createdAt || new Date();
+    }
 
     // toJSON function
     toJSON() {
         return {
-            _id: this._id,
-            name: this.name,
+            username: this.username,
             email: this.email,
             bilkentID: this.bilkentID,
             department: this.department,
