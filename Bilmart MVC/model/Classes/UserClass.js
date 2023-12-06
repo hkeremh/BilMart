@@ -14,9 +14,9 @@ class User {
     wishList;
     profileImage;
     createdAt;
-
+    ratedamount;
     // Constructor
-    constructor(username, password, email, bilkentID, department, verification, rating, settings, description, postList, wishList, profileImage, createdAt) {
+    constructor({username, password, email, bilkentID, department, verification, rating, settings, description, postList, wishList, profileImage, ratedamount, createdAt}) {
         this.username = username || '';
         this.password = password || '';
         this.email = email || '';
@@ -29,6 +29,7 @@ class User {
         this.postList = postList || [];
         this.wishList = wishList || [];
         this.profileImage = profileImage || '';
+        this.ratedamount = ratedamount;
         this.createdAt = createdAt || new Date();
     }
 
@@ -45,6 +46,7 @@ class User {
             postList: this.postList,
             wishList: this.wishList,
             profileImage: this.profileImage,
+            ratedamount: this.ratedamount,
             createdAt: this.createdAt
         };
     }
