@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
+import PasswordStrengthBar from 'react-password-strength-bar';
 import NavBar from "./navbar.jsx";
 import signUp from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
@@ -146,7 +147,7 @@ const handleSuccess = (msg) =>
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-lock-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
                         <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"/>
                       </svg>
-                      <div class="form-outline flex-fill mb-0">
+                      <div class="form-outline flex-column flex-fill mb-0">
                         <label className="form-label fw-bold text" htmlFor="password">Password</label>
                         <input
                           className="form-control text"
@@ -156,8 +157,12 @@ const handleSuccess = (msg) =>
                           placeholder="Enter your password"
                           onChange={(e) => updateForm({ password: e.target.value })}
                         />
+                        <div><PasswordStrengthBar password={form.password} height="200px"/></div>
                       </div>
+                      
                     </div>
+                    
+                    
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="submit" value="SignUp" className="btn btn-dark"><span className="text">Sign Up</span></button>
                     </div>
