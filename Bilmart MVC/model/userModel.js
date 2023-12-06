@@ -43,8 +43,6 @@ async function login(email, password){
 async function create(newDocument){
     let collection = await db.collection("Users");
     const user = new User(newDocument)
-
-    //let result = await collection.insertOne(newDocument);
     let result = await collection.insertOne(user.toJSON());
     return result;
 }

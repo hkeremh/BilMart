@@ -71,19 +71,7 @@ router.patch('/wishlist/:username', async (req, res) => {
   try {
     const username = req.params.username;
     const updates =  {
-      $set: {
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        posts: req.body.posts,
-        settings: req.body.settings,
-        profilePhoto: req.body.profilePhoto,
-        wishlist: req.body.wishlist,
-        description: req.body.description,
-        rating: req.body.rating,
-        ratedamount: req.body.ratedamount,
-        createdAt: req.body.createdAt
-      }
+      $set: {wishlist: req.body.wishlist}
     };
     const result = await userModel.addToWishlist(username, updates) //access model func.
     res.send(result).status(200);
