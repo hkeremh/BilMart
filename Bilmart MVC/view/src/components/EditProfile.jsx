@@ -47,7 +47,6 @@ export default function EditProfile() {
   }
  useEffect(() => {
    async function fetchData() {
-    console.log(params);
      const username = params.username;
      const response = await fetch(`http://localhost:4000/user/username/${username}`);
 
@@ -94,7 +93,6 @@ export default function EditProfile() {
 
  async function onSubmit(e) {
    e.preventDefault();
-   console.log(photo);
    const editedUser = {
     email: user.email,
     username: user.username,
@@ -109,14 +107,51 @@ export default function EditProfile() {
     createdAt: user.createdAt
    };
     // This will send a post request to update the data in the database.
-    await fetch(`http://localhost:4000/user/editprofile/${params.username}`, {
+    const result = await fetch(`http://localhost:4000/user/editprofile/${params.username}`, {
       method: "PATCH",
       body: JSON.stringify(editedUser),
       headers: {
         'Content-Type': 'application/json'
       },
     });
-    navigate("/profile");    
+    const response = await result.json();
+    if(response === "This username is taken"){
+      toast.error(`This username is taken`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } else if(response === "Usernames can only contain alphanumeric characters, dot, dash and underscore"){
+      toast.error(`Usernames can only contain alphanumeric characters, dot, dash and underscore`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } else {
+      toast.success(`Profile updated successfully`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1500);
+    } 
  }
  return(
     <div>
@@ -131,6 +166,23 @@ export default function EditProfile() {
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Edit your profile</p>
                 <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                      </svg>
+                      <div class="form-outline flex-fill mb-0">
+                        <label className="form-label fw-bold text" htmlFor="username">Username</label>
+                        <input
+                          className="form-control text"
+                          type="username"
+                          name="username"
+                          value={user.username}
+                          placeholder="Enter your username"
+                          onChange={(e) => updateUser({ username: e.target.value })}
+                        />
+                      </div>
+                  </div>
                   <div class="d-flex flex-row align-items-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-image-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
                         <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>

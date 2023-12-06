@@ -75,12 +75,11 @@ function Profile(){
  
   // This method will delete a record
   async function deleteRecord(id) {
+    const newRecords = userPosts.filter((el) => el._id !== id);
+    setUserPosts(newRecords);    
     await fetch(`http://localhost:4000/listing/${id}`, {
       method: "DELETE"
     });
- 
-    const newRecords = userPosts.filter((el) => el._id !== id);
-    setUserPosts(newRecords);
   }
  
   // This method will map out the records on the table
@@ -106,12 +105,12 @@ function Profile(){
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                   </svg> : <img className="profilePhoto" src={profileUser.profilePhoto}/>}
                   <h1>{profileUser.username}</h1>
-                  <h2>Title</h2>
+                  <h4>{profileUser.description || "Description"}</h4>
                   <hr/>
                   <h1>{userPosts.length}</h1>
                   <h3>Posts</h3>
                   <hr/>
-                  <Link to={`/create`}><Button className="createListing" variant="success" style={{backgroundColor: "#192655"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
+                  <Link to={`/create`}><Button className="createListing" variant="secondary" style={{backgroundColor: "#192655"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
                 </div>
                 </Container>
             </Col>

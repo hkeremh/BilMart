@@ -91,24 +91,32 @@ router.patch('/wishlist/:username', async (req, res) => {
 })
 router.patch('/editprofile/:username', async (req, res) => {
   try {
-    const username = req.params.username;
-    const updates =  {
-      $set: {
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        posts: req.body.posts,
-        settings: req.body.settings,
-        profilePhoto: req.body.profilePhoto,
-        wishlist: req.body.wishlist,
-        description: req.body.description,
-        rating: req.body.rating,
-        ratedamount: req.body.ratedamount,
-        createdAt: req.body.createdAt
-      }
-    };
-    const result = await userModel.editProfile(username, updates) //access model func.
-    res.send(result).status(200);
+    const oldUsername = req.params.username;
+    let existingUser = await userModel.getUserByUserName(req.body.username);
+    let result;
+    if(existingUser && (existingUser.username != oldUsername)) {
+      result = "This username is taken";
+    } else if(!usernameRegex.test(req.body.username)) {
+      result = "Usernames can only contain alphanumeric characters, dot, dash and underscore";
+    } else {
+      const updates =  {
+        $set: {
+          email: req.body.email,
+          username: req.body.username,
+          password: req.body.password,
+          posts: req.body.posts,
+          settings: req.body.settings,
+          profilePhoto: req.body.profilePhoto,
+          wishlist: req.body.wishlist,
+          description: req.body.description,
+          rating: req.body.rating,
+          ratedamount: req.body.ratedamount,
+          createdAt: req.body.createdAt
+        }
+      };
+      result = await userModel.editProfile(oldUsername, updates) //access model func.    
+    }
+    res.json(result).status(200);  
   } catch (error) {
     console.error(error)
     res.status(500).send({ error: 'Internal Server Error' })
@@ -170,7 +178,7 @@ router.post("/signup", async (req, res, next) => {
       settings: {},
       profilePhoto: "",
       wishlist: [],
-      description: "",
+      description: req.body.description,
       rating: 0,
       ratedamount: 0,
       createdAt: new Date()
@@ -272,7 +280,7 @@ router.post("/verify", async (req, res, next) => {
           settings: {},
           profilePhoto: "",
           wishlist: [],
-          description: "",
+          description: tempUser.description,
           rating: 0,
           ratedamount: 0,
           createdAt: new Date()

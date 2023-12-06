@@ -137,6 +137,22 @@ html{
   line-height: 87.523%; /* 14.004px */
   margin-top: 15px;
 }
+.userInfo h4{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.userInfo h5{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
 .userInfo hr{
   border: 1px solid #544C4C;
   margin-top: 15px;
@@ -160,6 +176,22 @@ html{
   margin-top: 15px;
 }
 .itemUserInfo h3{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo h4{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo h5{
   color: #544C4C;
   font-family: 'Montserrat', sans-serif;
   font-style: normal;

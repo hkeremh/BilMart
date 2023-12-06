@@ -292,8 +292,11 @@ useEffect(() => {
             </Col>
             <Col xl={5}>
                 <Container className="itemCardInfo" fluid>
-                  <div style={{display: "flex", alignItems: "center"}}>
-                    {item.type === "Donation" ? <h1 className="itemPrice">{item.price + "₺ Goal"}</h1> : <h1 className="itemPrice">{item.price}₺</h1>}
+                  {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center"}}>
+                    {item.type === "Donation" && <h1 className="itemPrice">{item.price + "₺ Goal"}</h1>}
+                    {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.price}₺</h1>}
+                    {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
+                    {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
                     {userWishlist.includes(item._id) ? <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
                       <div className="text" style={{alignItems: "center"}}>Remove from Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                           <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
@@ -305,7 +308,12 @@ useEffect(() => {
                         </svg></span>
                       </div>
                     </Button>}
-                  </div>
+                  </div> : <div style={{display: "flex", alignItems: "center"}}>
+                    {item.type === "Donation" && <h1 className="itemPrice">{item.price + "₺ Goal"}</h1>}
+                    {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.price}₺</h1>}
+                    {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
+                    {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
+                  </div>}
                   <hr style={{border: "1px solid #544C4C", marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                     <h3>{item.title || "Title"}</h3>
@@ -322,22 +330,24 @@ useEffect(() => {
                     {owner.profilePhoto === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                    </svg> : <img className="itemProfilePhoto" width="auto" height="150" style={{borderRadius: "50%"}} src={owner.profilePhoto}/>}
+                    </svg> : <img className="itemProfilePhoto" width="150" height="150" style={{borderRadius: "50%"}} src={owner.profilePhoto}/>}
                     </div>
                     <div className="itemUserInfo" style={{marginLeft: "10px"}}>
                       <h1>{owner.username}</h1>
                       <hr/>
-                      <h2 style={{alignItems: "center"}}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" className="bi bi-person-lines-fill me-3" viewBox="0 0 16 16">
+                      <h5 style={{alignItems: "center", fontWeight: "bold"}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" className="bi bi-person-lines-fill me-3" viewBox="0 0 16 16">
                             <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
-                        </svg>{owner.title || "Title"}
-                      </h2>
+                        </svg>{owner.description || "Title"}
+                      </h5>
                     </div>
                   </div>
                   <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
-                  <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                  {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                     {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
-                  </div>   
+                  </div> : <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                    <Button variant="secondary" style={{backgroundColor: "#192655"}} href="/profile"><div className="text">Go to Profile</div></Button>
+                  </div>  }
                 </Container>
             </Col>
         </Row>
@@ -352,7 +362,7 @@ useEffect(() => {
                   <div style={{alignItems: "center", display: "flex"}}>
                       <h3 style={{color: "#E1AA74"}}>Condition: </h3>
                       <h3 style={{color: "black", marginLeft: "10px"}}>{item.availability}</h3>
-                      <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>
+                      {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}
                   </div>
                 </div>
                 <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
