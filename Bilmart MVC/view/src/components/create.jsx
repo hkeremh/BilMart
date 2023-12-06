@@ -34,10 +34,13 @@ export default function Create() {
       var canvas = document.createElement('canvas');
       var ctx = canvas.getContext('2d');
       
-      const reduceRatio = 10000000.0 / (img.width * img.height)
+      let reduceRatio = 10000000.0 / (img.width * img.height)
+      if(reduceRatio > 1) reduceRatio = 1
+
       // Set the canvas size to the image size
       canvas.width = img.width * reduceRatio;
       canvas.height = img.height * reduceRatio;
+      
       
   
       // Draw the image on the canvas

@@ -33,7 +33,8 @@ export default function EditProfile() {
       // Create a canvas element
       var canvas = document.createElement('canvas');
       var ctx = canvas.getContext('2d');
-      const reduceRatio = 10000000.0 / (img.width * img.height)
+      let reduceRatio = 10000000.0 / (img.width * img.height)
+      if(reduceRatio > 1) reduceRatio = 1
       // Set the canvas size to the image size
       canvas.width = img.width * reduceRatio;
       canvas.height = img.height * reduceRatio;
@@ -198,10 +199,10 @@ export default function EditProfile() {
                         let file = e.target.files[0];
                         let reader = new FileReader();
                         reader.onloadend = function () {
-                            // compressImage(reader.result, 0.1, (compress) => {
-                            //     updatePhoto(compress);
-                            // })
-                            updatePhoto(reader.result);
+                            compressImage(reader.result, 0.1, (compress) => {
+                                 updatePhoto(compress);
+                            })
+                            //updatePhoto(reader.result);
                         }
                         reader.readAsDataURL(file);
                         }}

@@ -26,6 +26,20 @@ const mailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/
 const usernameRegex = /^[\w-\.]+$/
 
+function getVerificationCode() {
+  //create 6 digit verification code
+  const verificationLength = 6;
+  const verificationCodeArr = new Uint16Array(verificationLength);
+  let verificationCode = "";
+  //get 6 random numbers
+  crypto.getRandomValues(verificationCodeArr);
+  for (let index = 0; index < verificationCodeArr.length; index++) {
+    //turn numbers to digits and put in a string
+    verificationCodeArr[index] = verificationCodeArr[index] % 10;
+    verificationCode = verificationCode + verificationCodeArr[index].toString();
+  }
+  return verificationCode;
+}
 //this is an example of a specific route which calls a "getAllListings" function
 //from the model.
 router.get('/username/:username', async (req, res) => {
@@ -171,7 +185,16 @@ router.post("/", userVerification);
  */
 router.post("/signup", async (req, res, next) => {
   try {
-    console.log(req.body)
+    //check that the req is in correct format
+    console.log(Object.keys(req.body).length)
+    if(Object.keys(req.body).length > 4 ||
+      !req.body.email ||
+      !req.body.username ||
+      !req.body.username ||
+      !req.body.description
+      ) {
+        return res.json({ message: "Bad request" });
+    }
     const encryptedPassword = await bcrypt.hash(req.body.password, 12);
 /*    const newUser = {
       email: req.body.email,
@@ -229,6 +252,7 @@ router.post("/signup", async (req, res, next) => {
     if(existingUser) {
       tempUserModel.remove(existingUser._id);
     }
+    
     //create 6 digit verification code
     const verificationLength = 6;
     const verificationCodeArr = new Uint16Array(verificationLength);
@@ -246,8 +270,6 @@ router.post("/signup", async (req, res, next) => {
       verificationCode = verificationCode + verificationCodeArr[index].toString();
     }
     newUser.verificationCode = await bcrypt.hash(verificationCode, 12);
-
-    console.log(newUser.toJSON())
 
     await tempUserModel.create(newUser.toJSON());
     const tempUser = await tempUserModel.getUserByUserName(newUser.username);
@@ -332,6 +354,10 @@ router.post("/verify", async (req, res, next) => {
     console.error(error);
     return res.json({ message: "Email verification failed" });
   }
+})
+router.post("/change-password", async (req, res, next) => { 
+  const email = req.body.email;
+
 })
 
  export default router; //allows other files to access the routes
