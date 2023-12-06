@@ -173,19 +173,7 @@ router.post("/signup", async (req, res, next) => {
   try {
     console.log(req.body)
     const encryptedPassword = await bcrypt.hash(req.body.password, 12);
-/*    const newUser = {
-      email: req.body.email,
-      username: req.body.username,
-      password: encryptedPassword,
-      posts: {},
-      settings: {},
-      profilePhoto: "",
-      wishlist: [],
-      description: req.body.description,
-      rating: 0,
-      ratedamount: 0,
-      createdAt: new Date()
-    }*/
+
     const newUser = new TempUser(
         req.body.username,
         encryptedPassword,
@@ -199,6 +187,7 @@ router.post("/signup", async (req, res, next) => {
         {},
         [],
         [],
+        0,
         new Date(),
         null
     )
