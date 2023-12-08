@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner';
 import ItemCard from "./Card.jsx";
 import Classification from "./Classification.jsx";
 import LogoBar from "./LogoBar.jsx";
@@ -15,6 +16,7 @@ import NavBar from "./navbar.jsx";
 const Wishlist = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const [isLoading, setIsLoading] = useState(true);
   const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
   useEffect(() => {
@@ -82,23 +84,31 @@ const Wishlist = () => {
   <div>
   <NavBar />
   <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
-  <Container fluid style={{marginTop: "15px"}}>
-      <LogoBar text="Wishlist"/>
-      <Container style={{marginTop: "15px"}} fluid>
-      <Row>
-          <Col xl={3} md={4}>
-              <Container className="selection" fluid>
-                <Classification />
-              </Container>
-          </Col>
-          <Col xl={9} md={8}>
-              <Container className="items" style={{textAlign: "center"}} fluid>
-                  {recordList()}
-              </Container>
-          </Col>
-      </Row>
-      </Container>
-  </Container>
+  {isLoading ? (
+      <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    ) : (
+    <Container fluid style={{marginTop: "15px"}}>
+        <LogoBar text="Wishlist"/>
+        <Container style={{marginTop: "15px"}} fluid>
+        <Row>
+            <Col xl={3} md={4}>
+                <Container className="selection" fluid>
+                  <Classification />
+                </Container>
+            </Col>
+            <Col xl={9} md={8}>
+                <Container className="items" style={{textAlign: "center"}} fluid>
+                    {recordList()}
+                </Container>
+            </Col>
+        </Row>
+        </Container>
+    </Container>
+    )}
   <ToastContainer />
 </div>
 </div>

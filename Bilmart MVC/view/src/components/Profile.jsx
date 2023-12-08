@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from "react-bootstrap/esm/Col";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
+import Spinner from 'react-bootstrap/Spinner';
 import LogoBar from "./LogoBar.jsx";
 import ItemCard from "./Card.jsx";
 import createIcon from "../img/plus.png";
@@ -16,6 +17,7 @@ import NavBar from "./navbar.jsx";
 
 function Profile(){
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [cookies, removeCookie] = useCookies([]);
   const [profileUser, setProfileUser] = useState({});
   const [userPosts, setUserPosts] = useState([]);
@@ -45,7 +47,7 @@ function Profile(){
       const { status, user } = data;
       await fetchData(user);
       return status
-        ?  console.log(user)
+        ?  setIsLoading(false)
         : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
@@ -68,7 +70,7 @@ function Profile(){
         return;
       }
       const userPosts = await response.json();
-      setUserPosts(userPosts);  
+      setUserPosts(userPosts); 
     }
     fetchPosts();
   });
@@ -88,47 +90,56 @@ function Profile(){
         return <ItemCard record={record} key={record._id} deleteRecord={deleteRecord} onProfile={true} />
     });
   }
-  
   return (
     <div>
     <NavBar />
     <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
-    <Container fluid>
-        <LogoBar />
-        <Container style={{marginTop: "15px"}} fluid>
-        <Row>
-            <Col lg={3}>
-                <Container fluid className="d-flex justify-content-center align-items-center">
-                <div className="userInfo">
-                  {profileUser.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="profilePhoto bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                  </svg> : <img className="profilePhoto" src={profileUser.profileImage}/>}
-                  <h1>{profileUser.username}</h1>
-                  <h4>{profileUser.description || "Description"}</h4>
-                  <hr/>
-                  <h1>{userPosts.length}</h1>
-                  <h3>Posts</h3>
-                  <hr/>
-                  <Link to={`/create`}><Button className="createListing" variant="secondary" style={{backgroundColor: "#192655"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
-                </div>
-                </Container>
-            </Col>
-            <Col lg={9}>
-                <Container fluid>
-                <div className="userListings">
-                  <Container className="logoBar" fluid>
-                    <h1>Posts</h1>
-                  </Container>
-                  <Container className="profileItems" style={{textAlign: "center"}} fluid>
-                    {recordList()}
-                  </Container>
-                </div>
-                </Container>
-            </Col>
-        </Row>
-        </Container>
-    </Container>
+    {isLoading ? (
+      <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    ) : (
+      <div>
+        <Container fluid>
+            <LogoBar />
+            <Container style={{marginTop: "15px"}} fluid>
+            <Row>
+                <Col lg={3}>
+                    <Container fluid className="d-flex justify-content-center align-items-center">
+                    <div className="userInfo">
+                      {profileUser.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="profilePhoto bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                      </svg> : <img className="profilePhoto" src={profileUser.profileImage}/>}
+                      <h1>{profileUser.username}</h1>
+                      <h4>{profileUser.description || "Description"}</h4>
+                      <hr/>
+                      <h1>{userPosts.length}</h1>
+                      <h3>Posts</h3>
+                      <hr/>
+                      <Link to={`/create`}><Button className="createListing" variant="secondary" style={{backgroundColor: "#192655"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
+                    </div>
+                    </Container>
+                </Col>
+                <Col lg={9}>
+                    <Container fluid>
+                    <div className="userListings">
+                      <Container className="logoBar" fluid>
+                        <h1>Posts</h1>
+                      </Container>
+                      <Container className="profileItems" style={{textAlign: "center"}} fluid>
+                        {recordList()}
+                      </Container>
+                    </div>
+                    </Container>
+                </Col>
+            </Row>
+            </Container>
+        </Container>      
+      </div>
+    )}
     </div>
     </div>
   );
