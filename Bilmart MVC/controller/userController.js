@@ -109,7 +109,7 @@ router.patch('/editprofile/:username', async (req, res) => {
           email: req.body.email,
           username: req.body.username,
           password: req.body.password,
-          posts: req.body.posts,
+          postList: req.body.postList,
           settings: req.body.settings,
           profileImage: req.body.profileImage,
           wishList: req.body.wishList,
@@ -140,6 +140,7 @@ router.post("/login", async (req, res) => {
           return res.json({success: false, message: 'User not found'})
         }
         const validPassword = await bcrypt.compare(req.body.password, user.password);
+        console.log(req.body.password, user.password);
         if(!validPassword) {
           return res.json({success: false, message: 'Invalid password'})
         }
@@ -194,7 +195,7 @@ router.post("/signup", async (req, res, next) => {
         false,
         null,
         [],
-        req.body.title,
+        req.body.description,
         {},
         [],
         [],
@@ -303,7 +304,7 @@ router.post("/verify", async (req, res, next) => {
           email: tempUser.email,
           username: tempUser.username,
           password: tempUser.password,
-          posts: [],
+          postList: [],
           settings: {},
           profileImage: "",
           wishList: [],

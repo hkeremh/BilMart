@@ -12,10 +12,10 @@ export default function EditProfile() {
     email: "",
     username: "",
     password: "",
-    posts: {},
+    postList: [],
     settings: {},
-    profilePhoto: "",
-    wishlist: [],
+    profileImage: "",
+    wishList: [],
     description: "",
     rating: 0,
     ratedamount: 0,
@@ -73,7 +73,7 @@ export default function EditProfile() {
        return;
      }
      setUser(record);
-     setPhoto(record.profilePhoto);
+     setPhoto(record.profileImage);
    }
 
    fetchData();
@@ -98,10 +98,13 @@ export default function EditProfile() {
     email: user.email,
     username: user.username,
     password: user.password,
-    posts: user.posts,
+    bilkentID: user.bilkentID,
+    department: user.department,
+    verification: user.verification,
+    postList: user.postList,
     settings: user.settings,
-    profilePhoto: photo,
-    wishlist: user.wishlist,
+    profileImage: photo,
+    wishList: user.wishList,
     description: user.description,
     rating: user.rating,
     ratedamount: user.ratedamount,

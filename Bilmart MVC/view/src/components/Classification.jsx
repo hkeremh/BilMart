@@ -10,66 +10,68 @@ function Classification(){
         <div>
         <Container style={{height: "10px"}}></Container>
         <Container className="itemDetail">
-            <Form.Label>Tags</Form.Label>
+            <Form.Label className="text">Tags</Form.Label>
             <hr/>
-            <Form.Label>Selected Tags</Form.Label>
+            <Form.Label className="text">Selected Tags</Form.Label>
             <hr/>
             <Form.Group className="mb-3">
-                <Form.Label>Search Tags</Form.Label>
+                <Form.Label className="text">Search Tags</Form.Label>
                 <Form.Group className="d-flex">
                     <Form.Control
                     type="search"
                     placeholder="Search"
-                    className="me-2"
+                    className="me-2 text"
                     aria-label="Search"
                     />
-                    <Button variant="secondary" style={{backgroundColor: "#192655"}}>Search</Button>
+                    <Button className="text" variant="secondary" style={{backgroundColor: "#192655"}}><span className="text">Search</span></Button>
                 </Form.Group>
             </Form.Group>
             <Form.Group className="mb-3">
                 <FloatingLabel
                     controlId="floatingSelectGrid"
                     label="Category Tags"
+                    className="text"
                     >
                     <Form.Select aria-label="Floating label select1">
-                        <option value="1">Sale Item</option>
-                        <option value="2">Lost&Found</option>
-                        <option value="3">Borrowal Item</option>
-                        <option value="4">Donation</option>
+                        <option className="text" value="1">Sale Item</option>
+                        <option className="text" value="2">Lost&Found</option>
+                        <option className="text" value="3">Borrowal Item</option>
+                        <option className="text" value="4">Donation</option>
                     </Form.Select>
                 </FloatingLabel>
                 <Form.Label></Form.Label>
                 <FloatingLabel
                     controlId="floatingSelectGrid"
                     label="Item Type Tags"
+                    className="text"
                     >
                     <Form.Select aria-label="Floating label select2">
-                        <option value="1">Book</option>
-                        <option value="2">Furniture</option>
-                        <option value="3">Clothing</option>
-                        <option value="4">Electronics</option>
-                        <option value="5">Course Material (CM)</option>
+                        <option className="text" value="1">Book</option>
+                        <option className="text" value="2">Furniture</option>
+                        <option className="text" value="3">Clothing</option>
+                        <option className="text" value="4">Electronics</option>
+                        <option className="text" value="5">Course Material (CM)</option>
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>
         </Container>
         <Container className="itemDetail">
-            <Form.Label>Status</Form.Label>
+            <Form.Label className="text">Status</Form.Label>
             <hr/>
             <Form.Group className="mb-3" style={{display:"flex"}}>
                 <div style={{marginLeft: "0", marginRight: "auto"}}>
-                    <Form.Check type="checkbox" label="Available"/>
-                    <Form.Check type="checkbox" label="All"/>
+                    <Form.Check className="text" type="checkbox" label="Available"/>
+                    <Form.Check className="text" type="checkbox" label="All"/>
                 </div>
                 <div style={{marginRight: "0", marginLeft: "auto"}}>
-                    <Form.Check type="checkbox" label="Lost"/>
-                    <Form.Check type="checkbox" label="Found"/>
+                    <Form.Check className="text" type="checkbox" label="Lost"/>
+                    <Form.Check className="text" type="checkbox" label="Found"/>
                 </div>
             </Form.Group>
         </Container>
         <Container>
-            <Form.Group className="d-flex" style={{justifyContent: "center", textAlign: "center"}}>
-                <Button variant="secondary" style={{backgroundColor: "#192655", marginBottom: "15px"}}>Find Listings</Button>
+            <Form.Group style={{justifyContent: "center", textAlign: "center"}}>
+                <Button className="text" variant="secondary" style={{backgroundColor: "#192655", marginBottom: "15px"}}><span className="text">Find Listings</span></Button>
             </Form.Group>
         </Container>
         <Container style={{height: "1px"}}></Container>

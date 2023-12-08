@@ -50,29 +50,29 @@ function NavBar(props) {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px'}} navbarScroll>
-            <Nav.Link href="/about">About</Nav.Link>
-            <Nav.Link href="/" disabled={disabled}>Home</Nav.Link>
-            <Nav.Link onClick={Wishlist} disabled={disabled}>Wishlist</Nav.Link>
-            <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled}>
-              <NavDropdown.Item href="#action4">Action</NavDropdown.Item>
-              <NavDropdown.Item >
+            <Nav.Link href="/about" className="text">About</Nav.Link>
+            <Nav.Link href="/" disabled={disabled} className="text">Home</Nav.Link>
+            <Nav.Link onClick={Wishlist} disabled={disabled} className="text">Wishlist</Nav.Link>
+            <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled} className="text">
+              <NavDropdown.Item href="#action4" className="text">Action</NavDropdown.Item>
+              <NavDropdown.Item className="text">
               <a onClick={ChangeProfilePhoto}>Edit Profile</a>
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>
+              <NavDropdown.Item className="text">
               <a onClick={Logout}>Log out</a>
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/profile" disabled={disabled}>Profile</Nav.Link>
+            <Nav.Link href="/profile" disabled={disabled} className="text">Profile</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control
               type="search"
               placeholder="Search"
-              className="me-2"
+              className="me-2 text"
               aria-label="Search"
             />
-            <Button variant="secondary" disabled={disabled}>Search</Button>
+            <Button variant="secondary" disabled={disabled}><span className="text">Search</span></Button>
           </Form>
         </Navbar.Collapse>
       </Container>

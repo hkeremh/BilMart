@@ -38,10 +38,12 @@ class User {
         return {
             username: this.username,
             email: this.email,
+            password: this.password,
             bilkentID: this.bilkentID,
             department: this.department,
             verification: this.verification,
             rating: this.rating,
+            description: this.description,
             settings: this.settings,
             postList: this.postList,
             wishList: this.wishList,

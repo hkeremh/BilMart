@@ -121,7 +121,7 @@ export default function Create() {
         });
 
       setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
-      navigate("/");
+      navigate("/profile");
     }
     else {    
         toast.error('Please upload 1-5 pictures', {
