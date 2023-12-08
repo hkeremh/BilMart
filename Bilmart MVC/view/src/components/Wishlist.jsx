@@ -65,6 +65,7 @@ const Wishlist = () => {
          wishlistPosts.push(record);
      }
      setRecords(wishlistPosts);
+     setIsLoading(false);
    }
 
    getRecords();
