@@ -157,7 +157,7 @@ const handleSuccess = (msg) =>
                           placeholder="Enter your password"
                           onChange={(e) => updateForm({ password: e.target.value })}
                         />
-                        <div><PasswordStrengthBar password={form.password} height="200px"/></div>
+                        {form.password !== "" && <div><PasswordStrengthBar password={form.password} height="200px"/></div>}
                       </div>
                       
                     </div>

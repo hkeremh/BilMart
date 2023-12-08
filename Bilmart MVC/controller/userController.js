@@ -74,7 +74,7 @@ router.get('/wishlist/:username', async (req, res) => {
     if(!user) {
       res.status(404).json('User not found')
     } else {
-      res.status(200).json(user.wishlist) //return value
+      res.status(200).json(user.wishList) //return value
     }
   } catch (error) {
     console.error(error)
@@ -85,7 +85,7 @@ router.patch('/wishlist/:username', async (req, res) => {
   try {
     const username = req.params.username;
     const updates =  {
-      $set: {wishlist: req.body.wishlist}
+      $set: {wishList: req.body.wishList}
     };
     const result = await userModel.addToWishlist(username, updates) //access model func.
     res.send(result).status(200);
@@ -111,8 +111,8 @@ router.patch('/editprofile/:username', async (req, res) => {
           password: req.body.password,
           posts: req.body.posts,
           settings: req.body.settings,
-          profilePhoto: req.body.profilePhoto,
-          wishlist: req.body.wishlist,
+          profileImage: req.body.profileImage,
+          wishList: req.body.wishList,
           description: req.body.description,
           rating: req.body.rating,
           ratedamount: req.body.ratedamount,
@@ -193,7 +193,7 @@ router.post("/signup", async (req, res, next) => {
         '',
         false,
         null,
-        {},
+        [],
         req.body.title,
         {},
         [],
@@ -303,10 +303,10 @@ router.post("/verify", async (req, res, next) => {
           email: tempUser.email,
           username: tempUser.username,
           password: tempUser.password,
-          posts: {},
+          posts: [],
           settings: {},
-          profilePhoto: "",
-          wishlist: [],
+          profileImage: "",
+          wishList: [],
           description: tempUser.description,
           rating: 0,
           ratedamount: 0,

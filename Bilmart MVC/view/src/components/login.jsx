@@ -60,11 +60,16 @@ export default function Login() {
        }, 1500);
      } else {
        handleError(message);
+       if(message === "Invalid password"){
+        updateForm({password: ""});
+       }
+       else {
+        setForm({email: "", password: ""});
+       }
      }
    } catch (error) {
      console.log(error);
    }
-   setForm({email: "", password: ""});
   }
     return(
     <div>

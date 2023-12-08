@@ -32,8 +32,8 @@ export default function Item() {
   password: "",
   posts: {},
   settings: {},
-  profilePhoto: "",
-  wishlist: [],
+  profileImage: "",
+  wishList: [],
   description: "",
   rating: 0,
   ratedamount: 0,
@@ -52,7 +52,7 @@ export default function Item() {
     return;
   }
   setProfileUser(user);
-  setUserWishlist(user.wishlist);
+  setUserWishlist(user.wishList);
 }
 useEffect(() => {
   const verifyCookie = async () => {
@@ -143,8 +143,8 @@ useEffect(() => {
         password: profileUser.password,
         posts: profileUser.posts,
         settings: profileUser.settings,
-        profilePhoto: profileUser.profilePhoto,
-        wishlist: updatedWishlist,
+        profileImage: profileUser.profileImage,
+        wishList: updatedWishlist,
         description: profileUser.description,
         rating: profileUser.rating,
         ratedamount: profileUser.ratedamount,
@@ -203,8 +203,8 @@ useEffect(() => {
         password: profileUser.password,
         posts: profileUser.posts,
         settings: profileUser.settings,
-        profilePhoto: profileUser.profilePhoto,
-        wishlist: updatedWishlist,
+        profileImage: profileUser.profileImage,
+        wishList: updatedWishlist,
         description: profileUser.description,
         rating: profileUser.rating,
         ratedamount: profileUser.ratedamount,
@@ -327,10 +327,10 @@ useEffect(() => {
                 <Container className="itemCardUserInfo" fluid>   
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                     <div style={{marginRight: "10px"}}>
-                    {owner.profilePhoto === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
+                    {owner.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                    </svg> : <img className="itemProfilePhoto" width="150" height="150" style={{borderRadius: "50%"}} src={owner.profilePhoto}/>}
+                    </svg> : <img className="itemProfilePhoto" width="150" height="150" style={{borderRadius: "50%"}} src={owner.profileImage}/>}
                     </div>
                     <div className="itemUserInfo" style={{marginLeft: "10px"}}>
                       <h1>{owner.username}</h1>
