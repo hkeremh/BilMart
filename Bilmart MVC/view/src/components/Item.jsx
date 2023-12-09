@@ -87,6 +87,7 @@ useEffect(() => {
     return;
   }
   setOwner(user);
+  setIsLoading(false);
 }
  useEffect(() => {
    async function fetchPostData() {
@@ -118,7 +119,6 @@ useEffect(() => {
      setItem(record);
      const userID = record.postOwner;
      fetchUserData(userID);
-     setIsLoading(false);
    }
    fetchPostData();
    return;
