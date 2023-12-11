@@ -10,6 +10,7 @@ import Col from "react-bootstrap/esm/Col";
 import Carousel from 'react-bootstrap/Carousel';
 import Button from "react-bootstrap/esm/Button";
 import Spinner from 'react-bootstrap/Spinner';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
 
