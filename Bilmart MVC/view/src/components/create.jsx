@@ -108,17 +108,20 @@ export default function Create() {
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
       const newItem = { ...form, postOwner: userID, images: sources };
-      await fetch("http://localhost:4000/listing", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newItem),
-      })
-        .catch(error => {
-          window.alert(error);
-          return;
+      try {
+        const response = await axios.post('http://localhost:4000/listing', newItem, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
         });
+      
+        // Handle the response here
+        console.log(response.data);
+      } catch (error) {
+        // Handle errors here
+        window.alert(error.message);
+      }
 
       setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
       navigate("/profile");
@@ -277,10 +280,10 @@ export default function Create() {
                         let file = e.target.files[0];
                         let reader = new FileReader();
                         reader.onloadend = function () {
-                            // compressImage(reader.result, 0.1, (compress) => {
-                            //     updatePhoto(compress);
-                            // })
-                            updateSources(reader.result);
+                            compressImage(reader.result, 0.1, (compress) => {
+                                updateSources(compress);
+                            })
+                            //updateSources(reader.result);
                         }
                         reader.readAsDataURL(file);
                         }}

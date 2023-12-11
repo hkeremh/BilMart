@@ -9,10 +9,13 @@ import { Link } from "react-router-dom";
 import deleteIcon from "../img/bin.png";
 
 function ItemCard(props) {
+
   return (
   <div className="itemCard">
   <Card style={{ width: '280px', height: "500px", border: "1px solid #DED0B6"}}>
-    <Card.Img className="centered-and-cropped" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}/>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.image } height={"220px"} width={"undefined"} style={{width: '100%',
+    height: undefined,
+    objectFit: 'contain', maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}/>
     <Card.Body>
       <Card.Title>
       {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}

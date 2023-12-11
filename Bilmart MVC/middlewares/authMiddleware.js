@@ -2,9 +2,16 @@ import userModel from "../model/userModel.js";
 import dotenv from "dotenv";
 dotenv.config({ path: "./config.env" });
 import jwt from "jsonwebtoken";
+/**
+ * @param {*} req a request
+ * @returns true if req.body contains a valid userToken, false otherwise
+ */
+const validCookie = (req) => {
+}
 
 const userVerification = (req, res) => {
   const token = req.cookies.userToken
+  console.log(req.cookies)
   if (!token) {
     return res.json({ status: false })
   }

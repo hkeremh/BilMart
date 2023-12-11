@@ -139,6 +139,8 @@ router.post("/login", async (req, res) => {
         if(!user) {
           return res.json({success: false, message: 'User not found'})
         }
+        console.log(req.body.password)
+        console.log(user.password)
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
           return res.json({success: false, message: 'Invalid password'})
@@ -174,7 +176,6 @@ router.post("/", userVerification);
 router.post("/signup", async (req, res, next) => {
   try {
     //check that the req is in correct format
-    console.log(Object.keys(req.body).length)
     if(Object.keys(req.body).length > 4 ||
       !req.body.email ||
       !req.body.username ||
