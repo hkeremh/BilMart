@@ -13,7 +13,7 @@ import About from "./components/About.jsx";
 import Item from "./components/Item.jsx";
 import Verify from "./components/Verify.jsx"
 import Wishlist from "./components/Wishlist.jsx"
-import "./CSS/general.css"
+import 'bootstrap/dist/css/bootstrap.css';
 
 const App = () => {
   return (

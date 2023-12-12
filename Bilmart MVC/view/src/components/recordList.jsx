@@ -13,7 +13,6 @@ import ItemCard from "./Card.jsx";
 import Classification from "./Classification.jsx";
 import LogoBar from "./LogoBar.jsx";
 import NavBar from "./navbar.jsx";
-import "../CSS/general.css"
 
 const Home = () => {
   const navigate = useNavigate();

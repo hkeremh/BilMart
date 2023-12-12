@@ -140,8 +140,12 @@ router.post("/", async (req, res) => {
 
     */
 
+    console.log("Here---------------------------")
+
     let itemStrategy;
     let post;
+
+    console.log(req.body)
 
     //applies specific strategy based on type of post
     let typeSpec = req.body.typeSpecific;
@@ -169,8 +173,16 @@ router.post("/", async (req, res) => {
         req.body.type,
         itemStrategy
     );
+
+    console.log("------------------post to send is:------------------")
+    console.log(post)
+    console.log("------------------post to JSON is:------------------")
+
     //newDoc is equal to post object in JSON format
     let newDocument = JSON.stringify(post.toJSON());
+    console.log(newDocument)
+    console.log("----------------------------------------------------")
+
     console.log(newDocument);
 
     const result = await listingModel.postListing(req.body) //access model func.

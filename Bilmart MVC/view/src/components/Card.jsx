@@ -8,7 +8,6 @@ import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import deleteIcon from "../img/bin.png";
 import "../CSS/card.css"
-import "../CSS/general.css"
 
 function ItemCard(props) {
   const [backgroundType, setBackgroundType] = useState('');

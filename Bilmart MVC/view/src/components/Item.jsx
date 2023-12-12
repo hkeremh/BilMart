@@ -13,7 +13,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
-import "../CSS/general.css"
 
 export default function Item() {
  const navigate = useNavigate();

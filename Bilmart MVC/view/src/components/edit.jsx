@@ -9,7 +9,6 @@ import { useCookies } from "react-cookie";
 import Spinner from 'react-bootstrap/Spinner';
 import NavBar from "./navbar.jsx";
 import deleteIcon from "../img/bin.png";
-import "../CSS/general.css"
 
 export default function Edit() {
  const [form, setForm] = useState({
