@@ -46,10 +46,10 @@ router.get('/:id', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
-
+//returns posts by a user
 router.get('/userPosts/:id', async (req, res) => {
   try {
-    const listing = await listingModel.getUserListings(req.params.id); //access model func.
+    const listing = await proxyListingModel.getUserListings(req.params.id); //access model func.
     res.status(200).json(listing) //return value
   } catch (error) {
     console.error(error)
@@ -68,39 +68,64 @@ router.post("/", async (req, res) => {
       !req.body.type ||
       !req.body.images
       ) {
-        return res.status(404).send({error: 'Request format is incorrect'})
+        return res.json({message: 'Request format is incorrect'})
       }
-      console.log('aa:'+ req.cookies.userToken)
-      const cookies = req.cookies;
+      //verify user cookie
       const { data } = await axios.post(
-              "http://localhost:4000/user/",
-              {headers: {
-                Cookie: "userToken=" + req.cookies.userToken, // Replace with your cookie value
-              }},
-              { withCredentials: true },
+              "http://localhost:4000/user/", {},
+              {
+                headers: {
+                    Cookie: "userToken=" + req.cookies.userToken + ";"
+                }
+              }
               
             );
-      console.log(data)
+      if(!data.status) {
+        return res.json({success: false, message: 'User token is invalid'})
+      }
+      //check that user exists
+      const user = await userModel.getUser(req.body.postOwner)
+      if(!user) {
+        return res.json({success: false, message: 'User doesn\'t exist'})
+      }
+      //check that user token matches request user id
+      console.log(user)
+      console.log(data.user)
+      if(user.username !== data.user) {
+        return res.json({success: false, message: 'Incorrect user'})
+      }
 
       let newPostDocument = {
         title: req.body.title,
         postDate: new Date(),
         images: req.body.images,
         description: req.body.description,
-        availability: req.body.availability,
+        availability: "Available",
         type: req.body.type,
         postOwner: req.body.postOwner,
         price: req.body.price
       };
     //check sizes and formats of request objects
-    if(newPostDocument.title.length <= 3  || req.body.title.length > 100) {
-      return res.status(404).send({error: 'The title should be between 3 and 100 characters long'})
+    if(newPostDocument.title.length <= 2  || req.body.title.length > 100) {
+      return res.json({success: false, message: 'The title should be between 4 and 99 characters long'})
     }
     if(newPostDocument.description.length > 2000) {
-      return res.status(404).send({error: 'The description should be less than 2000 characters long'})
+      return res.json({success: false, message: 'The description should be less than 2000 characters long'})
     }
-    //check that the user exists
-    //verify cookie
+    //check that price is a number
+    if(!/^\d+$/.test(newPostDocument.price)) {
+      return res.json({success: false, message: 'Price should be a number'})
+    }
+    //check images
+    if(newPostDocument.images.length > 5) {
+      return res.json({success: false, message: 'A post can contain at most 5 images'})
+    }
+    for (let i = 0; i < newPostDocument.images.length; i++) {
+      if(newPostDocument.images[i].length > 1000000) {
+
+      }
+      
+    }
     //create real post
     const result = await listingModel.postListing(newPostDocument) //access model func.
 
@@ -118,20 +143,21 @@ router.post("/", async (req, res) => {
     //compress first image for proxy
     const uri = newPostDocument.images[0].split(';base64,').pop()
     let imgBuffer = Buffer.from(uri, 'base64');
-    sharp(imgBuffer)
-    .resize(200, 200, {fit: 'inside'})
+    await sharp(imgBuffer)
+    .resize(300, 300, {fit: 'inside'})
     .toFormat('png')
     .toBuffer()
     .then(data => {
         console.log('success')
         newProxyPostDocument.image = `data:image/png;base64,${data.toString('base64')}`
         proxyListingModel.create(newProxyPostDocument);
+        console.log(newProxyPostDocument.image.length);
     })
-    .catch(err => console.log(`downisze issue ${err}`))
+    .catch(err => {return res.json({success: false, message:`downisze issue ${err}`})})
     
     
 
-    res.send(result).status(204);
+    res.json({success: true, message: "Post created in successfully"});
   } catch (error) {
     console.error(error)
     res.status(500).send({ error: 'Internal Server Error' })
@@ -162,8 +188,11 @@ router.patch("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  const query = { _id: new ObjectId(req.params.id) };
+  let query = { _id: new ObjectId(req.params.id) };
   const result = await listingModel.deleteListing(query) //access model func.
+  query = { realID: new ObjectId(req.params.id) };
+  await proxyListingModel.deleteListing(query) //access model func.
+   
   res.send(result).status(200);
 });
   

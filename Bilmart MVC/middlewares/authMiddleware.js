@@ -11,7 +11,6 @@ const validCookie = (req) => {
 
 const userVerification = (req, res) => {
   const token = req.cookies.userToken
-  console.log(req.cookies)
   if (!token) {
     return res.json({ status: false })
   }

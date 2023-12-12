@@ -19,7 +19,7 @@ export default function Create() {
     description: "",
     availability: "Available",
     type: "",
-    price: "",
+    price: "0",
   });
   function compressImage(inputImage, compressionQuality, callback) {
 
@@ -99,7 +99,28 @@ export default function Create() {
       return [...prev, value];
     });
   }
-
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+ const handleSuccess = (msg) =>
+  toast.success(msg, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
@@ -109,22 +130,29 @@ export default function Create() {
       const userID = owner._id;
       const newItem = { ...form, postOwner: userID, images: sources };
       try {
-        const response = await axios.post('http://localhost:4000/listing', newItem, {
+        const { data } = await axios.post('http://localhost:4000/listing', newItem, {
           headers: {
             'Content-Type': 'application/json',
           },
           withCredentials: true,
         });
-      
-        // Handle the response here
-        console.log(response.data);
+        console.log(data)
+        const { success, message } = data;
+        if (success) {
+          handleSuccess(message);
+          setTimeout(() => {
+            navigate("/profile");
+          }, 1500);
+        } else {
+          handleError(message);
+        }
+        
       } catch (error) {
         // Handle errors here
         window.alert(error.message);
       }
 
-      setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
-      navigate("/profile");
+      
     }
     else {    
         toast.error('Please upload 1-5 pictures', {
@@ -137,7 +165,7 @@ export default function Create() {
         progress: undefined,
         theme: "colored",
         });
-      setForm({ title: "", description: "", availability: "Available", type: "", price: ""});
+      setForm({ title: "", description: "", availability: "Available", type: "", price: "0"});
     }
   }
 

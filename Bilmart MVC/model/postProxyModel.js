@@ -20,9 +20,19 @@ async function create(newListing) {
     let result = await queryCollection.insertOne(newListing);
     return result;
 }
+async function getUserListings(query) {
+    let result = await queryCollection.find({postOwner: query}).toArray();
+    return result;
+}
+async function deleteListing(query) {
+let result = await queryCollection.deleteOne(query);
+return result;
+}
 export default {
     getAllListings,
     getListing,
     getByPostID,
-    create
+    create,
+    getUserListings,
+    deleteListing
 };
