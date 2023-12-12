@@ -28,11 +28,17 @@ async function deleteListing(query) {
 let result = await queryCollection.deleteOne(query);
 return result;
 }
+async function updateListing(query, updates) {
+    let result = await queryCollection.updateOne(query, updates);
+    return result;
+  }
+  
 export default {
     getAllListings,
     getListing,
     getByPostID,
     create,
     getUserListings,
-    deleteListing
+    deleteListing,
+    updateListing
 };

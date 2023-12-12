@@ -72,14 +72,14 @@ router.post("/", async (req, res) => {
       }
       //verify user cookie
       const { data } = await axios.post(
-              "http://localhost:4000/user/", {},
-              {
-                headers: {
-                    Cookie: "userToken=" + req.cookies.userToken + ";"
-                }
-              }
-              
-            );
+        "http://localhost:4000/user/", {},
+        {
+          headers: {
+              Cookie: "userToken=" + req.cookies.userToken + ";"
+          }
+        }
+        
+      );
       if(!data.status) {
         return res.json({success: false, message: 'User token is invalid'})
       }
@@ -166,8 +166,9 @@ router.post("/", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
   try {
-    const query = { _id: new ObjectId(req.params.id) };
-    const updates =  {
+    //edit real post
+    let query = { _id: new ObjectId(req.params.id) };
+    let updates =  {
       $set: {
         title: req.body.title,
         postDate: req.body.postDate,
@@ -180,7 +181,41 @@ router.patch("/:id", async (req, res) => {
       }
     };
     const result = await listingModel.updateListing(query, updates) //access model func.
-    res.send(result).status(200);
+    //edit proxy post
+    query = { realID: new ObjectId(req.params.id) };
+    let proxyUpdates =  {
+      $set: {
+        title: req.body.title,
+        description: req.body.description,
+        availability: req.body.availability,
+        type: req.body.type,
+        price: req.body.price
+      }
+      
+    };
+    const uri = req.body.images[0].split(';base64,').pop()
+    let imgBuffer = Buffer.from(uri, 'base64');
+    try{
+      await sharp(imgBuffer)
+      .resize(300, 300, {fit: 'inside'})
+      .toFormat('png')
+      .toBuffer()
+      .then(async data => {
+          console.log('success')
+          proxyUpdates.$set.image = `data:image/png;base64,${data.toString('base64')}`
+          await proxyListingModel.updateListing(query, proxyUpdates) //access model func.
+
+      })
+      .catch(err => {console.log(`downisze issue ${err}`)})
+      
+    }
+    catch(err) {
+      return res.json({success: false, message:`downisze issue ${err}`})
+    }
+   
+
+    return res.json({success: true, message: "Edited post successfully"})
+
   } catch (error) {
     console.error(error)
     res.status(500).send({ error: 'Internal Server Error' })
