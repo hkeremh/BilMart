@@ -29,6 +29,12 @@ async function getAllListings() {
   return result;
 }
 
+async function getPageListings(pageNumber) {
+  let collection = await db.collection('Posts'); //name of collection
+  let result = await collection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
+  return result;
+}
+
 async function postListing(newListing) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.insertOne(newListing);
@@ -50,6 +56,7 @@ async function deleteListing(query) {
 //all methods that need to be used by other files (controller) go in here to export.
 export default {
     getAllListings,
+    getPageListings,
     getListing,
     getUserListings,
     postListing,

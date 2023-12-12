@@ -22,7 +22,7 @@ const port = 4000; //server is established at localhost:4000 by default
  * In the future if need to do something like: bilmart/login, we would need to create a new loginController.js
  * inside the controller folder and all methods relating to login there.
 */
-app.use(bodyParser.json({ limit: '25mb' }))
+app.use(bodyParser.json({ limit: '50mb' }))
 app.use(
   cors({
     origin: ["http://localhost:3000"],

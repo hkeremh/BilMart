@@ -46,12 +46,12 @@ function NavBar(props) {
   return (
     <Navbar className="navbar-dark" expand="lg" style={{backgroundColor: "#192655"}}>
       <Container fluid>
-        <Navbar.Brand href="/" ><img src={logo} width={170} height={36}/></Navbar.Brand>
+        <Navbar.Brand href="/home?pageNumber=1" ><img src={logo} width={170} height={36}/></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px'}} navbarScroll>
             <Nav.Link href="/about" className="text">About</Nav.Link>
-            <Nav.Link href="/" disabled={disabled} className="text">Home</Nav.Link>
+            <Nav.Link href="/home?pageNumber=1" disabled={disabled} className="text">Home</Nav.Link>
             <Nav.Link onClick={Wishlist} disabled={disabled} className="text">Wishlist</Nav.Link>
             <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled} className="text">
               <NavDropdown.Item href="#action4" className="text">Action</NavDropdown.Item>

@@ -17,7 +17,8 @@ import NavBar from "./navbar.jsx";
 
 function Profile(){
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [isPostLoading, setIsPostLoading] = useState(true);
   const [cookies, removeCookie] = useCookies([]);
   const [profileUser, setProfileUser] = useState({});
   const [userPosts, setUserPosts] = useState([]);
@@ -47,7 +48,7 @@ function Profile(){
       const { status, user } = data;
       await fetchData(user);
       return status
-        ?  setIsLoading(false)
+        ?  setIsUserLoading(false)
         : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
@@ -71,6 +72,7 @@ function Profile(){
       }
       const userPosts = await response.json();
       setUserPosts(userPosts); 
+      setIsPostLoading(false);
     }
     fetchPosts();
   });
@@ -94,7 +96,7 @@ function Profile(){
     <div>
     <NavBar />
     <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
-    {isLoading ? (
+    {(isUserLoading || isPostLoading) ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

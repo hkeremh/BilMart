@@ -19,7 +19,7 @@ const App = () => {
     <div style={{backgroundColor: "#D6C7AE"}}>
       <div>
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/home?" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/edit/:id" element={<Edit />} />

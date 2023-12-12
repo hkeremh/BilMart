@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/esm/Button.js"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
+import axios from "axios";
+import { useCookies } from "react-cookie";
 import Spinner from 'react-bootstrap/Spinner';
 import NavBar from "./navbar.jsx";
 import deleteIcon from "../img/bin.png";
@@ -20,12 +22,64 @@ export default function Edit() {
    images: [],
  });
  const [sources, setSources] = useState([]);
- const [isLoading, setIsLoading] = useState(true);
+const [cookies, removeCookie] = useCookies([]);
+ const [isUserLoading, setIsUserLoading] = useState(true);
+ const [isPostLoading, setIsPostLoading] = useState(true);
  const params = useParams();
  const navigate = useNavigate();
+ function compressImage(inputImage, compressionQuality, callback) {
+
+  var img = new Image();
+
+  // Load the image
+  img.src = inputImage;
+
+  // Handle the image onload event
+  img.onload = function () {
+    // Create a canvas element
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    
+    let reduceRatio = 10000000.0 / (img.width * img.height)
+    if(reduceRatio > 1) reduceRatio = 1
+
+    // Set the canvas size to the image size
+    canvas.width = img.width * reduceRatio;
+    canvas.height = img.height * reduceRatio;
+    
+    
+
+    // Draw the image on the canvas
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    // Get the compressed image data as a base64-encoded string
+    var compressedImageData = canvas.toDataURL('image/jpeg', compressionQuality);
+
+
+    // Pass the compressed image data to the callback function
+    callback(compressedImageData);
+  };
+}
+useEffect(() => {
+  const verifyCookie = async () => {
+    if (!cookies.userToken) {
+      navigate("/login");
+    }
+    const { data } = await axios.post(
+      "http://localhost:4000/user/",
+      {},
+      { withCredentials: true }
+    );
+    const { status, user } = data;
+    return status
+      ?  setIsUserLoading(false)
+      : (removeCookie("userToken"), navigate("/login"));
+  };
+  verifyCookie();
+}, [cookies, navigate, removeCookie]);
 
  useEffect(() => {
-   async function fetchData() {
+   async function fetchPostData() {
      const id = params.id.toString();
      const response = await fetch(`http://localhost:4000/listing/${params.id.toString()}`);
 
@@ -52,10 +106,10 @@ export default function Edit() {
      }
      setForm(record);
      setSources(record.images);
-     setIsLoading(false);
+     setIsPostLoading(false);
    }
 
-   fetchData();
+   fetchPostData();
 
    return;
  }, [params.id, navigate]);
@@ -117,7 +171,7 @@ export default function Edit() {
   <div>
     <NavBar />
     <div style={{ marginTop: "-30px" }}>
-    {isLoading ? (
+    {(isPostLoading || isUserLoading) ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
@@ -272,10 +326,10 @@ export default function Edit() {
                         let file = e.target.files[0];
                         let reader = new FileReader();
                         reader.onloadend = function () {
-                            // compressImage(reader.result, 0.1, (compress) => {
-                            //     updatePhoto(compress);
-                            // })
-                            updateSources(reader.result);
+                            compressImage(reader.result, 0.1, (compress) => {
+                                updateSources(compress);
+                            })
+                            //updateSources(reader.result);
                         }
                         reader.readAsDataURL(file);
                         }}
@@ -302,12 +356,8 @@ export default function Edit() {
               </div>
               <div className="justify-content-center col-md-10 col-lg-6 col-xl-7 align-items-center order-1 order-lg-2">
                 <p className="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Selected Pictures:</p>
-                <div style={{textAlign: "center"}}>{sources.map((source, index) => {
-                  return(
-                    <div>
-                      <img className="centered-and-cropped" width={source.width * (100 / source.height)} height="200" style={{borderRadius: "5%", margin: "10px", maxWidth: "500px"}} src={source} />
-                    </div>
-                  ) 
+                <div style={{textAlign: "center"}}>{sources.map((source) => {
+                  return <img className="centered-and-cropped" width={source.width * (100 / source.height)} height="200" style={{borderRadius: "5%", margin: "10px", maxWidth: "500px"}} src={source} />
                 })}
                 </div>
               </div>
@@ -318,7 +368,6 @@ export default function Edit() {
     </div>
   </div>
     )}
-
     <ToastContainer />
     </div>
   </div>

@@ -16,7 +16,8 @@ import NavBar from "./navbar";
 
 export default function Item() {
  const navigate = useNavigate();
- const [isLoading, setIsLoading] = useState(true);
+ const [isPostLoading, setIsPostLoading] = useState(true);
+ const [isUserLoading, setIsUserLoading] = useState(true);
  const [cookies, removeCookie] = useCookies([]);
  const [owner, setOwner] = useState({});
  const [item, setItem] = useState({
@@ -70,7 +71,7 @@ useEffect(() => {
     const { status, user } = data;
     await fetchData(user);
     return status
-      ?  console.log("User is logged in")
+      ?  setIsUserLoading(false)
       : (removeCookie("userToken"), navigate("/login"));
   };
   verifyCookie();
@@ -88,7 +89,7 @@ useEffect(() => {
     return;
   }
   setOwner(user);
-  setIsLoading(false);
+  setIsPostLoading(false);
 }
  useEffect(() => {
    async function fetchPostData() {
@@ -284,7 +285,7 @@ useEffect(() => {
   <div>
    <NavBar />
    <div style={{ backgroundColor: "#D6C7AE"}}>
-   {isLoading ? (
+   {(isPostLoading || isUserLoading) ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

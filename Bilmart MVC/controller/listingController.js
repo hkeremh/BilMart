@@ -24,6 +24,27 @@ router.get('/', async (req, res) => {
       res.status(500).send({ error: 'Internal Server Error' })
     }
 })
+router.get("/home", async (req, res) => {
+  try {
+    const pageNumber = Number(req.query.pageNumber) || 1; 
+    const records = await listingModel.getPageListings(pageNumber);
+    console.log(records);  
+    res.json(records);
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+});
+// router.get('/search', async (req, res) => {
+//   try {
+//     const listings = await listingModel.searchListings(req.query) //access model func.
+//     //console.log(listings)
+//     res.send(listings) //return value
+//   } catch (error) {
+//     console.error(error)
+//     res.status(500).send({ error: 'Internal Server Error' })
+//   }
+// });
 router.get('/:id', async (req, res) => {
   try {
     const query = {_id: new ObjectId(req.params.id)};
