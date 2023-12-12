@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 import NavBar from "./navbar.jsx";
 import { Link } from "react-router-dom";
+import "../CSS/general.css"
 
 export default function Login() {
   const navigate = useNavigate();

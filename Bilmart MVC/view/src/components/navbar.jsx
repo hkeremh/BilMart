@@ -10,6 +10,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../img/BilMart-logos_transparent.png';
+import "../CSS/general.css"
 
 function NavBar(props) {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ function NavBar(props) {
     navigate(`/wishlist/${username}`);
   };
   return (
-    <Navbar className="navbar-dark" expand="lg" style={{backgroundColor: "#192655"}}>
+    <Navbar className="navbar-dark primary-accent" expand="lg">
       <Container fluid>
         <Navbar.Brand href="/home?pageNumber=1" ><img src={logo} width={170} height={36}/></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

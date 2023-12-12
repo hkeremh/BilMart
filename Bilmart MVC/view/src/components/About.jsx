@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import image from "../img/1.png";
 import NavBar from "./navbar.jsx";
+import "../CSS/general.css"
 
 function About(){
     return(
@@ -14,7 +15,7 @@ function About(){
         <div className="col-lg-6 mx-auto">
           <p className="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <Link to="/signup"><button type="button" className="btn btn-secondary btn-lg px-4 me-sm-3" style={{backgroundColor: "#192655"}}>Sign Up</button></Link>
+            <Link to="/signup"><button type="button" className="btn btn-secondary btn-lg px-4 me-sm-3 primary-accent">Sign Up</button></Link>
             <Link to="/login"><button type="button" className="btn btn-outline-secondary btn-lg px-4">Log In</button></Link>
           </div>
           <img src={image} className="img-fluid rounded-3  mb-4" alt="Example image" width="500" height="500" loading="lazy"/>

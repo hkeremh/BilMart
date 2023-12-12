@@ -14,6 +14,7 @@ import LogoBar from "./LogoBar.jsx";
 import ItemCard from "./Card.jsx";
 import createIcon from "../img/plus.png";
 import NavBar from "./navbar.jsx";
+import "../CSS/general.css"
 
 function Profile(){
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ function Profile(){
   return (
     <div>
     <NavBar />
-    <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
+    <div className="secondary-color" style={{marginTop: 15 }}>
     {(isUserLoading || isPostLoading) ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
@@ -121,7 +122,7 @@ function Profile(){
                       <h1>{userPosts.length}</h1>
                       <h3>Posts</h3>
                       <hr/>
-                      <Link to={`/create`}><Button className="createListing" variant="secondary" style={{backgroundColor: "#192655"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
+                      <Link to={`/create`}><Button className="createListing primary-accent" variant="secondary"><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
                     </div>
                     </Container>
                 </Col>

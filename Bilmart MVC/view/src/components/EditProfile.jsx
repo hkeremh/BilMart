@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import NavBar from "./navbar.jsx";
 import compress from "lz-string";
+import "../CSS/general.css"
 
 export default function EditProfile() {
  const [user, setUser] = useState({

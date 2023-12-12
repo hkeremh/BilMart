@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../CSS/general.css"
 
 function Classification(){
     return(
@@ -23,7 +24,7 @@ function Classification(){
                     className="me-2 text"
                     aria-label="Search"
                     />
-                    <Button className="text" variant="secondary" style={{backgroundColor: "#192655"}}><span className="text">Search</span></Button>
+                    <Button className="text primary-accent" variant="secondary"><span className="text">Search</span></Button>
                 </Form.Group>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -71,7 +72,7 @@ function Classification(){
         </Container>
         <Container>
             <Form.Group style={{justifyContent: "center", textAlign: "center"}}>
-                <Button className="text" variant="secondary" style={{backgroundColor: "#192655", marginBottom: "15px"}}><span className="text">Find Listings</span></Button>
+                <Button className="text primary-accent" variant="secondary" style={{marginBottom: "15px"}}><span className="text">Find Listings</span></Button>
             </Form.Group>
         </Container>
         <Container style={{height: "1px"}}></Container>

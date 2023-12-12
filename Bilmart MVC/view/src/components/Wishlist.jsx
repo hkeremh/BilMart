@@ -84,7 +84,7 @@ const Wishlist = () => {
  return (
   <div>
   <NavBar />
-  <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
+  <div className="secondary-color" style={{marginTop: 15 }}>
   {isLoading ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">

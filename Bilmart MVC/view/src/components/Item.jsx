@@ -13,6 +13,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
+import "../CSS/general.css"
 
 export default function Item() {
  const navigate = useNavigate();
@@ -284,7 +285,7 @@ useEffect(() => {
  return (
   <div>
    <NavBar />
-   <div style={{ backgroundColor: "#D6C7AE"}}>
+   <div className="parent">
    {(isPostLoading || isUserLoading) ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
@@ -310,12 +311,12 @@ useEffect(() => {
                       {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.price}₺</h1>}
                       {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
                       {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
-                      {userWishlist.includes(item._id) ? <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
+                      {userWishlist.includes(item._id) ? <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
                         <div className="text" style={{alignItems: "center"}}>Remove from Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                             <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                           </svg></span>
                         </div>
-                      </Button>: <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={addToWishlist}>
+                      </Button>: <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px"}} onClick={addToWishlist}>
                         <div className="text" style={{alignItems: "center"}}>Add to Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                             <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                           </svg></span>
@@ -327,11 +328,11 @@ useEffect(() => {
                       {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
                       {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
                     </div>}
-                    <hr style={{border: "1px solid #544C4C", marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
+                    <hr style={{marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <h3>{item.title || "Title"}</h3>
                     </div> 
-                    <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
+                    <hr style={{marginLeft: "15px", marginRight: "15px"}}/>
                     <div className="postDate" style={{alignItems: "center", display: "flex"}}>
                       <h3 style={{fontWeight: "bolder"}}>Post Date: </h3>
                       <h3 style={{color: "black", marginLeft: "10px"}}>{item.postDate.toString().substring(0, 10)}</h3>
@@ -355,11 +356,11 @@ useEffect(() => {
                         </h5>
                       </div>
                     </div>
-                    <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
+                    <hr style={{marginLeft: "15px", marginRight: "15px"}}/>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
+                      {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "white"}}><div className="text">Request Contact</div></Button>}
                     </div> : <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      <Button variant="secondary" style={{backgroundColor: "#192655"}} href="/profile"><div className="text">Go to Profile</div></Button>
+                      <Button className="primary-accent" variant="secondary" href="/profile"><div className="text">Go to Profile</div></Button>
                     </div>  }
                   </Container>
               </Col>
@@ -373,12 +374,12 @@ useEffect(() => {
                         <p style={{position: "absolute", right: "45px"}}>{"ID: " + item._id}</p>
                     </div>
                     <div style={{alignItems: "center", display: "flex"}}>
-                        <h3 style={{color: "#E1AA74"}}>Condition: </h3>
+                        <h3 className="secondary-color">Condition: </h3>
                         <h3 style={{color: "black", marginLeft: "10px"}}>{item.availability}</h3>
                         {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}
                     </div>
                   </div>
-                  <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
+                  <hr style={{marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
                   <div style={{marginBottom: "15px"}}>
                     <h1 style={{fontWeight: "bolder"}}>Description</h1>
                     <h3 >{item.description}</h3>

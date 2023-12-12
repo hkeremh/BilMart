@@ -13,6 +13,7 @@ import ItemCard from "./Card.jsx";
 import Classification from "./Classification.jsx";
 import LogoBar from "./LogoBar.jsx";
 import NavBar from "./navbar.jsx";
+import "../CSS/general.css"
 
 const Home = () => {
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ useEffect(() => {
  return (
   <div>
   <NavBar />
-  <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
+  <div className="secondary-color" style={{marginTop: 15 }}>
   {(isPostLoading || isUserLoading) ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">

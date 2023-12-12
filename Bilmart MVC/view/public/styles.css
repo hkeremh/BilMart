@@ -1,5 +1,11 @@
+:root {
+  --primary-color: white;
+  --secondary-color: #ccdbff;
+  --primary-accent: #192655;
+}
+
 html{
-    background-color: #D6C7AE;
+    background-color: var(--primary-color);
     font-family: 'Montserrat', sans-serif;
 }
 .text{
@@ -13,27 +19,27 @@ html{
     width: 280px;
 }
 .items{
-    background-color: #F3F0CA;
+    background-color: var(--secondary-color);
     border-radius: 15px;
 }
 .profileItems{
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   margin-top: 15px;
 }
 .selection{
     justify-content: center;
-    background-color: #F3F0CA;
+    background-color: var(--secondary-color);
     border-radius: 15px;
     width: 300px;
 }
 .itemDetail{
-    background-color: #FFFFEF;
+    background-color: var(--primary-color);
     border-radius: 15px;
 }
 .logoBar{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   width: 1000px;
   height: 50px;
@@ -41,7 +47,7 @@ html{
   flex-direction: column;
 }
 .logoBar h1{
-  color: #242760;
+  color: var(--primary-accent);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-size: 32px;
@@ -56,26 +62,26 @@ html{
 }
 .itemCardInfo{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   height: 250px;
   margin-bottom: 20px;
 }
 .itemCardUserInfo{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   height: 250px;
 }
 .itemCardDetails{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   height: auto;
   margin-top: 20px;
 }
 .itemCardDetails h1{
-  color: #E1AA74;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: bolder;
@@ -88,7 +94,7 @@ html{
 .userInfo{
   justify-content: center;
   text-align: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   width: 350px;
   margin-bottom: 15px;
@@ -96,25 +102,25 @@ html{
 .itemUserInfo{
   justify-content: center;
   text-align: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   width: 300px;
   margin-bottom: 15px;
 }
 .profilePhoto{
   border-radius: 50%;
-  border: 7px solid #D6C7AE;
+  border: 7px solid var(--secondary-color);
   width: 180px;
   height: 180px;
   margin-top: 15px;
 }
 .itemProfilePhoto{
   border-radius: 50%;
-  border: 7px solid #D6C7AE;
+  border: 7px solid var(--secondary-color);
   margin-top: 15px;
 }
 .userInfo h1{
-  color: #242760;
+  color: var(--primary-accent);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -122,7 +128,7 @@ html{
   margin-top: 15px;
 }
 .userInfo h2{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -130,7 +136,7 @@ html{
   margin-top: 15px;
 }
 .userInfo h3{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -138,7 +144,7 @@ html{
   margin-top: 15px;
 }
 .userInfo h4{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -146,7 +152,7 @@ html{
   margin-top: 15px;
 }
 .userInfo h5{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -154,13 +160,13 @@ html{
   margin-top: 15px;
 }
 .userInfo hr{
-  border: 1px solid #544C4C;
+  border: 1px solid var(--primary-color);
   margin-top: 15px;
   margin-left: 15px;
   margin-right: 15px;
 }
 .itemUserInfo h1{
-  color: #242760;
+  color: var(--primary-accent);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -168,7 +174,7 @@ html{
   margin-top: 15px;
 }
 .itemUserInfo h2{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -176,7 +182,7 @@ html{
   margin-top: 15px;
 }
 .itemUserInfo h3{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -184,7 +190,7 @@ html{
   margin-top: 15px;
 }
 .itemUserInfo h4{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -192,7 +198,7 @@ html{
   margin-top: 15px;
 }
 .itemUserInfo h5{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -200,7 +206,7 @@ html{
   margin-top: 15px;
 }
 .itemUserInfo hr{
-  border: 1px solid #544C4C;
+  border: 1px solid var(--primary-color);
   margin-top: 15px;
   margin-left: 15px;
   margin-right: 15px;
@@ -224,7 +230,7 @@ html{
   margin-top: 5px;
 }
 .gradient-background {
-    background: linear-gradient(300deg, #192655, #D6C7AE, #FFFFEF,#D6C7AE,#192655);
+    background: linear-gradient(300deg, #192655, var(--secondary-color), #FFFFEF,var(--secondary-color),#192655);
     background-size: 180% 180%;
     animation: gradient-animation 18s ease infinite;
   }
