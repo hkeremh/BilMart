@@ -114,7 +114,7 @@ useEffect(() => {
         progress: undefined,
         theme: "colored",
         });
-       navigate("/");
+       navigate("/home?pageNumber=1");
        return;
      }
 

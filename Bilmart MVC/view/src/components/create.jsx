@@ -163,20 +163,20 @@ export default function Create() {
       const userID = owner._id;
       const newItem = { ...form, postOwner: userID, images: sources};
       console.log(newItem);
-      await fetch("http://localhost:4000/listing", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newItem),
-      })
-        .catch(error => {
-          window.alert(error);
-          return;
-        });
+      // await fetch("http://localhost:4000/listing", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(newItem),
+      // })
+      //   .catch(error => {
+      //     window.alert(error);
+      //     return;
+      //   });
 
-      setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
-      navigate("/profile");
+      // setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
+      // navigate("/profile");
     }
     else {    
         toast.error('Please upload 1-5 pictures', {

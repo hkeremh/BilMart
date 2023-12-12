@@ -71,7 +71,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
         progress: undefined,
         theme: "colored",
       });
-       navigate("/");
+       navigate("/home?pageNumber=1");
        return;
      }
      setUser(record);
