@@ -17,7 +17,7 @@ import  jwt from "jsonwebtoken";
 import crypto from 'crypto'
 import cookieParser from 'cookie-parser';
 import { passwordStrength } from 'check-password-strength';
-import userVerification from '../middlewares/authMiddleware.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 import TempUser from "../model/Classes/tempUserClass.js"
 
 cookieParser()
@@ -159,7 +159,7 @@ router.post("/login", async (req, res) => {
         res.status(500).send({success: false, message: 'Internal Server Error' })
       }
   });
-router.post("/", userVerification);
+router.post("/", authMiddleware.userVerification);
 
 /**
  * Signs up a new user

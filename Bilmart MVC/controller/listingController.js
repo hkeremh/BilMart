@@ -12,6 +12,7 @@ import { ObjectId } from "mongodb";
 import listingModel from '../model/listingModel.js'; //this line allows controller to use methods from model
 import proxyListingModel from '../model/postProxyModel.js';
 import userModel from '../model/userModel.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 import sharp from 'sharp'
 import axios from "axios";
 const router = express.Router();
@@ -71,15 +72,7 @@ router.post("/", async (req, res) => {
         return res.json({message: 'Request format is incorrect'})
       }
       //verify user cookie
-      const { data } = await axios.post(
-        "http://localhost:4000/user/", {},
-        {
-          headers: {
-              Cookie: "userToken=" + req.cookies.userToken + ";"
-          }
-        }
-        
-      );
+      const data = await authMiddleware.validCookie(req)
       if(!data.status) {
         return res.json({success: false, message: 'User token is invalid'})
       }
@@ -89,8 +82,6 @@ router.post("/", async (req, res) => {
         return res.json({success: false, message: 'User doesn\'t exist'})
       }
       //check that user token matches request user id
-      console.log(user)
-      console.log(data.user)
       if(user.username !== data.user) {
         return res.json({success: false, message: 'Incorrect user'})
       }
@@ -166,6 +157,35 @@ router.post("/", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
   try {
+    //check cookkie validity
+    const data = await authMiddleware.validCookie(req)
+    if(!data.status) {
+      return res.json({success: false, message: 'User token is invalid'})
+    }
+    //check that user exists
+    const user = await userModel.getUser(req.body.postOwner)
+    if(!user) {
+      return res.json({success: false, message: 'User doesn\'t exist'})
+    }
+    //check that user token matches request user id
+    if(user.username !== data.user) {
+      return res.json({success: false, message: 'Incorrect user'})
+    }
+    //check sizes and formats of request objects
+    if(req.body.title.length <= 2  || req.body.title.length > 100) {
+      return res.json({success: false, message: 'The title should be between 4 and 99 characters long'})
+    }
+    if(req.body.description.length > 2000) {
+      return res.json({success: false, message: 'The description should be less than 2000 characters long'})
+    }
+    //check that price is a number
+    if(!/^\d+$/.test(req.body.price) && req.body.price != '') {
+      return res.json({success: false, message: 'Price should be a number'})
+    }
+    //check images
+    if(req.body.images.length > 5) {
+      return res.json({success: false, message: 'A post can contain at most 5 images'})
+    }
     //edit real post
     let query = { _id: new ObjectId(req.params.id) };
     let updates =  {

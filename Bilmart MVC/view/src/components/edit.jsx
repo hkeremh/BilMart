@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import NavBar from "./navbar.jsx";
 import deleteIcon from "../img/bin.png";
+import axios from "axios";
 
 export default function Edit() {
  const [form, setForm] = useState({
@@ -21,7 +22,28 @@ export default function Edit() {
  const [sources, setSources] = useState([]);
  const params = useParams();
  const navigate = useNavigate();
-
+ const handleError = (err) =>
+ toast.error(err, {
+   position: "top-center",
+   autoClose: 3000,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+   theme: "colored",
+ });
+const handleSuccess = (msg) =>
+ toast.success(msg, {
+   position: "top-center",
+   autoClose: 1500,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+   theme: "colored",
+ });
  useEffect(() => {
    async function fetchData() {
      const id = params.id.toString();
@@ -84,15 +106,32 @@ export default function Edit() {
    };
    if ((sources.length !== 0 && sources.length <= 5)){
     // This will send a post request to update the data in the database.
-    await fetch(`http://localhost:4000/listing/${params.id}`, {
+    /*await fetch(`http://localhost:4000/listing/${params.id}`, {
       method: "PATCH",
       body: JSON.stringify(editedListing),
       headers: {
         'Content-Type': 'application/json'
       },
-    });
+    });*/
+    const { data } = await axios.patch(
+      `http://localhost:4000/listing/${params.id}`,
+      {
+        ...editedListing
+      },
+      { withCredentials: true }
+    )
+    const { success, message } = data;
+     if (success) {
+       handleSuccess(message);
+       setTimeout(() => {
+         navigate("/profile");
+       }, 1500);
+     } else {
+       handleError(message);
+       
+     }
 
-    navigate("/profile");    
+    //navigate("/profile");    
    }
    else{
     toast.error('Please upload 1-5 pictures', {
