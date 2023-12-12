@@ -126,16 +126,53 @@ router.get('/userPosts/:id', async (req, res) => {
 //creates new listing
 router.post("/", async (req, res) => {
   try {
-    let newDocument = {
-      title: req.body.title,
-      postDate: req.body.postDate,
-      images: req.body.images,
-      description: req.body.description,
-      availability: req.body.availability,
-      type: req.body.type,
-      postOwner: req.body.postOwner,
-      price: req.body.price,
-    };
+
+    //assuming incoming newDoc is:
+    /*
+      title; //string +
+      postDate; //date +
+      images; //list of url +
+      description; //string +
+      tags; //list of string
+      postOwner; //url +
+      type; //string +
+      typeSpecific; // list of variables +
+
+    */
+
+    let itemStrategy;
+    let post;
+
+    //applies specific strategy based on type of post
+    let typeSpec = req.body.typeSpecific;
+    if (req.body.type === "Sale Item") {
+      itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
+    } else if (req.body.type === "Lend Item") {
+      itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
+    } else if (req.body.type === "Donate Item") {
+      itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
+    } else if (req.body.type === "Lend Item") {
+      itemStrategy = new LostFound(typeSpec.found)
+    } else {
+      console.error(error)
+      res.status(500).send({ error: 'No appropriate item type was selected when creating a post.' })
+    }
+
+    //create a post object with uniquie type
+    post = new Post(
+        req.body.title,
+        new Date(),
+        req.body.images,
+        req.body.description,
+        req.body.tags,
+        req.body.postOwner,
+        req.body.type,
+        itemStrategy
+    );
+
+    //newDoc is equal to post object in JSON format
+    let newDocument = JSON.stringify(post.toJSON());
+
     const result = await listingModel.postListing(newDocument) //access model func.
     res.send(result).status(204);
   } catch (error) {
