@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import db from '../database/database.js'; //allows the model to access the db client
+import User from "../model/Classes/UserClass.js"
 
 async function getUser(id) {
     let collection = await db.collection('Users'); //name of collection
@@ -41,8 +42,9 @@ async function login(email, password){
 
 async function create(newDocument){
     let collection = await db.collection("Users");
-    console.log(user)
+    const user = new User(newDocument)
     let result = await collection.insertOne(user.toJSON());
+    console.log ("-----------------Made it to insert user-----------------")
     return result;
 }
 
