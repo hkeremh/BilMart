@@ -1,30 +1,26 @@
-import Post from "./PostClass.js"
+import PostStrategy from "./PostStrategyClass.js"
 
-class Donation extends Post {
+class Donation extends PostStrategy {
     IBAN; //string
     weblink; //string url
     organizationName; //name or org
     monetaryTarget; //double value
 
-    constructor(title,postDate,images,description,tags,postOwner,type, IBAN, weblink, organizationName, monetaryTarget) {
-        super(title,postDate,images,description,tags,postOwner,type);
+    constructor(IBAN, weblink, organizationName, monetaryTarget) {
+        super();
         this.IBAN = IBAN
         this.weblink = weblink
         this.organizationName = organizationName
         this.monetaryTarget = monetaryTarget
     }
 
-    toJSON () {
-        const superJSON = super.toJSON()
+    getProperty() {
         return {
-            ...superJSON,
-            typeSpecific: {
-                IBAN: this.IBAN,
-                weblink: this.weblink,
-                organizationName: this.organizationName,
-                monetaryTarget: this.monetaryTarget
-            }
-        }
+            IBAN: this.IBAN,
+            weblink: this.weblink,
+            organizationName: this.organizationName,
+            monetaryTarget: this.monetaryTarget,
+        };
     }
 
 }

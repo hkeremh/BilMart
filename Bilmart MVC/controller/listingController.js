@@ -11,8 +11,17 @@ import express from 'express';
 import { ObjectId } from "mongodb";
 import listingModel from '../model/listingModel.js'; //this line allows controller to use methods from model
 const router = express.Router();
- 
-//this is an example of a specific route which calls a "getAllListings" function
+
+//-----------------------
+import TransactionalItem from "../model/Classes/TransactionalItemClass.js";
+import Post from "../model/Classes/PostClass.js";
+import LendItem from "../model/Classes/LendItemClass.js";
+import LostFound from "../model/Classes/LostFoundClass.js";
+import Donation from "../model/Classes/DonationClass.js";
+//-----------------------
+
+
+
 //from the model.
 router.get('/', async (req, res) => {
     try {
@@ -28,7 +37,51 @@ router.get("/home", async (req, res) => {
   try {
     const pageNumber = Number(req.query.pageNumber) || 1; 
     const records = await listingModel.getPageListings(pageNumber);
-    console.log(records);  
+    //console.log(records); //displays all posts loaded in json
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //vvvvvvvvvvvvvvvvvvvvvvvvvv
+    //DONT DELETE THE CODE BELOW
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    /*
+    //-----------
+
+    const sellItem = new TransactionalItem(4, 7, true);
+    const lendItem = new LendItem(5, 9, true, 4);
+    const donationItem = new Donation("097N78", "www.weblink.com", "stray dogs", 100000)
+    const LFItem = new LostFound(false);
+
+    const object = new Post(
+        "Title is This",
+        new Date(),
+        ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
+        "Descrion is this",
+        ['tag1', 'tag2'],
+        '123456789012345678901234', // MongoDB user ID
+        'sale',
+        LFItem
+    );
+
+    const jsonString = JSON.stringify(object.toJSON());
+
+    console.log("-----------JSON--------------")
+    console.log(jsonString);
+    console.log("-----------------------------")
+
+    console.log("get:" + JSON.stringify(object.getProperties()));
+
+    //------------
+    */
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //vvvvvvvvvvvvvvvvvvvvvvvvvv
+    //DONT DELETE THE CODE ABOVE
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
     res.json(records);
   } catch (error) {
     console.error(error)

@@ -1,3 +1,4 @@
+
 class Post {
     // Properties
     title; //string
@@ -7,9 +8,10 @@ class Post {
     tags; //list of string
     postOwner; //url
     type; //string
+    typeSpecific; // list of variables
 
     // Constructor
-    constructor(title, postDate, images, description, tags, postOwner, type) {
+    constructor(title, postDate, images, description, tags, postOwner, type, typeSpec) {
         this.title = title;
         this.postDate = postDate;
         this.images = images || [];
@@ -17,6 +19,11 @@ class Post {
         this.tags = tags || [];
         this.postOwner = postOwner;
         this.type = type;
+        this.typeSpecific = typeSpec || {};
+    }
+
+    getProperties() {
+        return this.typeSpecific.getProperty()
     }
 
     // toJSON function
@@ -30,6 +37,7 @@ class Post {
             tags: this.tags,
             postOwner: this.postOwner,
             type: this.type,
+            typeSpecific: this.typeSpecific
         };
     }
 }

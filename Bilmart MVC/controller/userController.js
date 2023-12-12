@@ -136,6 +136,7 @@ router.patch('/editprofile/:username', async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const user = await userModel.getUserByEmail(req.body.email)
+        console.log(user)
         if(!user) {
           return res.json({success: false, message: 'User not found'})
         }
@@ -298,20 +299,11 @@ router.post("/verify", async (req, res, next) => {
         if(!validCode) {
           return res.json({ success: false, message: "Verification code is wrong"})
         }
-        //create actual user
-        await userModel.create({
-          email: tempUser.email,
-          username: tempUser.username,
-          password: tempUser.password,
-          postList: [],
-          settings: {},
-          profileImage: "",
-          wishList: [],
-          description: tempUser.description,
-          rating: 0,
-          ratedamount: 0,
-          createdAt: new Date()
-        })
+
+        //changes verification form false to true
+        tempUser.verification = true;
+        await userModel.create({...tempUser})
+
         const user = await userModel.getUserByEmail(tempUser.email)
         //delete temp user
         tempUserModel.remove(tempUser._id)
@@ -321,7 +313,8 @@ router.post("/verify", async (req, res, next) => {
           withCredentials: true,
           httpOnly: false,
         })
-        
+
+
 
         return res.json({ success: true, message: "User is verified"})
       }

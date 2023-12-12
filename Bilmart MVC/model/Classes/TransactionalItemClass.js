@@ -1,30 +1,24 @@
-import Post from "./PostClass.js"
+import PostStrategy from "./PostStrategyClass.js"
 
-class TransactionalItem extends Post {
+class TransactionalItem extends PostStrategy {
     price; //double
-    quality; // 1-10 int value
+    quantity; //1-10 int
     available; //bool
 
-    constructor(title,postDate,images,description,tags,postOwner,type,price,quality, available) {
-        super(title, postDate, images, description, tags, postOwner, type); //calls Post constructor
-        this.price = price
-        this.quality = quality
-        this.available = available
-
+    constructor(price, quantity, available) {
+        super();
+        this.price = price;
+        this.quality = quantity;
+        this.available = available;
     }
 
-    toJSON() {
-        const superJSON = super.toJSON();
+    getProperty() {
         return {
-            ...superJSON,
-            typeSpecific: {
-                price: this.price,
-                quality: this.quality,
-                available: this.available
-            }
-        }
+            price: this.price,
+            quality: this.quality,
+            available: this.available
+        };
     }
-
 }
 
 export default TransactionalItem
