@@ -15,6 +15,7 @@ export default function EditProfile() {
     password: "",
     postList: [],
     settings: {},
+    verification: false,
     profileImage: "",
     wishList: [],
     description: "",
@@ -215,7 +216,6 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                               compressImage(reader.result, 0.1, (compress) => {
                                   updatePhoto(compress);
                               })
-                              //updatePhoto(reader.result);
                           }
                           reader.readAsDataURL(file);
                           }}

@@ -56,7 +56,7 @@ export default function Login() {
      if (success) {
        handleSuccess(message);
        setTimeout(() => {
-         navigate("/home?");
+         navigate("/home");
        }, 1500);
      } else {
        handleError(message);

@@ -57,7 +57,7 @@ const handleSuccess = (msg) =>
     if (success) {
       handleSuccess(message);
       setTimeout(() => {
-        navigate("/home?pageNumber=1");
+        navigate("/home");
       }, 1500);
     } else {
       handleError(message);
