@@ -36,9 +36,9 @@ async function getPageListings(pageNumber) {
 }
 
 async function postListing(newListing) {
-  let collection = await db.collection('Posts'); //name of collection
-  let result = await collection.insertOne(newListing);
-  return result;
+    let collection = await db.collection('Posts'); //name of collection
+    let result = await collection.insertOne(newListing);
+    return result;
 }
 
 async function updateListing(query, updates) {
