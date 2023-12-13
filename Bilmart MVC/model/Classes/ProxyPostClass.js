@@ -34,7 +34,7 @@ class ProxyPost {
     //JSON.stringify(object.toJSON());
     toJSON() {
         return {
-            readID: this.realID,
+            realID: this.realID,
             title: this.title,
             postDate: this.postDate,
             image: this.image,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card';
 import Button from "react-bootstrap/Button";
@@ -31,7 +31,7 @@ function ItemCard(props) {
   return (
   <div className="itemCard">
   <Card style={{ width: '280px', height: "500px", border: "1px solid #DED0B6"}}>
-    <Card.Img className="centered-and-cropped" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}/>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.image} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}/>
     <Card.Body>
       <Card.Title>
       {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
@@ -52,11 +52,11 @@ function ItemCard(props) {
     <Card.Body>
       <div>
       <Row>
-      <Col><Link to={`/item/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">View</div></Button></Link></Col>
+      <Col><Link to={`/item/${props.record.realID}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">View</div></Button></Link></Col>
       {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length < 6) && <Col><div className="text" style={{backgroundColor: "#192655", border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price + "₺"}</h4></div></Col>}
       {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length >= 6) && <Col><div className="text" style={{backgroundColor: "#192655", border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price.substring(0,5) + "...₺"}</h4></div></Col>}
-      {props.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Edit</div></Button></Link></Col>}
-      {props.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
+      {props.onProfile === true && <Col><Link to={`/edit/${props.record.realID}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Edit</div></Button></Link></Col>}
+      {props.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record.realID);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
       </Row>
       </div>
     </Card.Body>
