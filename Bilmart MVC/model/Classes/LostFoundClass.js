@@ -5,7 +5,7 @@ class LostFound extends PostStrategy {
 
     constructor(found) {
         super();
-        this.found = found;
+        this.found = found || false;
     }
 
     getProperty() {

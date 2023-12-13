@@ -9,6 +9,7 @@ class Post {
     postOwner; //url
     type; //string
     typeSpecific; // list of variables
+    availability; //bool
 
     // Constructor
     constructor(title, postDate, images, description, tags, postOwner, type, typeSpec) {
@@ -20,6 +21,7 @@ class Post {
         this.postOwner = postOwner;
         this.type = type;
         this.typeSpecific = typeSpec || {};
+        this.availability = "Available";
     }
 
     getProperties() {
@@ -37,7 +39,8 @@ class Post {
             tags: this.tags,
             postOwner: this.postOwner,
             type: this.type,
-            typeSpecific: this.typeSpecific
+            typeSpecific: this.typeSpecific,
+            availability: this.availability
         };
     }
 }

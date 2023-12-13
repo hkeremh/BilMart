@@ -2,7 +2,7 @@ import PostStrategy from "./PostStrategyClass.js"
 
 class TransactionalItem extends PostStrategy {
     price; //double
-    quantity; //1-10 int
+    quality; //
     available; //bool
 
     constructor(price, quantity, available) {

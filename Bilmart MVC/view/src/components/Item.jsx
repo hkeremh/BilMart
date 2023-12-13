@@ -13,6 +13,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
+import "../CSS/general.css"
 
 export default function Item() {
  const navigate = useNavigate();
@@ -357,7 +358,7 @@ useEffect(() => {
                     </div>
                     <hr style={{marginLeft: "15px", marginRight: "15px"}}/>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "white"}}><div className="text">Request Contact</div></Button>}
+                      {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
                     </div> : <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <Button className="primary-accent" variant="secondary" href="/profile"><div className="text">Go to Profile</div></Button>
                     </div>  }

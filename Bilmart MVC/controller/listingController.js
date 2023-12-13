@@ -151,11 +151,11 @@ router.post("/", async (req, res) => {
     let typeSpec = req.body.typeSpecific;
     if (req.body.type === "Sale Item") {
       itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
-    } else if (req.body.type === "Lend Item") {
+    } else if (req.body.type === "Borrowal Item") {
       itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
-    } else if (req.body.type === "Donate Item") {
+    } else if (req.body.type === "Donation") {
       itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
-    } else if (req.body.type === "Lend Item") {
+    } else if (req.body.type === "Lost Item") {
       itemStrategy = new LostFound(typeSpec.found)
     } else {
       console.error(error)
@@ -174,18 +174,10 @@ router.post("/", async (req, res) => {
         itemStrategy
     );
 
-    console.log("------------------post to send is:------------------")
-    console.log(post)
-    console.log("------------------post to JSON is:------------------")
-
     //newDoc is equal to post object in JSON format
-    let newDocument = JSON.stringify(post.toJSON());
-    console.log(newDocument)
-    console.log("----------------------------------------------------")
+    let newDocument = post.toJSON();
+    const result = await listingModel.postListing(newDocument) //access model func.
 
-    console.log(newDocument);
-
-    const result = await listingModel.postListing(req.body) //access model func.
     res.send(result).status(204);
   } catch (error) {
     console.error(error)
