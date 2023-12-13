@@ -3,34 +3,43 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card';
 import Button from "react-bootstrap/Button";
 import ListGroup from 'react-bootstrap/ListGroup';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
+import deleteIcon from "../img/bin.png";
 
 function ItemCard(props) {
   return (
   <div className="itemCard">
-  <Card style={{ width: '280px', height: "500px" }}>
-    <Card.Img variant="top" src={props.record.src[0] || "https://picsum.photos/400"} height={210} width={280}/>
+  <Card style={{ width: '280px', height: "500px", border: "1px solid #DED0B6"}}>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}/>
     <Card.Body>
-      <Card.Title>{props.record.title}</Card.Title>
+      <Card.Title>
+      {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
+      {props.record.title.toString().length >= 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title.toString().substring(0, 17) + "..." }</div>}
+      </Card.Title>
       <Card.Text>
-        {props.record.description}
+        {props.record.description.toString().length < 40 && <div className="text">{props.record.description}</div>}
+        {props.record.description.toString().length >= 40 && <div className="text">{props.record.description.toString().substring(0, 37) + "..." }</div>}
       </Card.Text>
     </Card.Body>
     <ListGroup className="list-group-flush">
-      <ListGroup.Item>{props.record.availability}</ListGroup.Item>
-      <ListGroup.Item>{props.record.type}</ListGroup.Item>
+      {props.record.type === "Sale Item" && <ListGroup.Item><div className="text">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div></ListGroup.Item>}
+      {props.record.type === "Borrowal Item" && <ListGroup.Item><div className="text">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div></ListGroup.Item>}
+      {(props.record.type === "Lost Item" || props.record.type === "Found Item") && <ListGroup.Item><div className="text">{props.record.typeSpecific.status === true ? "Found" : "Still Lost"}</div></ListGroup.Item>}
+      {props.record.type === "Donation" && <ListGroup.Item><div className="text">{props.record.typeSpecific.organizationName}</div></ListGroup.Item>}
+      <ListGroup.Item><div className="text" style={{fontWeight: "bold"}}>{props.record.type}</div></ListGroup.Item>
     </ListGroup>
     <Card.Body>
-      <Container>
+      <div>
       <Row>
-      {!props.record.type.includes("Sold") && <Col><Link to={`/item/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>View</Button></Link></Col>}
-      {props.record.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="success" style={{backgroundColor: "#192655"}}>Edit</Button></Link></Col>}
-      {props.record.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}>Delete</Button></Col>}
+      <Col><Link to={`/item/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">View</div></Button></Link></Col>
+      {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length < 6) && <Col><div className="text" style={{backgroundColor: "#192655", border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price + "₺"}</h4></div></Col>}
+      {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length >= 6) && <Col><div className="text" style={{backgroundColor: "#192655", border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price.substring(0,5) + "...₺"}</h4></div></Col>}
+      {props.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Edit</div></Button></Link></Col>}
+      {props.onProfile === true && <Col><Button variant="danger" style={{backgroundColor: "#192655"}} onClick={() => {props.deleteRecord(props.record._id);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
       </Row>
-      </Container>
+      </div>
     </Card.Body>
   </Card>
   </div>

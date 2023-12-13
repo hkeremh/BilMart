@@ -1,5 +1,9 @@
 html{
     background-color: #D6C7AE;
+    font-family: 'Montserrat', sans-serif;
+}
+.text{
+  font-family: 'Montserrat', sans-serif;
 }
 .itemCard{
     display: inline-block;
@@ -12,10 +16,16 @@ html{
     background-color: #F3F0CA;
     border-radius: 15px;
 }
+.profileItems{
+  background-color: #F3F0CA;
+  border-radius: 15px;
+  margin-top: 15px;
+}
 .selection{
     justify-content: center;
     background-color: #F3F0CA;
     border-radius: 15px;
+    width: 300px;
 }
 .itemDetail{
     background-color: #FFFFEF;
@@ -32,6 +42,7 @@ html{
 }
 .logoBar h1{
   color: #242760;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-size: 32px;
   font-weight: 600;
@@ -41,27 +52,34 @@ html{
   justify-content: center;
   background-color:#0F0E0E;
   border-radius: 15px;
-  height: 500px;
+  height: 520px;
 }
 .itemCardInfo{
   justify-content: center;
   background-color: #F3F0CA;
   border-radius: 15px;
-  height: 280px;
+  height: 250px;
   margin-bottom: 20px;
 }
 .itemCardUserInfo{
   justify-content: center;
   background-color: #F3F0CA;
   border-radius: 15px;
-  height: 200px;
+  height: 250px;
 }
 .itemCardDetails{
   justify-content: center;
   background-color: #F3F0CA;
   border-radius: 15px;
-  height: 500px;
-  margin-top: 20px;
+  height: auto;
+}
+.itemCardDetails h1{
+  color: #E1AA74;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: bolder;
+  line-height: normal;
+  margin-top: 5px;
 }
 .createListing{
   margin-bottom: 15px;
@@ -74,15 +92,29 @@ html{
   width: 350px;
   margin-bottom: 15px;
 }
-.userInfo img{
+.itemUserInfo{
+  justify-content: center;
+  text-align: center;
+  background-color: #F3F0CA;
+  border-radius: 15px;
+  width: 300px;
+  margin-bottom: 15px;
+}
+.profilePhoto{
   border-radius: 50%;
   border: 7px solid #D6C7AE;
   width: 180px;
   height: 180px;
   margin-top: 15px;
 }
+.itemProfilePhoto{
+  border-radius: 50%;
+  border: 7px solid #D6C7AE;
+  margin-top: 15px;
+}
 .userInfo h1{
   color: #242760;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -90,6 +122,7 @@ html{
 }
 .userInfo h2{
   color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 87.523%; /* 15.754px */
@@ -97,6 +130,23 @@ html{
 }
 .userInfo h3{
   color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.userInfo h4{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.userInfo h5{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 87.523%; /* 14.004px */
@@ -107,6 +157,70 @@ html{
   margin-top: 15px;
   margin-left: 15px;
   margin-right: 15px;
+}
+.itemUserInfo h1{
+  color: #242760;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 15px;
+}
+.itemUserInfo h2{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 15.754px */
+  margin-top: 15px;
+}
+.itemUserInfo h3{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo h4{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo h5{
+  color: #544C4C;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo hr{
+  border: 1px solid #544C4C;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.itemPrice{
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 54px;
+  font-style: normal;
+  font-weight: bolder;
+  line-height: normal;
+  margin-left: 15px;
+  margin-top: 5px;
+} 
+.postDate{
+  color: #E1AA74;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  line-height: normal;
+  margin-left: 15px;
+  margin-top: 5px;
 }
 .gradient-background {
     background: linear-gradient(300deg, #192655, #D6C7AE, #FFFFEF,#D6C7AE,#192655);

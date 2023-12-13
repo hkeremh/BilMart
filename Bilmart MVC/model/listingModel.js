@@ -13,8 +13,14 @@ import db from '../database/database.js'; //allows the model to access the db cl
 async function getListing(query) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.findOne(query);
-  if (!result) { return "Listing not found"; }
-  else { return result; }
+  if(!result) {return "Listing not found";}
+  else {return result;}
+}
+
+async function getUserListings(query) {
+  let collection = await db.collection('Posts'); //name of collection
+  let result = await collection.find({postOwner: query}).toArray();
+  return result;
 }
 
 async function getAllListings() {
@@ -23,10 +29,16 @@ async function getAllListings() {
   return result;
 }
 
-async function postListing(newListing) {
+async function getPageListings(pageNumber) {
   let collection = await db.collection('Posts'); //name of collection
-  let result = await collection.insertOne(newListing);
+  let result = await collection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
   return result;
+}
+
+async function postListing(newListing) {
+    let collection = await db.collection('Posts'); //name of collection
+    let result = await collection.insertOne(newListing);
+    return result;
 }
 
 async function updateListing(query, updates) {
@@ -54,10 +66,12 @@ async function searchListings(searchQuery) {
 
 //all methods that need to be used by other files (controller) go in here to export.
 export default {
-  getAllListings,
-  getListing,
-  postListing,
-  updateListing,
-  deleteListing,
-  searchListings
+    getAllListings,
+    getPageListings,
+    getListing,
+    getUserListings,
+    postListing,
+    updateListing,
+    deleteListing,
+    searchListings
 };

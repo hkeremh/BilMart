@@ -6,15 +6,29 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "check-password-strength": "^2.0.7",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongodb": "^6.3.0"
+    "jsonwebtoken": "^9.0.2",
+    "lz-string": "^1.5.0",
+    "mongodb": "^6.3.0",
+    "nodemailer": "^6.9.7",
+    "nodemon": "^3.0.1",
+    "react-password-strength-bar": "^0.4.1"
+  },
+  "devDependencies": {
+    "compress-images": "^2.0.5"
   }
 }

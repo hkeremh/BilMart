@@ -12,23 +12,97 @@ import { ObjectId } from "mongodb";
 import listingModel from '../model/listingModel.js'; //this line allows controller to use methods from model
 const router = express.Router();
 
-//this is an example of a specific route which calls a "getAllListings" function
+//-----------------------
+import TransactionalItem from "../model/Classes/TransactionalItemClass.js";
+import Post from "../model/Classes/PostClass.js";
+import LendItem from "../model/Classes/LendItemClass.js";
+import LostFound from "../model/Classes/LostFoundClass.js";
+import Donation from "../model/Classes/DonationClass.js";
+//-----------------------
+
+
+
 //from the model.
 router.get('/', async (req, res) => {
+    try {
+      const listings = await listingModel.getAllListings() //access model func.
+      //console.log(listings)
+      res.send(listings) //return value
+    } catch (error) {
+      console.error(error)
+      res.status(500).send({ error: 'Internal Server Error' })
+    }
+})
+router.get("/home", async (req, res) => {
   try {
-    const listings = await listingModel.getAllListings() //access model func.
-    res.send(listings) //return value
+    const pageNumber = Number(req.query.pageNumber) || 1; 
+    const records = await listingModel.getPageListings(pageNumber);
+    //console.log(records); //displays all posts loaded in json
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //vvvvvvvvvvvvvvvvvvvvvvvvvv
+    //DONT DELETE THE CODE BELOW
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    /*
+    //-----------
+
+    const sellItem = new TransactionalItem(4, 7, true);
+    const lendItem = new LendItem(5, 9, true, 4);
+    const donationItem = new Donation("097N78", "www.weblink.com", "stray dogs", 100000)
+    const LFItem = new LostFound(false);
+
+    const object = new Post(
+        "Title is This",
+        new Date(),
+        ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
+        "Descrion is this",
+        ['tag1', 'tag2'],
+        '123456789012345678901234', // MongoDB user ID
+        'sale',
+        LFItem
+    );
+
+    const jsonString = JSON.stringify(object.toJSON());
+
+    console.log("-----------JSON--------------")
+    console.log(jsonString);
+    console.log("-----------------------------")
+
+    console.log("get:" + JSON.stringify(object.getProperties()));
+
+    //------------
+    */
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //vvvvvvvvvvvvvvvvvvvvvvvvvv
+    //DONT DELETE THE CODE ABOVE
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+    res.json(records);
   } catch (error) {
     console.error(error)
     res.status(500).send({ error: 'Internal Server Error' })
   }
-})
-
+});
+// router.get('/search', async (req, res) => {
+//   try {
+//     const listings = await listingModel.searchListings(req.query) //access model func.
+//     //console.log(listings)
+//     res.send(listings) //return value
+//   } catch (error) {
+//     console.error(error)
+//     res.status(500).send({ error: 'Internal Server Error' })
+//   }
+// });
 router.get('/:id', async (req, res) => {
   try {
-    const query = { _id: new ObjectId(req.params.id) };
+    const query = {_id: new ObjectId(req.params.id)};
     const listing = await listingModel.getListing(query) //access model func.
-    if (listing === "Listing not found") {
+    if(listing === "Listing not found") {
       res.status(404).send('Listing not found')
     } else {
       res.status(200).send(listing) //return value
@@ -39,16 +113,70 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.get('/userPosts/:id', async (req, res) => {
+  try {
+    const listing = await listingModel.getUserListings(req.params.id); //access model func.
+    res.status(200).json(listing) //return value
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
+//creates new listing
 router.post("/", async (req, res) => {
   try {
-    let newDocument = {
-      title: req.body.title,
-      description: req.body.description,
-      availability: req.body.availability,
-      type: req.body.type,
-      src: req.body.src
-    };
-    const result = await listingModel.postListing(newDocument) //access model func.
+
+    //assuming incoming newDoc is:
+    /*
+      title; //string +
+      postDate; //date +
+      images; //list of url +
+      description; //string +
+      tags; //list of string
+      postOwner; //url +
+      type; //string +
+      typeSpecific; // list of variables +
+
+    */
+
+    let itemStrategy;
+    let post;
+
+    //applies specific strategy based on type of post
+    let typeSpec = req.body.typeSpecific;
+    if (req.body.type === "Sale Item") {
+      itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
+    } else if (req.body.type === "Borrowal Item") {
+      itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
+    } else if (req.body.type === "Donation") {
+      itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
+    } else if (req.body.type === "Lost Item" || req.body.type === "Found Item") {
+      itemStrategy = new LostFound(typeSpec.status)
+    } else {
+      res.status(500).send({ error: 'No appropriate item type was selected when creating a post.' })
+    }
+
+    //create a post object with unique type
+    //console.log(req.body);
+    post = new Post(
+        req.body.title,
+        new Date(),
+        req.body.images,
+        req.body.description,
+        req.body.tags,
+        req.body.postOwner,
+        req.body.type,
+        itemStrategy,
+        req.body.wishlistCount
+    );
+    //newDoc is equal to post object in JSON format
+    let newDocument = JSON.stringify(post.toJSON());
+    console.log("-----------JSON.stringify toJSON--------------")
+    console.log(newDocument);
+    console.log("-----------------------------")
+
+    const result = await listingModel.postListing(post.toJSON()) //access model func.
     res.send(result).status(204);
   } catch (error) {
     console.error(error)
@@ -59,13 +187,16 @@ router.post("/", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
-    const updates = {
+    const updates =  {
       $set: {
         title: req.body.title,
+        postDate: req.body.postDate,
+        images: req.body.images,
         description: req.body.description,
         availability: req.body.availability,
         type: req.body.type,
-        src: req.body.src
+        postOwner: req.body.postOwner,
+        price: req.body.price,
       }
     };
     const result = await listingModel.updateListing(query, updates) //access model func.
@@ -93,5 +224,5 @@ router.post('/search', async (req, res) => {
   }
 
 })
-
-export default router; //allows other files to access the routes
+  
+  export default router; //allows other files to access the routes
