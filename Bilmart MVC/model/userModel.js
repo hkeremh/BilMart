@@ -44,7 +44,6 @@ async function create(newDocument){
     let collection = await db.collection("Users");
     const user = new User(newDocument)
     let result = await collection.insertOne(user.toJSON());
-    console.log ("-----------------Made it to insert user-----------------")
     return result;
 }
 

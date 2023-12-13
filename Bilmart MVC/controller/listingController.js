@@ -23,6 +23,7 @@ import Post from "../model/Classes/PostClass.js";
 import LendItem from "../model/Classes/LendItemClass.js";
 import LostFound from "../model/Classes/LostFoundClass.js";
 import Donation from "../model/Classes/DonationClass.js";
+import ProxyPost from "../model/Classes/ProxyPostClass.js";
 //-----------------------
 
 
@@ -149,7 +150,6 @@ router.post("/", async (req, res) => {
     //check request format
     if(!req.body.title ||
         !req.body.description ||
-        !req.body.availability ||
         !req.body.postOwner ||
         !req.body.type ||
         !req.body.images
@@ -216,7 +216,7 @@ router.post("/", async (req, res) => {
       return res.json({success: false, message: 'The description should be less than 2000 characters long'})
     }
     //check that price is a number
-    if(!/^\d+$/.test(newPostDocument.price)) {
+    if(!/^\d+$/.test(newPostDocument.typeSpecific.price)) {
       return res.json({success: false, message: 'Price should be a number'})
     }
     //check images
@@ -227,7 +227,19 @@ router.post("/", async (req, res) => {
     const result = await listingModel.postListing(newPostDocument) //access model func.
 
     //--------------------
-    let newProxyPostDocument = {
+
+    let proxyPost = new ProxyPost(
+        result.insertedId,
+        req.body.title,
+        new Date(),
+        '',
+        req.body.description,
+        req.body.tags,
+        req.body.postOwner,
+        req.body.type,
+        itemStrategy
+    );
+    /*let newProxyPostDocument = {
       realID: result.insertedId,
       title: req.body.title,
       postOwner: req.body.postOwner,
@@ -236,29 +248,36 @@ router.post("/", async (req, res) => {
       availability: req.body.availability,
       type: req.body.type,
       price: req.body.price
-    }
+    }*/
     //compress first image for proxy
-    const uri = newPostDocument.images[0].split(';base64,').pop()
-    let imgBuffer = Buffer.from(uri, 'base64');
-    await sharp(imgBuffer)
-        .resize(300, 300, {fit: 'inside'})
-        .toFormat('png')
-        .toBuffer()
-        .then(data => {
-          console.log('success')
-          newProxyPostDocument.image = `data:image/png;base64,${data.toString('base64')}`
-          proxyListingModel.create(newProxyPostDocument);
-          console.log(newProxyPostDocument.image.length);
-        })
-        .catch(err => {return res.json({success: false, message:`downisze issue ${err}`})})
+    try {
+      const uri = newPostDocument.images[0].split(';base64,').pop()
+      let imgBuffer = Buffer.from(uri, 'base64');
+      await sharp(imgBuffer)
+          .resize(300, 300, {fit: 'inside'})
+          .toFormat('png')
+          .toBuffer()
+          .then(data => {
+            console.log('success')
+            // newProxyPostDocument.image = `data:image/png;base64,${data.toString('base64')}`
+            proxyPost.image = `data:image/png;base64,${data.toString('base64')}`;
+            // proxyListingModel.create(newProxyPostDocument);
+            console.log(proxyPost.toJSON())
+            proxyListingModel.create(proxyPost.toJSON());
+            console.log("sent to prxy")
+          })
+          .catch(err => {
+            console.log(`downisze issue ${err}`)
+          })
+    } catch (e) {
+      return res.json({success: false, message: `downisze issue ${err}`})
+    }
+
+
+    return res.json({success: true, message: "Post created in successfully"});
 
 
 
-    res.json({success: true, message: "Post created in successfully"});
-
-
-
-    res.send(result).status(204);
   } catch (error) {
     console.error(error)
     res.status(500).send({ error: 'Internal Server Error' })

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card';
 import Button from "react-bootstrap/Button";
@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import deleteIcon from "../img/bin.png";
 import "../CSS/card.css"
+
 
 function ItemCard(props) {
   const [backgroundType, setBackgroundType] = useState('');
@@ -22,15 +23,16 @@ function ItemCard(props) {
       'Other Item': 'other-background',
     };
 
+
+
     setBackgroundType(typeToBackground[type] || 'other-background');
   }, [props.record.type]);
+
   return (
       <div className={`itemCard `} >
-        <div className={`circleBackground ${backgroundType}`} style={{width: '100%',
-          height: undefined,
-          objectFit: 'contain', maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}></div>
+        <div className={`circleBackground ${backgroundType}`} style={{width: '100%', height: undefined, objectFit: 'contain', maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}/>
         <Card>
-          <Card.Img className="centered-and-cropped rounded-container img_c" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"}/>
+          <Card.Img className="centered-and-cropped rounded-container img_c" variant="top" src={props.record.image} height={"220px"} width={"auto"}/>
             <Card.Body>
             <Card.Title>
           {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
@@ -48,11 +50,11 @@ function ItemCard(props) {
             <Card.Body>
             <div>
             <Row>
-          {!props.record.availability.includes("Unavailable") && <Col><Link to={`/item/${props.record._id}`}><Button className="primary-accent" variant="secondary"><div className="text">View</div></Button></Link></Col>}
+          {!props.record.availability.includes("Unavailable") && <Col><Link to={`/item/${props.record.readID}`}><Button className="primary-accent" variant="secondary"><div className="text">View</div></Button></Link></Col>}
           {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length < 6) && <Col><div className="text primary-accent" style={{border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price + "₺"}</h4></div></Col>}
           {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length >= 6) && <Col><div className="text primary-accent" style={{border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price.substring(0,5) + "...₺"}</h4></div></Col>}
-          {props.onProfile === true && <Col><Link to={`/edit/${props.record._id}`}><Button className="primary-accent" variant="secondary"><div className="text">Edit</div></Button></Link></Col>}
-          {props.onProfile === true && <Col><Button className="primary-accent" variant="danger" onClick={() => {props.deleteRecord(props.record._id);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
+          {props.onProfile === true && <Col><Link to={`/edit/${props.record.readID}`}><Button className="primary-accent" variant="secondary"><div className="text">Edit</div></Button></Link></Col>}
+          {props.onProfile === true && <Col><Button className="primary-accent" variant="danger" onClick={() => {props.deleteRecord(props.record.readID);}}><img width={23} height={23} src={deleteIcon}/></Button></Col>}
             </Row>
             </div>
             </Card.Body>

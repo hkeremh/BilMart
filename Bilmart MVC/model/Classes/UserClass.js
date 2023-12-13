@@ -17,7 +17,6 @@ class User {
     ratedamount;
     // Constructor
     constructor({username, password, email, bilkentID, department, verification, rating, settings, description, postList, wishList, profileImage, ratedamount, createdAt}) {
-        console.log ("-----------------Made it to user constructor-----------------")
         this.username = username || '';
         this.password = password || '';
         this.email = email || '';
