@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
 router.get("/home", async (req, res) => {
   try {
     const pageNumber = Number(req.query.pageNumber) || 1;
-    const records = await listingModel.getPageListings(pageNumber);
+    const records = await proxyListingModel.getPageListings(pageNumber);
     //console.log(records); //displays all posts loaded in json
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -154,7 +154,7 @@ router.post("/", async (req, res) => {
         !req.body.type ||
         !req.body.images
     ) {
-      return res.json({message: 'Request format is incorrect'})
+      return res.json({message: 'Please fill all the missing sections'})
     }
     //verify user cookie
     const data = await authMiddleware.validCookie(req)
@@ -271,7 +271,7 @@ router.post("/", async (req, res) => {
     }
 
 
-    return res.json({success: true, message: "Post created in successfully"});
+    return res.json({success: true, message: "Post created successfully"});
 
 
 

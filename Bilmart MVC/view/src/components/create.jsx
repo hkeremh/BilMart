@@ -179,26 +179,15 @@ export default function Create() {
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
-    if ((sources.length !== 0 && sources.length <= 5)) {
+    if ((sources.length !== 0 && sources.length <= 5) || (form.type !== "")){
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
-      // const typeSpecificItem = await updateTypeSpecific();
-      // typeSpecificItem.images = sources;
-      // typeSpecificItem.postOwner = userID;
-      // console.log(typeSpecificItem);
-      // await fetch("http://localhost:4000/listing", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(typeSpecificItem),
-      // })
-      //   .catch(error => {
-      //     window.alert(error);
-      //     return;
-      const newItem = { ...form, postOwner: userID, images: sources };
+      const typeSpecificItem = await updateTypeSpecific();
+      typeSpecificItem.images = sources;
+      typeSpecificItem.postOwner = userID;
+      console.log(typeSpecificItem);
       try {
-        const { data } = await axios.post('http://localhost:4000/listing', newItem, {
+        const { data } = await axios.post('http://localhost:4000/listing', typeSpecificItem, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -223,17 +212,29 @@ export default function Create() {
 
     }
     else {
-      toast.error('Please upload 1-5 pictures', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
-      setForm({ title: "", description: "", availability: "Available", type: "", price: "0"});
+      if((sources.length === 0 || sources.length > 5) && form.type !== ""){
+        toast.error('Please upload 1 to 5 images', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+      } else {
+        toast.error('Please fill all the missing sections', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });        
+      }
     }
   }
 

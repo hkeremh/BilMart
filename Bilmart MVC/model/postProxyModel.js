@@ -7,16 +7,21 @@ async function getAllListings() {
     let result = await queryCollection.find({}).toArray();
     return result;
 }
-async function getListing(query) {
-    const result = await queryCollection.findOne(query);
+async function getPageListings(pageNumber) {
+    let result = await queryCollection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
     return result;
+  }
+async function getListing(query) {
+    let result = await queryCollection.findOne(query);
+    if(!result) {return "Listing not found";}
+    else {return result;}
 }
 async function getByPostID(postID) {
-    const result = await queryCollection.findOne(query);
-    return result;
+    let result = await queryCollection.findOne(postID);
+    if(!result) {return "Listing not found";}
+    else {return result;}
 }
 async function create(newListing) {
-
     let result = await queryCollection.insertOne(newListing);
     return result;
 }
@@ -25,8 +30,8 @@ async function getUserListings(query) {
     return result;
 }
 async function deleteListing(query) {
-let result = await queryCollection.deleteOne(query);
-return result;
+    let result = await queryCollection.deleteOne(query);
+    return result;
 }
 async function updateListing(query, updates) {
     let result = await queryCollection.updateOne(query, updates);
@@ -36,6 +41,7 @@ async function updateListing(query, updates) {
 export default {
     getAllListings,
     getListing,
+    getPageListings,
     getByPostID,
     create,
     getUserListings,
