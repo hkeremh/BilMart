@@ -147,18 +147,18 @@ router.post("/", async (req, res) => {
     let typeSpec = req.body.typeSpecific;
     if (req.body.type === "Sale Item") {
       itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
-    } else if (req.body.type === "Lend Item") {
+    } else if (req.body.type === "Borrowal Item") {
       itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
-    } else if (req.body.type === "Donate Item") {
+    } else if (req.body.type === "Donation") {
       itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
-    } else if (req.body.type === "Lend Item") {
-      itemStrategy = new LostFound(typeSpec.found)
+    } else if (req.body.type === "Lost Item" || req.body.type === "Found Item") {
+      itemStrategy = new LostFound(typeSpec.status)
     } else {
-      console.error(error)
       res.status(500).send({ error: 'No appropriate item type was selected when creating a post.' })
     }
 
     //create a post object with unique type
+    //console.log(req.body);
     post = new Post(
         req.body.title,
         new Date(),
@@ -167,13 +167,16 @@ router.post("/", async (req, res) => {
         req.body.tags,
         req.body.postOwner,
         req.body.type,
-        itemStrategy
+        itemStrategy,
+        req.body.wishlistCount
     );
     //newDoc is equal to post object in JSON format
     let newDocument = JSON.stringify(post.toJSON());
+    console.log("-----------JSON.stringify toJSON--------------")
     console.log(newDocument);
+    console.log("-----------------------------")
 
-    const result = await listingModel.postListing(req.body) //access model func.
+    const result = await listingModel.postListing(post.toJSON()) //access model func.
     res.send(result).status(204);
   } catch (error) {
     console.error(error)
