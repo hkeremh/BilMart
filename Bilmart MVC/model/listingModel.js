@@ -9,6 +9,7 @@
  */
 
 import db from '../database/database.js'; //allows the model to access the db client
+import { ObjectId } from 'mongodb';
 
 async function getListing(query) {
   let collection = await db.collection('Posts'); //name of collection
@@ -17,16 +18,28 @@ async function getListing(query) {
   else {return result;}
 }
 
+async function getUserListings(query) {
+  let collection = await db.collection('Posts'); //name of collection
+  let result = await collection.find({postOwner: query}).toArray();
+  return result;
+}
+
 async function getAllListings() {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.find({}).toArray();
   return result;
 }
 
-async function postListing(newListing) {
+async function getPageListings(pageNumber) {
   let collection = await db.collection('Posts'); //name of collection
-  let result = await collection.insertOne(newListing);
+  let result = await collection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
   return result;
+}
+
+async function postListing(newListing) {
+    let collection = await db.collection('Posts'); //name of collection
+    let result = await collection.insertOne(newListing);
+    return result;
 }
 
 async function updateListing(query, updates) {
@@ -40,11 +53,19 @@ async function deleteListing(query) {
   let result = await collection.deleteOne(query);
   return result;
 }
+async function addToWishlist(id, updates) {
+  let collection = await db.collection('Posts'); //name of collection
+  let query = {_id: new ObjectId(id)};
+  let result = await collection.updateOne(query, updates);
+  return result;
+}
 
 //all methods that need to be used by other files (controller) go in here to export.
 export default {
     getAllListings,
+    getPageListings,
     getListing,
+    getUserListings,
     postListing,
     updateListing,
     deleteListing

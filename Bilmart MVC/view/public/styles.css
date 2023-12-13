@@ -1,5 +1,11 @@
+:root {
+  --primary-color: white;
+  --secondary-color: #ccdbff;
+  --primary-accent: #192655;
+}
+
 html{
-    background-color: #D6C7AE;
+    background-color: var(--primary-color);
     font-family: 'Montserrat', sans-serif;
 }
 .text{
@@ -13,26 +19,27 @@ html{
     width: 280px;
 }
 .items{
-    background-color: #F3F0CA;
+    background-color: var(--secondary-color);
     border-radius: 15px;
 }
 .profileItems{
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   margin-top: 15px;
 }
 .selection{
     justify-content: center;
-    background-color: #F3F0CA;
+    background-color: var(--secondary-color);
     border-radius: 15px;
+    width: 300px;
 }
 .itemDetail{
-    background-color: #FFFFEF;
+    background-color: var(--primary-color);
     border-radius: 15px;
 }
 .logoBar{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   width: 1000px;
   height: 50px;
@@ -40,7 +47,7 @@ html{
   flex-direction: column;
 }
 .logoBar h1{
-  color: #242760;
+  color: var(--primary-accent);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-size: 32px;
@@ -51,27 +58,34 @@ html{
   justify-content: center;
   background-color:#0F0E0E;
   border-radius: 15px;
-  height: 500px;
+  height: 520px;
 }
 .itemCardInfo{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
-  height: 280px;
+  height: 250px;
   margin-bottom: 20px;
 }
 .itemCardUserInfo{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
-  height: 200px;
+  height: 250px;
 }
 .itemCardDetails{
   justify-content: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
-  height: 500px;
-  margin-top: 20px;
+  height: auto;
+}
+.itemCardDetails h1{
+  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: bolder;
+  line-height: normal;
+  margin-top: 5px;
 }
 .createListing{
   margin-bottom: 15px;
@@ -79,20 +93,33 @@ html{
 .userInfo{
   justify-content: center;
   text-align: center;
-  background-color: #F3F0CA;
+  background-color: var(--secondary-color);
   border-radius: 15px;
   width: 350px;
   margin-bottom: 15px;
 }
+.itemUserInfo{
+  justify-content: center;
+  text-align: center;
+  background-color: var(--secondary-color);
+  border-radius: 15px;
+  width: 300px;
+  margin-bottom: 15px;
+}
 .profilePhoto{
   border-radius: 50%;
-  border: 7px solid #D6C7AE;
+  border: 7px solid var(--secondary-color);
   width: 180px;
   height: 180px;
   margin-top: 15px;
 }
+.itemProfilePhoto{
+  border-radius: 50%;
+  border: 7px solid var(--secondary-color);
+  margin-top: 15px;
+}
 .userInfo h1{
-  color: #242760;
+  color: var(--primary-accent);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -100,7 +127,7 @@ html{
   margin-top: 15px;
 }
 .userInfo h2{
-  color: #544C4C;
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -108,7 +135,23 @@ html{
   margin-top: 15px;
 }
 .userInfo h3{
-  color: #544C4C;
+  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.userInfo h4{
+  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.userInfo h5{
+  color: var(--primary-color);
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -116,13 +159,77 @@ html{
   margin-top: 15px;
 }
 .userInfo hr{
-  border: 1px solid #544C4C;
+  border: 1px solid var(--primary-color);
   margin-top: 15px;
   margin-left: 15px;
   margin-right: 15px;
 }
+.itemUserInfo h1{
+  color: var(--primary-accent);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 15px;
+}
+.itemUserInfo h2{
+  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 87.523%; /* 15.754px */
+  margin-top: 15px;
+}
+.itemUserInfo h3{
+  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo h4{
+  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo h5{
+  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 87.523%; /* 14.004px */
+  margin-top: 15px;
+}
+.itemUserInfo hr{
+  border: 1px solid var(--primary-color);
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.itemPrice{
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 54px;
+  font-style: normal;
+  font-weight: bolder;
+  line-height: normal;
+  margin-left: 15px;
+  margin-top: 5px;
+} 
+.postDate{
+  color: #E1AA74;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  line-height: normal;
+  margin-left: 15px;
+  margin-top: 5px;
+}
 .gradient-background {
-    background: linear-gradient(300deg, #192655, #D6C7AE, #FFFFEF,#D6C7AE,#192655);
+    background: linear-gradient(300deg, #192655, var(--secondary-color), #FFFFEF,var(--secondary-color),#192655);
     background-size: 180% 180%;
     animation: gradient-animation 18s ease infinite;
   }
