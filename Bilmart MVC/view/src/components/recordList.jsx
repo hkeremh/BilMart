@@ -44,18 +44,16 @@ const Home = () => {
  const [records, setRecords] = useState([]);
  // This method fetches the records from the database.
    async function getRecords(pageNumber){
-    const response = await fetch(`http://localhost:4000/listing/home?pageNumber=${pageNumber}`);
-
-    if (!response.ok) {
-      const message = `An error occurred: ${response.statusText}`;
-      window.alert(message);
-      return;
-    }
-
-    const records = await response.json();
-    setRecords(records);
-    setIsPostLoading(false);
-    navigate(`/home?pageNumber=${pageNumber}`);
+      const response = await fetch(`http://localhost:4000/listing/home?pageNumber=${pageNumber}`);
+      if (!response.ok) {
+        const message = `An error occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const records = await response.json();
+      setRecords(records);
+      setIsPostLoading(false);
+      navigate(`/home?pageNumber=${pageNumber}`);      
   }  
 useEffect(() => {
   getRecords(currentPage);
