@@ -78,7 +78,6 @@ html{
   background-color: var(--secondary-color);
   border-radius: 15px;
   height: auto;
-  margin-top: 20px;
 }
 .itemCardDetails h1{
   color: var(--primary-color);

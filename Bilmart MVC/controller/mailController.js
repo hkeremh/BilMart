@@ -25,10 +25,10 @@ exports.sendMail = (reciever, subject, html) => {
     }
   })
 }
-exports.wishlistNotification = (posterMail, itemName, postURL, wishlistCount) => {
-  sendMail(posterMail,
+exports.wishlistNotification = (posterMail, itemName, wishlister, wishlistCount) => {
+  exports.sendMail(posterMail,
     "Wishlisting",    
-    "<h1>BilMart</h1><h2>Your item <a href=" + postURL +">" + itemName + "</a> has been wishlisted " + wishlistCount + " times.</h2>")
+    `<h1>BilMart</h1><h2>Your item "${itemName}" has been wishlisted by ${wishlister}.</h2><h2>It has been wishlisted ${wishlistCount} times.</h2>`)
 }
 exports.ratingNotification = (posterMail, newRating) =>{
   sendMail(posterMail,

@@ -88,6 +88,17 @@ router.patch('/wishlist/:username', async (req, res) => {
       $set: {wishList: req.body.wishList}
     };
     const result = await userModel.addToWishlist(username, updates) //access model func.
+    const owner = req.body.postOwner;
+    const item = req.body.item;
+    if(item !== undefined){
+      try {
+      await mailer.wishlistNotification(owner.email, item.title, req.body.username, item.wishlistCount);  
+      console.log("Email sent");
+      } catch (error) {
+        console.error(error);
+        console.log("Email couldn't be sent");
+      }      
+    }
     res.send(result).status(200);
   } catch (error) {
     console.error(error)
