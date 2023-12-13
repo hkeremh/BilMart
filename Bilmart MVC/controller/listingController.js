@@ -213,7 +213,7 @@ router.post("/", async (req, res) => {
       return res.json({success: false, message: 'The description should be less than 2000 characters long'})
     }
     //check that price is a number
-    if(!/^\d+$/.test(newPostDocument.typeSpecific.price)) {
+    if((newPostDocument.typeSpecific.price) && !/^\d+$/.test(newPostDocument.typeSpecific.price)) {
       return res.json({success: false, message: 'Price should be a number'})
     }
     //check images
@@ -305,12 +305,27 @@ router.patch("/:id", async (req, res) => {
       return res.json({success: false, message: 'The description should be less than 2000 characters long'})
     }
     //check that price is a number
-    if(!/^\d+$/.test(req.body.price) && req.body.price != '') {
+    if(req.body.typeSpecific.price && !/^\d+$/.test(req.body.typeSpecific.price) && req.body.typeSpecific.price != '') {
       return res.json({success: false, message: 'Price should be a number'})
     }
     //check images
     if(req.body.images.length > 5) {
       return res.json({success: false, message: 'A post can contain at most 5 images'})
+    }
+    let itemStrategy;
+
+    //applies specific strategy based on type of post
+    let typeSpec = req.body.typeSpecific;
+    if (req.body.type === "Sale Item") {
+      itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
+    } else if (req.body.type === "Borrowal Item") {
+      itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
+    } else if (req.body.type === "Donation") {
+      itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
+    } else if (req.body.type === "Lost Item" || req.body.type === "Found Item") {
+      itemStrategy = new LostFound(typeSpec.status)
+    } else {
+      res.status(500).send({ error: 'No appropriate item type was selected when creating a post.' })
     }
     //edit real post
     let query = { _id: new ObjectId(req.params.id) };
@@ -323,7 +338,7 @@ router.patch("/:id", async (req, res) => {
         availability: req.body.availability,
         type: req.body.type,
         postOwner: req.body.postOwner,
-        price: req.body.price,
+        typeSpecific: itemStrategy
       }
     };
     const result = await listingModel.updateListing(query, updates) //access model func.
@@ -335,7 +350,7 @@ router.patch("/:id", async (req, res) => {
         description: req.body.description,
         availability: req.body.availability,
         type: req.body.type,
-        price: req.body.price
+        typeSpecific: itemStrategy
       }
 
     };
