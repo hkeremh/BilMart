@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card';
 import Button from "react-bootstrap/Button";
@@ -26,7 +26,9 @@ function ItemCard(props) {
   }, [props.record.type]);
   return (
       <div className={`itemCard `} >
-        <div className={`circleBackground ${backgroundType}`}></div>
+        <div className={`circleBackground ${backgroundType}`} style={{width: '100%',
+          height: undefined,
+          objectFit: 'contain', maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}></div>
         <Card>
           <Card.Img className="centered-and-cropped rounded-container img_c" variant="top" src={props.record.images[0]} height={"220px"} width={"auto"}/>
             <Card.Body>

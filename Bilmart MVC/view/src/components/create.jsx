@@ -33,37 +33,37 @@ export default function Create() {
       monetaryTarget: "",
       status: true
     },
-    price: "",
+    price: "0",
   });
   function compressImage(inputImage, compressionQuality, callback) {
 
     var img = new Image();
-
+  
     // Load the image
     img.src = inputImage;
-
+  
     // Handle the image onload event
     img.onload = function () {
       // Create a canvas element
       var canvas = document.createElement('canvas');
       var ctx = canvas.getContext('2d');
-
+      
       let reduceRatio = 10000000.0 / (img.width * img.height)
       if(reduceRatio > 1) reduceRatio = 1
 
       // Set the canvas size to the image size
       canvas.width = img.width * reduceRatio;
       canvas.height = img.height * reduceRatio;
-
-
-
+      
+      
+  
       // Draw the image on the canvas
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
       // Get the compressed image data as a base64-encoded string
       var compressedImageData = canvas.toDataURL('image/jpeg', compressionQuality);
 
-
+  
       // Pass the compressed image data to the callback function
       callback(compressedImageData);
     };
@@ -113,6 +113,28 @@ export default function Create() {
       return [...prev, value];
     });
   }
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+ const handleSuccess = (msg) =>
+  toast.success(msg, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
   async function updateTypeSpecific() {
     if(form.type == "Sale Item"){
       const typeSpecificSale = {
@@ -163,24 +185,31 @@ export default function Create() {
     if ((sources.length !== 0 && sources.length <= 5)) {
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
-      const newItem = { ...form, postOwner: userID, images: sources};
-      console.log("----------newItem----------")
-      console.log(newItem)
-      console.log("---------------------------")
-      await fetch("http://localhost:4000/listing", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newItem),
-      })
-          .catch(error => {
-            window.alert(error);
-            return;
-          });
+      const newItem = { ...form, postOwner: userID, images: sources };
+      try {
+        const { data } = await axios.post('http://localhost:4000/listing', newItem, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        });
+        console.log(data)
+        const { success, message } = data;
+        if (success) {
+          handleSuccess(message);
+          setTimeout(() => {
+            navigate("/profile");
+          }, 1500);
+        } else {
+          handleError(message);
+        }
 
-      setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
-      navigate("/profile");
+      } catch (error) {
+        // Handle errors here
+        window.alert(error.message);
+      }
+
+
     }
     else {
       toast.error('Please upload 1-5 pictures', {
@@ -192,8 +221,8 @@ export default function Create() {
         draggable: true,
         progress: undefined,
         theme: "colored",
-      });
-      setForm({ title: "", description: "", availability: "Available", type: "", price: ""});
+        });
+      setForm({ title: "", description: "", availability: "Available", type: "", price: "0"});
     }
   }
 

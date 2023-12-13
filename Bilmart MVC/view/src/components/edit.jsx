@@ -39,15 +39,15 @@ const [cookies, removeCookie] = useCookies([]);
     // Create a canvas element
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
-    
+
     let reduceRatio = 10000000.0 / (img.width * img.height)
     if(reduceRatio > 1) reduceRatio = 1
 
     // Set the canvas size to the image size
     canvas.width = img.width * reduceRatio;
     canvas.height = img.height * reduceRatio;
-    
-    
+
+
 
     // Draw the image on the canvas
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -78,6 +78,28 @@ useEffect(() => {
   verifyCookie();
 }, [cookies, navigate, removeCookie]);
 
+ const handleError = (err) =>
+ toast.error(err, {
+   position: "top-center",
+   autoClose: 3000,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+   theme: "colored",
+ });
+const handleSuccess = (msg) =>
+ toast.success(msg, {
+   position: "top-center",
+   autoClose: 1500,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+   theme: "colored",
+ });
  useEffect(() => {
    async function fetchPostData() {
      const id = params.id.toString();
@@ -141,15 +163,32 @@ useEffect(() => {
    };
    if ((sources.length !== 0 && sources.length <= 5)){
     // This will send a post request to update the data in the database.
-    await fetch(`http://localhost:4000/listing/${params.id}`, {
+    /*await fetch(`http://localhost:4000/listing/${params.id}`, {
       method: "PATCH",
       body: JSON.stringify(editedListing),
       headers: {
         'Content-Type': 'application/json'
       },
-    });
+    });*/
+    const { data } = await axios.patch(
+      `http://localhost:4000/listing/${params.id}`,
+      {
+        ...editedListing
+      },
+      { withCredentials: true }
+    )
+    const { success, message } = data;
+     if (success) {
+       handleSuccess(message);
+       setTimeout(() => {
+         navigate("/profile");
+       }, 1500);
+     } else {
+       handleError(message);
 
-    navigate("/profile");    
+     }
+
+    //navigate("/profile");
    }
    else{
     toast.error('Please upload 1-5 pictures', {

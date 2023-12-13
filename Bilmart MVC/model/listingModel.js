@@ -9,6 +9,7 @@
  */
 
 import db from '../database/database.js'; //allows the model to access the db client
+import { ObjectId } from 'mongodb';
 
 async function getListing(query) {
   let collection = await db.collection('Posts'); //name of collection
@@ -50,6 +51,12 @@ async function updateListing(query, updates) {
 async function deleteListing(query) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.deleteOne(query);
+  return result;
+}
+async function addToWishlist(id, updates) {
+  let collection = await db.collection('Posts'); //name of collection
+  let query = {_id: new ObjectId(id)};
+  let result = await collection.updateOne(query, updates);
   return result;
 }
 
