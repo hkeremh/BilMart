@@ -33,7 +33,7 @@ export default function Create() {
       monetaryTarget: "",
       status: true
     },
-    price: "",
+    wishlistCount: 0
   });
   function compressImage(inputImage, compressionQuality, callback) {
 
@@ -114,69 +114,69 @@ export default function Create() {
     });
   }
   async function updateTypeSpecific() {
-    if(form.type == "Sale Item"){
+    if(form.type === "Sale Item"){
       const typeSpecificSale = {
         price: form.typeSpecific.price,
         quality: form.typeSpecific.quality,
         available: form.typeSpecific.available,
       }
-      setForm({...form, typeSpecific: typeSpecificSale, price: form.price});
+      return {...form, typeSpecific: typeSpecificSale};
     } 
-    else if(form.type == "Borrowal Item"){
+    else if(form.type === "Borrowal Item"){
       const typeSpecificBorrowal = {
         price: form.typeSpecific.price,
         quality: form.typeSpecific.quality,
         available: form.typeSpecific.available,
         lendDuration: form.typeSpecific.lendDuration,
       }
-      setForm({typeSpecific: typeSpecificBorrowal, price: form.price});
+      return {...form, typeSpecific: typeSpecificBorrowal};
     }
-    else if(form.type == "Donation"){
+    else if(form.type === "Donation"){
       const typeSpecificDonation = {
         IBAN: form.typeSpecific.IBAN,
         weblink: form.typeSpecific.weblink,
         organizationName: form.typeSpecific.organizationName,
         monetaryTarget: form.typeSpecific.monetaryTarget,
       }
-      setForm({...form, typeSpecific: typeSpecificDonation, price: form.price});
+      return {...form, typeSpecific: typeSpecificDonation};
     }
-    else if(form.type == "Lost Item"){
+    else if(form.type === "Lost Item"){
       const typeSpecificLost = {
         status: false,
       }
-      setForm({...form, typeSpecific: typeSpecificLost, price: form.price});
+      return {...form, typeSpecific: typeSpecificLost};
     }
-    else if(form.type == "Found Item"){
+    else if(form.type === "Found Item"){
       const typeSpecificFound = {
-        status: true,
+        status: false,
       }
-      setForm({...form, typeSpecific: typeSpecificFound, price: form.price});
+      return {...form, typeSpecific: typeSpecificFound};
     }
-    console.log(form);
   }
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
-    await updateTypeSpecific();
     if ((sources.length !== 0 && sources.length <= 5)) {
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
-      const newItem = { ...form, postOwner: userID, images: sources};
-      console.log(newItem);
-      // await fetch("http://localhost:4000/listing", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(newItem),
-      // })
-      //   .catch(error => {
-      //     window.alert(error);
-      //     return;
-      //   });
+      const typeSpecificItem = await updateTypeSpecific();
+      typeSpecificItem.images = sources;
+      typeSpecificItem.postOwner = userID;
+      console.log(typeSpecificItem);
+      await fetch("http://localhost:4000/listing", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(typeSpecificItem),
+      })
+        .catch(error => {
+          window.alert(error);
+          return;
+        });
 
-      // setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
-      // navigate("/profile");
+      setForm({ title: "", postDate: new Date(), description: "", availability: "Available", type: "", price: ""});
+      navigate("/profile");
     }
     else {    
         toast.error('Please upload 1-5 pictures', {
@@ -328,7 +328,7 @@ export default function Create() {
                                   <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
-                                  <label className="form-label fw-bold text" htmlFor="password">Price</label>
+                                  <label className="form-label fw-bold text" htmlFor="password">Price (₺)</label>
                                   <input 
                                     placeholder="Enter price" 
                                     type="text" 
@@ -348,7 +348,7 @@ export default function Create() {
                                   <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
-                                <label className="form-label fw-bold text" htmlFor="quality">Select your item's condition</label>
+                                <label className="form-label fw-bold text" htmlFor="quality">Select Item's Condition</label>
                                 <Dropdown onSelect={(eventKey) => updateForm({ typeSpecific: { ...form.typeSpecific, quality: eventKey } })}>
                                 <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                                   {form.typeSpecific.quality || "Select Condition"}
@@ -370,7 +370,7 @@ export default function Create() {
                                   <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
-                                <label className="form-label fw-bold text" htmlFor="password">Price</label>
+                                <label className="form-label fw-bold text" htmlFor="password">Price (₺)</label>
                                 <input 
                                   placeholder="Enter price per day" 
                                   type="text" 
@@ -390,7 +390,7 @@ export default function Create() {
                                   <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
-                                <label className="form-label fw-bold text" htmlFor="quality">Select your item's condition</label>
+                                <label className="form-label fw-bold text" htmlFor="quality">Select Item's Condition</label>
                                 <Dropdown onSelect={(eventKey) => updateForm({ typeSpecific: { ...form.typeSpecific, quality: eventKey } })}>
                                 <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                                   {form.typeSpecific.quality || "Select Condition"}
@@ -408,7 +408,7 @@ export default function Create() {
                                   <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
-                                <label className="form-label fw-bold text" htmlFor="password">Lending Duration</label>
+                                <label className="form-label fw-bold text" htmlFor="password">Lending Duration (days)</label>
                                 <input 
                                   placeholder="Enter lending duration" 
                                   type="text" 

@@ -28,7 +28,9 @@ export default function Item() {
    type: "",
    postOwner: "",
    images: [],
-   records: [],
+   tags: [],
+   typeSpecific: {},
+   wishlistCount: 0,
  });
  const [profileUser, setProfileUser] = useState({
   email: "",
@@ -125,7 +127,6 @@ useEffect(() => {
    fetchPostData();
    return;
  }, [params.id, navigate]);
- 
  function addToWishlist() {
   async function wishlist() {
     if (userWishlist.includes(item._id)) {
@@ -153,7 +154,9 @@ useEffect(() => {
         description: profileUser.description,
         rating: profileUser.rating,
         ratedamount: profileUser.ratedamount,
-        createdAt: profileUser.createdAt
+        createdAt: profileUser.createdAt,
+        postOwner: owner,
+        item: item
       };
       const response = await fetch(`http://localhost:4000/user/wishlist/${profileUser.username}`, {
         method: "PATCH",
@@ -297,7 +300,7 @@ useEffect(() => {
       <Container style={{marginTop: "15px"}} fluid>
           <Row>
               <Col xl={7}>
-                  <div className="itemCarousel">
+                  <div className="itemCarousel" style={{marginBottom: "20px"}}>
                   <Carousel>
                       {itemPhotos()}
                   </Carousel>
@@ -306,8 +309,8 @@ useEffect(() => {
               <Col xl={5}>
                   <Container className="itemCardInfo" fluid>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center"}}>
-                      {item.type === "Donation" && <h1 className="itemPrice">{item.price + "₺ Goal"}</h1>}
-                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.price}₺</h1>}
+                      {item.type === "Donation" && <h1 className="itemPrice">{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
+                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.typeSpecific.price}₺</h1>}
                       {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
                       {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
                       {userWishlist.includes(item._id) ? <Button variant="secondary" style={{backgroundColor: "#192655", position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
@@ -322,8 +325,8 @@ useEffect(() => {
                         </div>
                       </Button>}
                     </div> : <div style={{display: "flex", alignItems: "center"}}>
-                      {item.type === "Donation" && <h1 className="itemPrice">{item.price + "₺ Goal"}</h1>}
-                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.price}₺</h1>}
+                      {item.type === "Donation" && <h1 className="itemPrice">{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
+                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.typeSpecific.price}₺</h1>}
                       {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
                       {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
                     </div>}
@@ -337,7 +340,7 @@ useEffect(() => {
                       <h3 style={{color: "black", marginLeft: "10px"}}>{item.postDate.toString().substring(0, 10)}</h3>
                     </div>
                   </Container>
-                  <Container className="itemCardUserInfo" fluid>   
+                  <Container className="itemCardUserInfo" fluid style={{marginBottom: "20px"}}>   
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <div style={{marginRight: "10px"}}>
                       {owner.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
@@ -357,7 +360,7 @@ useEffect(() => {
                     </div>
                     <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      {item.type === "Donation" ? <h3 className="text">IBAN:</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
+                      {item.type === "Donation" ? <h3 className="text">{"IBAN: "+item.typeSpecific.IBAN}</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
                     </div> : <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <Button variant="secondary" style={{backgroundColor: "#192655"}} href="/profile"><div className="text">Go to Profile</div></Button>
                     </div>  }
@@ -370,17 +373,23 @@ useEffect(() => {
                   <div>
                     <div style={{display: "flex", alignItems: "center"}}>
                         <h1 style={{fontWeight: "bolder"}}>Details</h1>
-                        <p style={{position: "absolute", right: "45px"}}>{"ID: " + item._id}</p>
+                        <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>ID: </span>{item._id}</p>
                     </div>
                     <div style={{alignItems: "center", display: "flex"}}>
-                        <h3 style={{color: "#E1AA74"}}>Condition: </h3>
-                        <h3 style={{color: "black", marginLeft: "10px"}}>{item.availability}</h3>
+                        {item.type !== "Donation" && <h3 style={{color: "#E1AA74"}}>Condition: </h3>}
+                        {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
+                        {(item.type === "Lost Item" || item.type === "Found Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.status === true ? "Found" : "Still Lost"}</h3>}
+                        {item.type === "Donation" && <h3 style={{color: "#E1AA74"}}>Progress: </h3>}
+                        {item.type === "Donation" && <ProgressBar variant="secondary" className="text" style={{marginBottom: "5px", marginLeft: "15px", width: "915px", height: "30px"}} now={19000/item.typeSpecific.monetaryTarget*100} label={`${(19000/item.typeSpecific.monetaryTarget*100).toPrecision(2)}% Reached`} animated/>}
                         {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}
                     </div>
                   </div>
                   <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
                   <div style={{marginBottom: "15px"}}>
-                    <h1 style={{fontWeight: "bolder"}}>Description</h1>
+                    <div style={{display: "flex", alignItems: "center", marginTop: "-10px"}}>
+                        <h1 style={{fontWeight: "bolder"}}>Description</h1>
+                        {item.type === "Donation" && <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>Website Link: </span>{item.typeSpecific.weblink}</p>}
+                    </div>
                     <h3 >{item.description}</h3>
                     <div style={{height: "10px"}}></div>
                   </div>
