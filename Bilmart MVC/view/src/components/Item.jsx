@@ -289,7 +289,7 @@ useEffect(() => {
  return (
   <div>
    <NavBar />
-   <div style={{ backgroundColor: "#D6C7AE"}}>
+   <div>
    {(isPostLoading || isUserLoading) ? (
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
@@ -378,7 +378,7 @@ useEffect(() => {
                         <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>ID: </span>{item._id}</p>
                     </div>
                     <div style={{alignItems: "center", display: "flex"}}>
-                        {item.type !== "Donation" && <h3 style={{color: "#E1AA74"}}>Condition: </h3>}
+                        {item.type !== "Donation" && <h3  style={{color: "var(--primary-accent)"}}>Condition: </h3>}
                         {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
                         {(item.type === "Lost Item" || item.type === "Found Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.status === true ? "Found" : "Still Lost"}</h3>}
                         {item.type === "Donation" && <h3 style={{color: "#E1AA74"}}>Progress: </h3>}

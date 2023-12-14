@@ -260,7 +260,7 @@ router.post("/", async (req, res) => {
       return res.json({success: false, message: 'The description should be less than 2000 characters long'})
     }
     //check that price is a number
-    if((newPostDocument.typeSpecific.price) && !/^\d+$/.test(newPostDocument.typeSpecific.price)) {
+    if((newPostDocument.typeSpecific.price) && /^\d+(\.\d*)?(\.\d+)?$/.test(newPostDocument.typeSpecific.price)) {
       return res.json({success: false, message: 'Price should be a number'})
     }
     //check images
