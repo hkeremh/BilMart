@@ -396,7 +396,7 @@ export default function Create() {
                         <div class="form-outline flex-fill mb-0">
                           <label className="form-label fw-bold text" htmlFor="password">Tags</label>
                           <input
-                          placeholder="Enter tags"
+                          placeholder="Enter tag, tag"
                           type="text"
                           className="form-control text"
                           id="tags"

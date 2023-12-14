@@ -1,11 +1,28 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
+
 function Classification(){
+    const [tags, setTags] = useState([]);
+
+    const searchTag = () => {
+        if(tags){
+
+        }
+    }
+    const handlePressKey = (e) =>{
+        if(e.keyCode === 13){
+            searchTag();
+        }
+
+    }
+
     return(
         <div>
         <Container style={{height: "10px"}}></Container>
@@ -22,8 +39,11 @@ function Classification(){
                     placeholder="Search"
                     className="me-2 text"
                     aria-label="Search"
+                    value = {tags}
+                    handlePressKey={handlePressKey}
+
                     />
-                    <Button className="text primary-accent" variant="secondary"><span className="text">Search</span></Button>
+                    <Button onClick ="searchTag" className="text primary-accent" variant="secondary"><span className="text">Search</span></Button>
                 </Form.Group>
             </Form.Group>
             <Form.Group className="mb-3">
