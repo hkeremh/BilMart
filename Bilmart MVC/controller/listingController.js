@@ -211,8 +211,6 @@ router.post("/", async (req, res) => {
     if (hasEmptyProperty) {
       return res.json({ success: false, message: 'Please fill in all properties' });
     }
-
-
     if (req.body.type === "Sale Item") {
       itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
     } else if (req.body.type === "Borrowal Item") {
@@ -230,7 +228,6 @@ router.post("/", async (req, res) => {
           console.error('Error:', error.message);
           return res.status(500).json({ success: false, message: 'DNS check Error' });
         }
-
     } else if (req.body.type === "Lost Item" || req.body.type === "Found Item") {
       itemStrategy = new LostFound(typeSpec.status)
     } else {
@@ -259,10 +256,10 @@ router.post("/", async (req, res) => {
     if(newPostDocument.description.length > 2000) {
       return res.json({success: false, message: 'The description should be less than 2000 characters long'})
     }
-    //check that price is a number
-    if((newPostDocument.typeSpecific.price) && /^\d+(\.\d*)?(\.\d+)?$/.test(newPostDocument.typeSpecific.price)) {
-      return res.json({success: false, message: 'Price should be a number'})
-    }
+    // //check that price is a number
+    // if((newPostDocument.typeSpecific.price) && /^\d+(\.\d*)?(\.\d+)?$/.test(newPostDocument.typeSpecific.price)) {
+    //   return res.json({success: false, message: 'Price should be a number!'})
+    // }
     //check images
     if(newPostDocument.images.length > 5) {
       return res.json({success: false, message: 'A post can contain at most 5 images'})
@@ -328,15 +325,18 @@ router.patch("/:id", async (req, res) => {
     if(!data.status) {
       return res.json({success: false, message: 'User token is invalid'})
     }
+
     //check that user exists
     const user = await userModel.getUser(req.body.postOwner)
     if(!user) {
       return res.json({success: false, message: 'User doesn\'t exist'})
     }
+
     //check that user token matches request user id
     if(user.username !== data.user) {
       return res.json({success: false, message: 'Incorrect user'})
     }
+
     //check sizes and formats of request objects
     if(req.body.title.length <= 2  || req.body.title.length > 100) {
       return res.json({success: false, message: 'The title should be between 4 and 99 characters long'})
@@ -344,10 +344,11 @@ router.patch("/:id", async (req, res) => {
     if(req.body.description.length > 2000) {
       return res.json({success: false, message: 'The description should be less than 2000 characters long'})
     }
+
     //check that price is a number
-    if(req.body.typeSpecific.price && !/^\d+$/.test(req.body.typeSpecific.price) && req.body.typeSpecific.price != '') {
-      return res.json({success: false, message: 'Price should be a number'})
-    }
+    // if(req.body.typeSpecific.price && !/^\d+$/.test(req.body.typeSpecific.price) && req.body.typeSpecific.price != '') {
+    //   return res.json({success: false, message: 'Price should be a number'})
+    // }
     //check images
     if(req.body.images.length > 5) {
       return res.json({success: false, message: 'A post can contain at most 5 images'})
@@ -356,18 +357,46 @@ router.patch("/:id", async (req, res) => {
 
     //applies specific strategy based on type of post
     let typeSpec = req.body.typeSpecific;
+    let hasEmptyProperty = false;
+    //VVVVVV
+    //need to send type spec.
+    //^^^^^^
+    if (typeSpec !== undefined && typeSpec !== null) {
+      Object.entries(typeSpec).forEach(([property, value]) => {
+        if (value === '' || value === undefined || value === null) {
+          hasEmptyProperty = true;
+        }
+      });
+    }
+
+    if (hasEmptyProperty) {
+      return res.json({ success: false, message: 'Please fill in all properties' });
+    }
+    console.log("---------After checks---------")
     if (req.body.type === "Sale Item") {
       itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
     } else if (req.body.type === "Borrowal Item") {
       itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
     } else if (req.body.type === "Donation") {
-      itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
+      try {
+        const exists = await isValidWebLink(typeSpec.weblink);
+        if (exists) {
+          itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
+          // return res.json({ success: false, message: `${typeSpec.weblink} exists.` });
+        } else {
+          return res.json({ success: false, message: `${typeSpec.weblink} does not exists.` });
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+        return res.status(500).json({ success: false, message: 'DNS check Error' });
+      }
     } else if (req.body.type === "Lost Item" || req.body.type === "Found Item") {
       itemStrategy = new LostFound(typeSpec.status)
     } else {
       res.status(500).send({ error: 'No appropriate item type was selected when creating a post.' })
     }
     //edit real post
+    console.log("---------After strategy---------")
     let query = { _id: new ObjectId(req.params.id) };
     let updates =  {
       $set: {
@@ -381,8 +410,13 @@ router.patch("/:id", async (req, res) => {
         typeSpecific: itemStrategy
       }
     };
+    console.log("---------after query and update---------")
+
     const result = await listingModel.updateListing(query, updates) //access model func.
     //edit proxy post
+
+    console.log("---------after listing model---------")
+
     query = { realID: new ObjectId(req.params.id) };
     let proxyUpdates =  {
       $set: {
@@ -392,8 +426,8 @@ router.patch("/:id", async (req, res) => {
         type: req.body.type,
         typeSpecific: itemStrategy
       }
-
     };
+
     const uri = req.body.images[0].split(';base64,').pop()
     let imgBuffer = Buffer.from(uri, 'base64');
     try{

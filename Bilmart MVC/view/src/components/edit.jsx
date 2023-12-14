@@ -346,9 +346,49 @@ const handleSuccess = (msg) =>
                         <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
                         <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
                       </svg> : <span></span>}
-                      {form.type ===  "Sale Item" && <div className="form-group"><label className="form-label fw-bold text" htmlFor="password">Price</label><input placeholder="Enter price" type="text" className="form-control text" id="price" value={form.price} onChange={(e) => updateForm({ price: e.target.value })}/></div>}
-                      {form.type ===  "Borrowal Item" && <div className="form-group"><label className="form-label fw-bold text" htmlFor="password">Price</label><input placeholder="Enter price per day" type="text" className="form-control text" id="price" value={form.price} onChange={(e) => updateForm({ price: e.target.value })}/></div>}
-                      {form.type ===  "Donation" && <div className="form-group"><label className="form-label fw-bold text" htmlFor="password">Donation Goal</label><input placeholder="Enter donation goal" type="text" className="form-control text" id="price" value={form.price} onChange={(e) => updateForm({ price: e.target.value })}/></div>}
+                      {form.type ===  "Sale Item" && <div className="form-group"><label className="form-label fw-bold text" htmlFor="password">Price</label>
+                          <input
+                          placeholder="Enter price"
+                          type="text"
+                          className="form-control text"
+                          id="price"
+                          value={form.price}
+                          onChange={(e) => {
+                          const inputValue = e.target.value;
+                          if (/^\d+(\.\d*)?(\.\d+)?$/.test(inputValue) || inputValue === "") {
+                              updateForm({ price: e.target.value })
+                          }
+                          }}
+                          />
+                        </div>
+                      }
+                      {form.type ===  "Borrowal Item" && <div className="form-group"><label className="form-label fw-bold text" htmlFor="password">Price</label>
+                          <input
+                              placeholder="Enter price per day"
+                              type="text" className="form-control text"
+                              id="price"
+                              value={form.price}
+                              onChange={(e) => {
+                                  const inputValue = e.target.value;
+                                  if (/^\d+(\.\d*)?(\.\d+)?$/.test(inputValue) || inputValue === "") {
+                                      updateForm({ price: e.target.value })
+                                  }
+                              }}
+                          />
+                      </div>}
+                      {form.type ===  "Donation" && <div className="form-group"><label className="form-label fw-bold text" htmlFor="password">Donation Goal</label>
+                          <input placeholder="Enter donation goal"
+                                 type="text"
+                                 className="form-control text"
+                                 id="price" value={form.price}
+                                 onChange={(e) => {
+                                     const inputValue = e.target.value;
+                                     if (/^\d+(\.\d*)?(\.\d+)?$/.test(inputValue) || inputValue === "") {
+                                         updateForm({ price: e.target.value })
+                                     }
+                                 }}
+                          />
+                      </div>}
                   </div>
                   <div className="d-flex flex-row align-items-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-image-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
