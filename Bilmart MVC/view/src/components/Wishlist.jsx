@@ -55,7 +55,7 @@ const Wishlist = () => {
      const records = await response.json();
      const wishlistPosts = [];
      for(var i = 0; i < records.length; i++){
-         const response = await fetch(`http://localhost:4000/listing/${records[i]}`);
+         const response = await fetch(`http://localhost:4000/listing/proxy/${records[i]}`);
          if (!response.ok) {
             const message = `An error occurred: ${response.statusText}`;
             window.alert(message);

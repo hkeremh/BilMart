@@ -141,6 +141,20 @@ router.get('/:id', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
+router.get('/proxy/:id', async (req, res) => {
+  try {
+    const query = {realID: new ObjectId(req.params.id)};
+    const listing = await proxyListingModel.getListing(query) //access model func.
+    if(listing === "Listing not found") {
+      res.status(404).send('Listing not found')
+    } else {
+      res.status(200).send(listing) //return value
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+})
 //returns posts by a user
 router.get('/userPosts/:id', async (req, res) => {
   try {
