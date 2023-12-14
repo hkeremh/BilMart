@@ -10,6 +10,11 @@ import axios from "axios";
 import NavBar from "./navbar.jsx";
 import compress from "lz-string";
 import deleteIcon from "../img/bin.png";
+//import Tag from 'react-bootstrap/Navbar';
+//import { InputTags } from 'react-bootstrap-tagsinput'
+//import { WithContext as ReactTags } from 'react-tag-input';
+//import { TagsInput } from "react-tag-input-component";
+
 
 export default function Create() {
   const navigate = useNavigate();
@@ -22,6 +27,7 @@ export default function Create() {
     description: "",
     availability: "Available",
     type: "",
+    tags: [],
     typeSpecific: {
       price: "",
       quality: "",
@@ -36,6 +42,21 @@ export default function Create() {
     price: "0",
     wishlistCount: 0
   });
+  const [tags, setTags] = useState([]);
+  /*
+  const [tags, setTags] = useState({});
+  const KeyCodes = {
+    comma: 188,
+    enter: 13
+  };
+  const delimiters = [KeyCodes.comma, KeyCodes.enter];
+  const handleDelete = i => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAddition = tag => {
+    setTags([...tags, tag]);
+  };*/
   function compressImage(inputImage, compressionQuality, callback) {
 
     var img = new Image();
@@ -364,6 +385,28 @@ export default function Create() {
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-journal-richtext fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                          <path d="M7.5 3.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047L11 4.75V7a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 7v-.5s1.54-1.274 1.639-1.208M5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                        </svg>
+                        <div class="form-outline flex-fill mb-0">
+                          <label className="form-label fw-bold text" htmlFor="password">Tags</label>
+                          <input
+                          placeholder="Enter tags"
+                          type="text"
+                          className="form-control text"
+                          id="tags"
+                          value={form.tags.join(', ')} // Convert array to string for display
+                          onChange={(e) => updateForm({ tags: e.target.value.split(', ') })} // Convert string to array on change
+                        />
+                        </div>
+                    </div>
+
+
                     <div class="d-flex flex-row align-items-center mb-4">
                         {form.type ===  "Sale Item" && 
                             <div>
