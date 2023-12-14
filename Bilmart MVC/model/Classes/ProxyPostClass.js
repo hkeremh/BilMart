@@ -1,18 +1,20 @@
 
-class Post {
+class ProxyPost {
     // Properties
+    realID; //id of actual post
     title; //string
     postDate; //date
-    images; //list of url
+    image; //url
     description; //string
     tags; //list of string
     postOwner; //url
     type; //string
     typeSpecific; // list of variables
-    wishlistCount; //how many times item got wishlisted
+    availability; //bool
 
     // Constructor
-    constructor(title, postDate, images, description, tags, postOwner, type, typeSpec) {
+    constructor(realID, title, postDate, images, description, tags, postOwner, type, typeSpec) {
+        this.realID = realID;
         this.title = title;
         this.postDate = postDate;
         this.images = images || [];
@@ -21,7 +23,7 @@ class Post {
         this.postOwner = postOwner;
         this.type = type;
         this.typeSpecific = typeSpec || {};
-        this.wishlistCount =  0;
+        this.availability = "Available";
     }
 
     getProperties() {
@@ -32,17 +34,18 @@ class Post {
     //JSON.stringify(object.toJSON());
     toJSON() {
         return {
+            realID: this.realID,
             title: this.title,
             postDate: this.postDate,
-            images: this.images,
+            image: this.image,
             description: this.description,
             tags: this.tags,
             postOwner: this.postOwner,
             type: this.type,
             typeSpecific: this.typeSpecific,
-            wishlistCount: this.wishlistCount
+            availability: this.availability
         };
     }
 }
 
-export default Post;
+export default ProxyPost;

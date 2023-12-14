@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "check-password-strength": "^2.0.7",
@@ -26,7 +27,9 @@
     "mongodb": "^6.3.0",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
-    "react-password-strength-bar": "^0.4.1"
+    "nvm": "^0.0.4",
+    "react-password-strength-bar": "^0.4.1",
+    "sharp": "^0.33.0"
   },
   "devDependencies": {
     "compress-images": "^2.0.5"

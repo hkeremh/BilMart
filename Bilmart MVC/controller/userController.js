@@ -17,7 +17,7 @@ import  jwt from "jsonwebtoken";
 import crypto from 'crypto'
 import cookieParser from 'cookie-parser';
 import { passwordStrength } from 'check-password-strength';
-import userVerification from '../middlewares/authMiddleware.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 import TempUser from "../model/Classes/tempUserClass.js"
 
 cookieParser()
@@ -88,6 +88,17 @@ router.patch('/wishlist/:username', async (req, res) => {
       $set: {wishList: req.body.wishList}
     };
     const result = await userModel.addToWishlist(username, updates) //access model func.
+    const owner = req.body.postOwner;
+    const item = req.body.item;
+    if(item !== undefined){
+      try {
+      await mailer.wishlistNotification(owner.email, item.title, req.body.username, item.wishlistCount);  
+      console.log("Email sent");
+      } catch (error) {
+        console.error(error);
+        console.log("Email couldn't be sent");
+      }      
+    }
     res.send(result).status(200);
   } catch (error) {
     console.error(error)
@@ -140,6 +151,8 @@ router.post("/login", async (req, res) => {
         if(!user) {
           return res.json({success: false, message: 'User not found'})
         }
+        console.log(req.body.password)
+        console.log(user.password)
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
           return res.json({success: false, message: 'Invalid password'})
@@ -158,7 +171,7 @@ router.post("/login", async (req, res) => {
         res.status(500).send({success: false, message: 'Internal Server Error' })
       }
   });
-router.post("/", userVerification);
+router.post("/", authMiddleware.userVerification);
 
 /**
  * Signs up a new user
@@ -175,7 +188,6 @@ router.post("/", userVerification);
 router.post("/signup", async (req, res, next) => {
   try {
     //check that the req is in correct format
-    console.log(Object.keys(req.body).length)
     if(Object.keys(req.body).length > 4 ||
       !req.body.email ||
       !req.body.username ||

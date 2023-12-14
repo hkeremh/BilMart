@@ -78,7 +78,6 @@ html{
   background-color: var(--secondary-color);
   border-radius: 15px;
   height: auto;
-  margin-top: 20px;
 }
 .itemCardDetails h1{
   color: var(--primary-color);
@@ -109,14 +108,16 @@ html{
 }
 .profilePhoto{
   border-radius: 50%;
-  border: 7px solid var(--secondary-color);
+  /*border: 7px solid var(--secondary-color);*/
+  border: 2px solid gray;
   width: 180px;
   height: 180px;
   margin-top: 15px;
 }
 .itemProfilePhoto{
   border-radius: 50%;
-  border: 7px solid var(--secondary-color);
+  /*border: 7px solid var(--secondary-color);*/
+  border: 2px solid gray;
   margin-top: 15px;
 }
 .userInfo h1{

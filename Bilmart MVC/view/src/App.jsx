@@ -17,7 +17,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const App = () => {
   return (
-    <div className="parent">
+    <div>
       <div>
       <Routes>
         <Route exact path="/home?" element={<Home />} />
