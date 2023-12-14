@@ -381,8 +381,11 @@ export default function Create() {
                                     id="price"
                                     value={form.typeSpecific.price}
                                     onChange={(e) => {
-                                      updateForm({ price: e.target.value });
-                                      updateForm({ typeSpecific: { ...form.typeSpecific, price: e.target.value } });
+                                      const inputValue = e.target.value;
+                                      if (/^\d+(\.\d*)?(\.\d+)?$/.test(inputValue) || inputValue === "") {
+                                        updateForm({ price: inputValue });
+                                        updateForm({ typeSpecific: { ...form.typeSpecific, price: inputValue } });
+                                      }
                                     }}
                                   />
                                 </div>
@@ -417,14 +420,17 @@ export default function Create() {
                                 <div class="form-outline flex-fill mb-0">
                                 <label className="form-label fw-bold text" htmlFor="password">Price (₺)</label>
                                 <input
-                                  placeholder="Enter price per day"
+                                  placeholder="Enter price"
                                   type="text"
                                   className="form-control text"
                                   id="price"
                                   value={form.typeSpecific.price}
                                   onChange={(e) => {
-                                    updateForm({ price: e.target.value });
-                                    updateForm({ typeSpecific: { ...form.typeSpecific, price: e.target.value } });
+                                    const inputValue = e.target.value;
+                                    if (/^\d+(\.\d*)?(\.\d+)?$/.test(inputValue) || inputValue === "") {
+                                      updateForm({ price: inputValue });
+                                      updateForm({ typeSpecific: { ...form.typeSpecific, price: inputValue } });
+                                    }
                                   }}
                                 />
                                 </div>
@@ -461,7 +467,10 @@ export default function Create() {
                                   id="price" 
                                   value={form.typeSpecific.lendDuration} 
                                   onChange={(e) => {
-                                    updateForm({ typeSpecific: { ...form.typeSpecific, lendDuration: e.target.value } });
+                                    const inputValue = e.target.value;
+                                    if (/^\d+$/.test(inputValue) || inputValue === ""){
+                                      updateForm({ typeSpecific: { ...form.typeSpecific, lendDuration: inputValue } });
+                                    }
                                   }}
                                 />
                                 </div>
@@ -507,9 +516,12 @@ export default function Create() {
                                   id="price" 
                                   value={form.typeSpecific.monetaryTarget} 
                                   onChange={(e) => {
-                                    updateForm({ price: e.target.value });
-                                    updateForm({ typeSpecific: { ...form.typeSpecific, monetaryTarget: e.target.value } });
-                                  }}
+                                    const inputValue = e.target.value;
+                                    if (/^\d+$/.test(inputValue) || inputValue === ""){
+                                      updateForm({ price: inputValue});
+                                      updateForm({ typeSpecific: { ...form.typeSpecific, monetaryTarget: inputValue } });
+                                    }                                    }
+                                  }
                                 />
                                 </div>
                               </div>
@@ -529,7 +541,10 @@ export default function Create() {
                                   id="IBAN" 
                                   value={form.typeSpecific.IBAN} 
                                   onChange={(e) => {
-                                    updateForm({ typeSpecific: { ...form.typeSpecific, IBAN: e.target.value } });
+                                    const inputValue = e.target.value;
+                                    if (/^\d+(\.\d*)?(\.\d+)?$/.test(inputValue) || inputValue === "") {
+                                      updateForm({ typeSpecific: { ...form.typeSpecific, IBAN: inputValue } });
+                                    }
                                   }}
                                 />
                                 </div>

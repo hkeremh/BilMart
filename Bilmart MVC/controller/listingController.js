@@ -16,6 +16,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import sharp from 'sharp'
 import axios from "axios";
 const router = express.Router();
+import url from 'url'
 
 //-----------------------
 import TransactionalItem from "../model/Classes/TransactionalItemClass.js";
@@ -26,7 +27,14 @@ import Donation from "../model/Classes/DonationClass.js";
 import ProxyPost from "../model/Classes/ProxyPostClass.js";
 //-----------------------
 
-
+// async function isValidWebLink(link) {
+//   try {
+//     const response = await axios.get(link)
+//     return response.status === 200;
+//   } catch (err) {
+//     return false;
+//   }
+// }
 
 //from the model.
 router.get('/', async (req, res) => {
@@ -176,13 +184,31 @@ router.post("/", async (req, res) => {
     let itemStrategy;
     let post;
 
+
     //applies specific strategy based on type of post
     let typeSpec = req.body.typeSpecific;
+
+    let hasEmptyProperty = false;
+
+    Object.entries(typeSpec).forEach(([property, value]) => {
+      if (value === '' || value === undefined || value === null) {
+        hasEmptyProperty = true;
+      }
+    });
+
+    if (hasEmptyProperty) {
+      return res.json({ success: false, message: 'Please fill in all properties' });
+    }
+
+
     if (req.body.type === "Sale Item") {
       itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
     } else if (req.body.type === "Borrowal Item") {
       itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
     } else if (req.body.type === "Donation") {
+      // if (!isValidWebLink(typeSpec.weblink)){
+      //   return res.json({success: false, message: `Enter a real weblink. ${typeSpec.weblink} is not valid.`})
+      // }
       itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
     } else if (req.body.type === "Lost Item" || req.body.type === "Found Item") {
       itemStrategy = new LostFound(typeSpec.status)
@@ -221,7 +247,12 @@ router.post("/", async (req, res) => {
       return res.json({success: false, message: 'A post can contain at most 5 images'})
     }
 
+
     const result = await listingModel.postListing(newPostDocument) //access model func.
+    console.log("-------------")
+    console.log(result)
+    console.log("-------------")
+
 
     //--------------------
 
@@ -236,16 +267,7 @@ router.post("/", async (req, res) => {
         req.body.type,
         itemStrategy
     );
-    /*let newProxyPostDocument = {
-      realID: result.insertedId,
-      title: req.body.title,
-      postOwner: req.body.postOwner,
-      description: req.body.description,
-      postDate: new Date(),
-      availability: req.body.availability,
-      type: req.body.type,
-      price: req.body.price
-    }*/
+
     //compress first image for proxy
     try {
       const uri = newPostDocument.images[0].split(';base64,').pop()
