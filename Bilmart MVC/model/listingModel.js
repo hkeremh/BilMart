@@ -29,6 +29,12 @@ async function getAllListings() {
   return result;
 }
 
+async function getAllTags() {
+  let collection = await db.collection('Tags'); //name of collection
+  let result = await collection.find({}).toArray();
+  return result;
+}
+
 async function getPageListings(pageNumber) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
@@ -53,14 +59,33 @@ async function deleteListing(query) {
   return result;
 }
 
+/*
+{
+	text : "searchtext",
+	type : "category",
+	tags : ["tag1","tag2"],
+	availability : ["Available",]
+}
+*/
 async function searchListings(searchQuery) {
-  let collection = await db.collection('Posts'); //name of collection
+  let collection = await db.collection('QueryPosts'); //name of collection
+  let isPrice = searchQuery.includes("price");
+  let isLow =  searchQuery.includes("Low");
+
   let result = await collection.find({
-    "$or": [
-      { "title": { $regex: searchQuery.text, $options: "i" } },
-      { "description": { $regex: searchQuery.text, $options: "i" } }
+    "$and": [
+      { "type": searchQuery.type.length > 0 ? { $in: searchQuery.type  } : {$exists: true} },
+      //{ "availability": searchQuery.availability.length > 0 ? { $in: searchQuery.availability  } : {$exists: true}},
+      {"$or": [
+        { "title": { $regex: searchQuery.text, $options: "i" } },
+        { "description": { $regex: searchQuery.text, $options: "i" } } 
+      ]},
+      { "tags": searchQuery.tags.length > 0 ? { $in: searchQuery.tags  } : {$exists: true}}
+
+     
     ]
-  }).toArray();
+    
+  }).sort(isPrice ? {"typeSpecific.price": isLow ? 1 : -1 } : {"postDate": isLow ? 1 : -1}).skip((searchQuery.pageNumber - 1) * 3).limit(3).toArray();
   return result;
 }
 
@@ -73,5 +98,6 @@ export default {
     postListing,
     updateListing,
     deleteListing,
-    searchListings
+    searchListings,
+    getAllTags
 };

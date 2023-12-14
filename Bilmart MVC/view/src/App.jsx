@@ -14,6 +14,7 @@ import Item from "./components/Item.jsx";
 import Verify from "./components/Verify.jsx"
 import Wishlist from "./components/Wishlist.jsx"
 
+
 const App = () => {
   return (
     <div style={{backgroundColor: "#D6C7AE"}}>

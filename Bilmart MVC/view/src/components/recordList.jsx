@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -14,6 +14,8 @@ import Classification from "./Classification.jsx";
 import LogoBar from "./LogoBar.jsx";
 import NavBar from "./navbar.jsx";
 
+
+
 const Home = () => {
   const navigate = useNavigate();
   const [isPostLoading, setIsPostLoading] = useState(true); 
@@ -22,6 +24,8 @@ const Home = () => {
   const [username, setUsername] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(3);
+
+ 
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.userToken) {
@@ -116,7 +120,10 @@ useEffect(() => {
           <Row>
               <Col xl={3} md={4}>
                   <Container className="selection" fluid>
-                    <Classification />
+                    
+                    <Classification pageNumber = {currentPage}/>
+                    
+                    
                   </Container>
               </Col>
               <Col xl={9} md={8}>
@@ -138,4 +145,6 @@ useEffect(() => {
  );
 }
 
+
 export default Home;
+
