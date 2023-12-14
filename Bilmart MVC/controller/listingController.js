@@ -15,8 +15,9 @@ import userModel from '../model/userModel.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import sharp from 'sharp'
 import axios from "axios";
+import dns from 'dns'
+
 const router = express.Router();
-import url from 'url'
 
 //-----------------------
 import TransactionalItem from "../model/Classes/TransactionalItemClass.js";
@@ -27,14 +28,27 @@ import Donation from "../model/Classes/DonationClass.js";
 import ProxyPost from "../model/Classes/ProxyPostClass.js";
 //-----------------------
 
-// async function isValidWebLink(link) {
-//   try {
-//     const response = await axios.get(link)
-//     return response.status === 200;
-//   } catch (err) {
-//     return false;
-//   }
-// }
+async function isValidWebLink(link) {
+  try {
+    const formattedLink = link.startsWith('http') ? link : `https://${link}`;
+    const dnsPromise = new Promise((resolve) => {
+      dns.resolve(formattedLink, (error) => {
+        resolve(!error);
+      });
+    });
+    const response = await axios.get(formattedLink);
+
+    const dnsResult = await dnsPromise;
+    const httpResult = response.status >= 200 && response.status < 300;
+
+    // Check if the response status is in the range of 200 to 299
+    return dnsResult || httpResult;
+  } catch (err) {
+    // Handle errors, e.g., network errors or non-2xx HTTP responses
+    return false;
+  }
+
+}
 
 //from the model.
 router.get('/', async (req, res) => {
@@ -179,8 +193,6 @@ router.post("/", async (req, res) => {
       return res.json({success: false, message: 'Incorrect user'})
     }
 
-    console.log("Here---------------------------")
-
     let itemStrategy;
     let post;
 
@@ -206,10 +218,19 @@ router.post("/", async (req, res) => {
     } else if (req.body.type === "Borrowal Item") {
       itemStrategy = new LendItem(typeSpec.price, typeSpec.quality, typeSpec.available, typeSpec.duration)
     } else if (req.body.type === "Donation") {
-      // if (!isValidWebLink(typeSpec.weblink)){
-      //   return res.json({success: false, message: `Enter a real weblink. ${typeSpec.weblink} is not valid.`})
-      // }
-      itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
+        try {
+          const exists = await isValidWebLink(typeSpec.weblink);
+          if (exists) {
+            itemStrategy = new Donation(typeSpec.IBAN, typeSpec.weblink, typeSpec.organizationName, typeSpec.monetaryTarget)
+            // return res.json({ success: false, message: `${typeSpec.weblink} exists.` });
+          } else {
+            return res.json({ success: false, message: `${typeSpec.weblink} does not exists.` });
+          }
+        } catch (error) {
+          console.error('Error:', error.message);
+          return res.status(500).json({ success: false, message: 'DNS check Error' });
+        }
+
     } else if (req.body.type === "Lost Item" || req.body.type === "Found Item") {
       itemStrategy = new LostFound(typeSpec.status)
     } else {
@@ -249,9 +270,6 @@ router.post("/", async (req, res) => {
 
 
     const result = await listingModel.postListing(newPostDocument) //access model func.
-    console.log("-------------")
-    console.log(result)
-    console.log("-------------")
 
 
     //--------------------
