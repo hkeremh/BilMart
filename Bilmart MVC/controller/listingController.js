@@ -329,13 +329,13 @@ router.post("/", async (req, res) => {
           .resize(300, 300, {fit: 'inside'})
           .toFormat('png')
           .toBuffer()
-          .then(data => {
+          .then( async data => {
             console.log('success')
             // newProxyPostDocument.image = `data:image/png;base64,${data.toString('base64')}`
             proxyPost.image = `data:image/png;base64,${data.toString('base64')}`;
             // proxyListingModel.create(newProxyPostDocument);
             console.log(proxyPost.toJSON())
-            proxyListingModel.create(proxyPost.toJSON());
+            await proxyListingModel.create(proxyPost.toJSON());
             console.log("sent to prxy")
           })
           .catch(err => {

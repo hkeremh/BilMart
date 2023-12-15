@@ -175,7 +175,7 @@ async function getSearchRecords(reqBody) {
 
   setRecords(records);
 
-  navigate(`/home?state=search&pageNumber=${currentPage}`);
+  navigate(`/home?state=search`);
   setIsPostLoading(false);
 
 }
