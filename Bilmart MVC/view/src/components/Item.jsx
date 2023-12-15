@@ -375,7 +375,7 @@ useEffect(() => {
                     </div> 
                     <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                     <div className="postDate" style={{alignItems: "center", display: "flex"}}>
-                      <h3 style={{fontWeight: "bolder"}}>Post Date: </h3>
+                      <h3 style={{fontWeight: "bolder", color: "var(--primary-accent)"}}>Post Date: </h3>
                       <h3 style={{color: "black", marginLeft: "10px"}}>{item.postDate.toString().substring(0, 10)}</h3>
                     </div>
                   </Container>
@@ -418,8 +418,8 @@ useEffect(() => {
                         {item.type !== "Donation" && <h3  style={{color: "var(--primary-accent)"}}>Condition: </h3>}
                         {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
                         {(item.type === "Lost Item" || item.type === "Found Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.status === true ? "Found" : "Still Lost"}</h3>}
-                        {item.type === "Donation" && <h3 style={{color: "#E1AA74"}}>Progress: </h3>}
-                        {item.type === "Donation" && <ProgressBar variant="secondary" className="text" style={{marginBottom: "5px", marginLeft: "15px", width: "915px", height: "30px"}} now={19000/item.typeSpecific.monetaryTarget*100} label={`${(19000/item.typeSpecific.monetaryTarget*100).toPrecision(2)}% Reached`} animated/>}
+                        {item.type === "Donation" && <h3 style={{color: "var(--primary-accent)"}}>Progress: </h3>}
+                        {item.type === "Donation" && <ProgressBar variant="secondary" className="text" style={{marginBottom: "5px", marginLeft: "15px", width: "915px", height: "30px"}} now={item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100} label={`${(item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100)}% Reached`} animated/>}
                         {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}
                     </div>
                   </div>

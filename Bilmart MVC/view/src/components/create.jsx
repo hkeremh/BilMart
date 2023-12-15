@@ -179,6 +179,7 @@ export default function Create() {
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
+    setIsUserLoading(true);
     if ((sources.length !== 0 && sources.length <= 5) || (form.type !== "")){
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
