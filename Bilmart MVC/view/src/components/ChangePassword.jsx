@@ -20,19 +20,6 @@ const params = useParams();
    newPassword: ""
  });
  const [isUserLoading, setIsUserLoading] = useState(true);
- const [user, setUser] = useState({
-    email: "",
-    username: "",
-    password: "",
-    postList: [],
-    settings: {},
-    profileImage: "",
-    wishList: [],
-    description: "",
-    rating: 0,
-    ratedamount: 0,
-    createdAt: ""
- });
  const handleError = (err) =>
  toast.error(err, {
    position: "top-center",
@@ -63,28 +50,6 @@ const handleSuccess = (msg) =>
  }
  useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:4000/user/id/${params.userID}`);
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
- 
-      const record = await response.json();
-      if (!record) {
-       toast.error(`User with ID: ${params.userID} not found`, {
-         position: "top-center",
-         autoClose: 3000,
-         hideProgressBar: false,
-         closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
-         progress: undefined,
-         theme: "colored",
-       });
-        return;
-      }
-      setUser(record);
       setIsUserLoading(false);
     }
  
@@ -97,11 +62,10 @@ const handleSuccess = (msg) =>
   e.preventDefault();
     try {
       const updatedUser = {
-        ...user,
         password: form.password
       }
       console.log(updatedUser);
-      const result = await fetch(`http://localhost:4000/user/changePassword/${params.userID}`, {
+      const result = await fetch(`http://localhost:4000/user/changePassword/${params.changePasswordToken}`, {
         method: "PATCH",
         body: JSON.stringify(updatedUser),
         headers: {

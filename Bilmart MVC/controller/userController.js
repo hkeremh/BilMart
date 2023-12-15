@@ -153,37 +153,6 @@ router.patch('/editprofile/:username', async (req, res) => {
   }
 })
 
-router.patch('/changePassword/:userID', async (req, res) => {
-  const encryptedPassword = await bcrypt.hash(req.body.password, 12);
-  if(passwordStrength(req.body.password).id < 2) {
-    return res.json({success: false, message: "Password is too weak" });
-  } else {
-    try {
-      const oldUsername = req.body.username;
-      let result;
-      const updates = {
-        $set: {
-          email: req.body.email,
-          username: req.body.username,
-          password: encryptedPassword,
-          postList: req.body.postList,
-          settings: req.body.settings,
-          profileImage: req.body.profileImage,
-          wishList: req.body.wishList,
-          description: req.body.description,
-          rating: req.body.rating,
-          ratedamount: req.body.ratedamount,
-          createdAt: req.body.createdAt
-        }
-      };
-      result = await userModel.editProfile(oldUsername, updates) //access model func.    
-      res.json({success: true, message: "Password changed successfully"}).status(200);  
-    } catch (error) {
-      console.error(error)
-      res.status(500).send({ error: 'Internal Server Error' })
-    }
-  }
-})
 /**
  * 
  * Logs in the user
@@ -216,7 +185,8 @@ router.post("/login", async (req, res) => {
         res.status(500).send({success: false, message: 'Internal Server Error' })
       }
   });
-router.post("/", authMiddleware.userVerification);
+
+  router.post("/", authMiddleware.userVerification);
 
 /**
  * Signs up a new user
@@ -385,12 +355,54 @@ router.post("/verify", async (req, res, next) => {
 router.post("/forgotpassword", async (req, res, next) => { 
   const email = req.body.email;
   const user = await userModel.getUserByEmail(email);
+  const userToken = await secretToken.createSecretTempUserToken(user._id);
   if(!user) {
     return res.json({success: false, message: "User not found"})
   } else {
-    let result = await mailer.forgotPasswordNotification(user);
+    try {
+      let result = await mailer.forgotPasswordNotification(user, userToken);
+    }
+    catch (error) {
+      return res.json({success: false, message: "Email couldn't be sent"})
+    }
     res.json({success: true, message: "Email sent successfully"});
   }
+})
+
+router.patch('/changePassword/:changePasswordToken', async (req, res) => {
+  jwt.verify(req.params.changePasswordToken, process.env.TEMP_USER_TOKEN_KEY, async (err, data) => {
+    if (err) {
+     return res.json({ success: false, message: "Token couldn't be verified" })
+    } 
+    //check if user exists
+    const user = await userModel.getUser(data.id);
+    if(!user) {
+      return res.json({ success: false, message: "User Does not exist" })
+    }
+    const encryptedPassword = await bcrypt.hash(req.body.password, 12);
+    if(passwordStrength(req.body.password).id < 2) {
+      return res.json({success: false, message: "Password is too weak" });
+    } 
+    try {
+      const oldUsername = user.username;
+      const updates = {
+        $set: {
+          password: encryptedPassword
+        }
+      };
+      await userModel.editProfile(oldUsername, updates) //access model func.    
+      res.json({success: true, message: "Password changed successfully"}).status(200);  
+    } catch (error) {
+      console.error(error)
+      res.status(500).send({ error: 'Internal Server Error' })
+    }
+  
+
+
+    
+  })
+
+  
 })
 
  export default router; //allows other files to access the routes

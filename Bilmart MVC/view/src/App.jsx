@@ -34,7 +34,7 @@ const App = () => {
         <Route path="/item/:id" element={<Item />} />
         <Route path="/wishlist/:username" element={<Wishlist />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/changePassword/:userID" element={<ChangePassword />} />
+        <Route path="/changePassword/:changePasswordToken" element={<ChangePassword />} />
       </Routes>
       </div>
     </div>
