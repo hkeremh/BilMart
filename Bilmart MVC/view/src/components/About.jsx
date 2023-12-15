@@ -5,6 +5,8 @@ import image from "../img/1.png";
 import NavBar from "./navbar.jsx";
 
 function About(){
+    const date = new Date();
+    const year = date.getFullYear();
     return(
       <div>
       <NavBar />
@@ -65,17 +67,16 @@ function About(){
           <svg className="bi me-2" width="40" height="32">
           </svg>
         </a>
-        <p className="text-body-secondary">Copyright© 2023</p>
+        <p className="text-body-secondary">Copyright© {year}</p>
       </div>
 
       <div className="col mb-3">
-        <h5>Section</h5>
+        <h5>Explore BilMart</h5>
         <ul className="nav flex-column">
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Home</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Features</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Pricing</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">FAQs</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">About</a></li>
+          <li className="nav-item mb-2"><a href="/home" className="nav-link p-0 text-body-secondary">Home</a></li>
+          <li className="nav-item mb-2"><a href="/signup" className="nav-link p-0 text-body-secondary">Sign Up</a></li>
+          <li className="nav-item mb-2"><a href="/login" className="nav-link p-0 text-body-secondary">Login</a></li>
+          <li className="nav-item mb-2"><a href="/about" className="nav-link p-0 text-body-secondary">About</a></li>
         </ul>
       </div>
     </footer>

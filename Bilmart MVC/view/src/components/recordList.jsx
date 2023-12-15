@@ -21,10 +21,9 @@ const Home = () => {
   const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(9);
   function handlePageChange(pageNumber) {
     setCurrentPage(pageNumber);
-
   }
   useEffect(() => {
     const verifyCookie = async () => {
@@ -40,11 +39,11 @@ const Home = () => {
       const { status, user } = data;
       setUsername(user);
       return status
-        ?  setIsUserLoading(false)
+        ?  (setIsUserLoading(false), getRecords(currentPage))
         : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
-  }, [cookies, navigate, removeCookie]);
+  }, [cookies, navigate, removeCookie, currentPage]);
  const [records, setRecords] = useState([]);
  // This method fetches the records from the database.
    async function getRecords(pageNumber){
@@ -62,9 +61,6 @@ const Home = () => {
     setIsPostLoading(false);
     navigate(`/home?pageNumber=${pageNumber}`);
   }  
-useEffect(() => {
-  getRecords(currentPage);
-}, [currentPage, pageSize]);
 
 //  useEffect(() => {
 //    async function getRecords() {
@@ -129,8 +125,8 @@ useEffect(() => {
                       {recordList()}
                   </Container>
                   <div style={{textAlign: "center", marginTop: "10px"}}>
-                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage - 1), setIsPostLoading(true), getRecords(currentPage - 1))} disabled={currentPage === 1} style={{marginRight: "5px"}}>Previous</Button>
-                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage + 1), setIsPostLoading(true), getRecords(currentPage + 1))} disabled={records.length < pageSize} style={{marginLeft: "5px"}}>Next</Button>
+                  <Button variant="secondary" onClick={() => {setCurrentPage(currentPage - 1); setIsPostLoading(true); getRecords(currentPage - 1);}} disabled={currentPage === 1} style={{marginRight: "5px"}}>Previous</Button>
+                  <Button variant="secondary" onClick={() => {setCurrentPage(currentPage + 1); setIsPostLoading(true); getRecords(currentPage + 1);}} disabled={records.length < pageSize} style={{marginLeft: "5px"}}>Next</Button>
                   </div>
               </Col>
           </Row>

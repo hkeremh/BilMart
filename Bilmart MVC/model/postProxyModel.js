@@ -8,7 +8,7 @@ async function getAllListings() {
     return result;
 }
 async function getPageListings(pageNumber) {
-    let result = await queryCollection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
+    let result = await queryCollection.find({}).skip((pageNumber - 1) * 9).limit(9).toArray();
     return result;
   }
 async function getListing(query) {
