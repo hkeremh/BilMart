@@ -57,7 +57,9 @@ router.get('/username/:username', async (req, res) => {
 })
 router.get('/id/:id', async (req, res) => {
   try {
-    let user = await userModel.getUser(req.params.id);
+    console.log(req.params.id);
+    const id = req.params.id.toString();
+    let user = await userModel.getUser(id);
     if(!user) {
       res.status(404).json('User not found')
     } else {
@@ -118,7 +120,6 @@ router.patch('/wishlist/:username', async (req, res) => {
   }
 })
 
-
 router.patch('/editprofile/:username', async (req, res) => {
   try {
     const oldUsername = req.params.username;
@@ -150,6 +151,38 @@ router.patch('/editprofile/:username', async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).send({ error: 'Internal Server Error' })
+  }
+})
+
+router.patch('/changePassword/:userID', async (req, res) => {
+  const encryptedPassword = await bcrypt.hash(req.body.password, 12);
+  if(passwordStrength(req.body.password).id < 2) {
+    return res.json({success: false, message: "Password is too weak" });
+  } else {
+    try {
+      const oldUsername = req.body.username;
+      let result;
+      const updates = {
+        $set: {
+          email: req.body.email,
+          username: req.body.username,
+          password: encryptedPassword,
+          postList: req.body.postList,
+          settings: req.body.settings,
+          profileImage: req.body.profileImage,
+          wishList: req.body.wishList,
+          description: req.body.description,
+          rating: req.body.rating,
+          ratedamount: req.body.ratedamount,
+          createdAt: req.body.createdAt
+        }
+      };
+      result = await userModel.editProfile(oldUsername, updates) //access model func.    
+      res.json({success: true, message: "Password changed successfully"}).status(200);  
+    } catch (error) {
+      console.error(error)
+      res.status(500).send({ error: 'Internal Server Error' })
+    }
   }
 })
 /**
@@ -351,9 +384,15 @@ router.post("/verify", async (req, res, next) => {
     return res.json({ message: "Email verification failed" });
   }
 })
-router.post("/change-password", async (req, res, next) => { 
+router.post("/forgotpassword", async (req, res, next) => { 
   const email = req.body.email;
-
+  const user = await userModel.getUserByEmail(email);
+  if(!user) {
+    return res.json({success: false, message: "User not found"})
+  } else {
+    let result = await mailer.forgotPasswordNotification(user);
+    res.json({success: true, message: "Email sent successfully"});
+  }
 })
 
  export default router; //allows other files to access the routes

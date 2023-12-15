@@ -13,6 +13,8 @@ import About from "./components/About.jsx";
 import Item from "./components/Item.jsx";
 import Verify from "./components/Verify.jsx"
 import Wishlist from "./components/Wishlist.jsx"
+import ForgotPassword from "./components/ForgotPassword.jsx"
+import ChangePassword from "./components/ChangePassword.jsx"
 import 'bootstrap/dist/css/bootstrap.css';
 
 const App = () => {
@@ -31,6 +33,8 @@ const App = () => {
         <Route path="/verify" element={<Verify />} />
         <Route path="/item/:id" element={<Item />} />
         <Route path="/wishlist/:username" element={<Wishlist />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/changePassword/:userID" element={<ChangePassword />} />
       </Routes>
       </div>
     </div>

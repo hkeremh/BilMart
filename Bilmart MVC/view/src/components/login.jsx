@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 export default function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    email: "",
     password: ""
   });
   const handleError = (err) =>
@@ -56,7 +55,7 @@ export default function Login() {
      if (success) {
        handleSuccess(message);
        setTimeout(() => {
-         navigate("/home?");
+         navigate("/home?pageNumber=1");
        }, 1500);
      } else {
        handleError(message);
@@ -122,6 +121,11 @@ export default function Login() {
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <span className="text">
                       Don't have an account? <Link to={"/signup"}>Sign Up</Link>
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <span className="text">
+                      <Link to={"/forgotpassword"}>Forgot Password</Link>
                     </span>
                   </div>
                 </form>
