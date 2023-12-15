@@ -492,5 +492,19 @@ router.delete("/:id", async (req, res) => {
 
   res.send(result).status(200);
 });
-  
+
+router.post('/search', async (req, res) => {
+
+  try {
+    const listings = await listingModel.searchListings(req.body) //access model func.
+    res.send(listings) //return value
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+
+})
+
+
+
   export default router; //allows other files to access the routes
