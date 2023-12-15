@@ -30,9 +30,9 @@ function ItemCard(props) {
   //className={['itemCard', backgroundType].join(' ')}
   return (
   <div className="itemCard">
-  <Card style={{ width: '280px', height: "500px", border: "1px solid #DED0B6"}}>
+  <Card style={{ width: '280px', height: "500px", border: "1px solid #DED0B6", borderRadius: "20px"}}>
     <div className={['circleBackground', backgroundType].join(' ')}/>
-    <Card.Img className="centered-and-cropped" variant="top" src={props.record.image} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6", borderRadius: "4px"}}/>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.image} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6", borderTopRightRadius: "20px", borderTopLeftRadius: "20px"}}/>
     <Card.Body>
       <Card.Title>
       {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
