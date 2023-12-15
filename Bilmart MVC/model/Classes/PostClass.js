@@ -10,6 +10,7 @@ class Post {
     type; //string
     typeSpecific; // list of variables
     wishlistCount; //how many times item got wishlisted
+    wishlist; //users who have wish listed this item []
 
     // Constructor
     constructor(title, postDate, images, description, tags, postOwner, type, typeSpec) {
@@ -22,6 +23,7 @@ class Post {
         this.type = type;
         this.typeSpecific = typeSpec || {};
         this.wishlistCount =  0;
+        this.wishlist = [];
     }
 
     getProperties() {
@@ -40,7 +42,8 @@ class Post {
             postOwner: this.postOwner,
             type: this.type,
             typeSpecific: this.typeSpecific,
-            wishlistCount: this.wishlistCount
+            wishlistCount: this.wishlistCount,
+            wishlist: this.wishlist
         };
     }
 }

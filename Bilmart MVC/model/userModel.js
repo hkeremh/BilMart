@@ -32,6 +32,14 @@ async function addToWishlist(username, updates) {
     let result = await collection.updateOne(query, updates);
     return result;
 }
+
+async function addToPostWishlist(postId, updates) {
+    let collection = await db.collection('Posts'); //name of collection
+    let query = {_id: new ObjectId(postId)};
+    let result = await collection.updateOne(query, updates);
+    return result;
+}
+
 async function login(email, password){
     let collection = await db.collection("Users");
     let results = await collection.find({}).toArray();
@@ -61,5 +69,6 @@ export default {
     getUserByUserName,
     editProfile,
     addToWishlist,
+    addToPostWishlist,
     remove
 };

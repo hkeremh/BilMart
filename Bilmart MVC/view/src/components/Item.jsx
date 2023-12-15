@@ -14,6 +14,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
 import "../CSS/general.css"
+import profile from "./Profile.jsx";
 
 export default function Item() {
  const navigate = useNavigate();
@@ -130,7 +131,7 @@ useEffect(() => {
  }, [params.id, navigate]);
  
  function addToWishlist() {
-  async function wishlist() {
+  async function addToWishlist() {
     if (userWishlist.includes(item._id)) {
       toast.error(`Listing is already in wishlist`, {
         position: "top-center",
@@ -144,7 +145,10 @@ useEffect(() => {
         });
       return;
     } else{
-      const updatedWishlist = [...userWishlist, item._id];
+      const updatedOwnerWishlist = [...userWishlist, item._id];
+      let updatedPostWishlist;
+          updatedPostWishlist = [...item.wishlist, profileUser._id]
+
       const editedUser = {
         email: profileUser.email,
         username: profileUser.username,
@@ -152,7 +156,7 @@ useEffect(() => {
         postList: profileUser.postList,
         settings: profileUser.settings,
         profileImage: profileUser.profileImage,
-        wishList: updatedWishlist,
+        wishList: updatedOwnerWishlist,
         description: profileUser.description,
         rating: profileUser.rating,
         ratedamount: profileUser.ratedamount,
@@ -160,18 +164,29 @@ useEffect(() => {
         postOwner: owner,
         item: item
       };
+      const editedPost = {
+          postId: item._id,
+          userId: profileUser._id,
+          wishlist: updatedPostWishlist
+      };
+
+      const edits = {editedUser, editedPost}
+
       const response = await fetch(`http://localhost:4000/user/wishlist/${profileUser.username}`, {
         method: "PATCH",
-        body: JSON.stringify(editedUser),
+        body: JSON.stringify(edits),
         headers: {
           'Content-Type': 'application/json'
         },
       });
+
+
       if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
+        const message = `Could not add to wishlist, an error has occurred: ${response.statusText}`;
         window.alert(message);
         return;
       }
+
       const result = await response.json();
       console.log(result);
       if (!result) {
@@ -186,7 +201,7 @@ useEffect(() => {
         theme: "colored",
         });
       } else{
-        setUserWishlist(updatedWishlist);
+        setUserWishlist(updatedOwnerWishlist);
         toast.success(`Listing added to wishlist`, {
           position: "top-center",
           autoClose: 1500,
@@ -200,79 +215,101 @@ useEffect(() => {
       }      
     }
   }
-  wishlist();
+
+  addToWishlist();
+
   return;
  }
  function removeFromWishlist() {
-  async function wishlist() {
-    if (userWishlist.includes(item._id)) {
-      const updatedWishlist = userWishlist.filter((listing) => listing !== item._id);
-      const editedUser = {
-        email: profileUser.email,
-        username: profileUser.username,
-        password: profileUser.password,
-        postList: profileUser.postList,
-        settings: profileUser.settings,
-        profileImage: profileUser.profileImage,
-        wishList: updatedWishlist,
-        description: profileUser.description,
-        rating: profileUser.rating,
-        ratedamount: profileUser.ratedamount,
-        createdAt: profileUser.createdAt
-      };
-      const response = await fetch(`http://localhost:4000/user/wishlist/${profileUser.username}`, {
-        method: "PATCH",
-        body: JSON.stringify(editedUser),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
-      const result = await response.json();
-      if (!result) {
-        toast.error(`Listing couldn't be removed from wishlist`, {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
-      } else{
-        setUserWishlist(updatedWishlist);
-        toast.success(`Listing removed from wishlist`, {
-          position: "top-center",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
+      async function removeFromWishlist() {
+        if (userWishlist.includes(item._id)) {
+
+        const updatedOwnerWishlist = userWishlist.filter((listing) => listing !== item._id);
+        const indexToRemove = item.wishlist.indexOf(item._id);
+
+        if (indexToRemove !== -1) {
+            item.wishlist.splice(indexToRemove, 1);
+        }
+        const updatedPostWishlist = item.wishlist;
+
+          const editedUser = {
+            email: profileUser.email,
+            username: profileUser.username,
+            password: profileUser.password,
+            postList: profileUser.postList,
+            settings: profileUser.settings,
+            profileImage: profileUser.profileImage,
+            wishList: updatedOwnerWishlist,
+            description: profileUser.description,
+            rating: profileUser.rating,
+            ratedamount: profileUser.ratedamount,
+            createdAt: profileUser.createdAt
+          };
+
+          const editedPost = {
+                postId: item._id,
+                userId: profileUser._id,
+                wishlist: updatedPostWishlist
+          }
+
+          const edits = {editedUser, editedPost};
+
+          const response = await fetch(`http://localhost:4000/user/wishlist/${profileUser.username}`, {
+            method: "PATCH",
+            body: JSON.stringify(edits),
+            headers: {
+              'Content-Type': 'application/json'
+            },
           });
-      } 
-    } else {
-      toast.error(`Listing is not in wishlist`, {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return;
-    }
-  }
-  wishlist();
-  return;
+
+          if (!response.ok) {
+            const message = `An error has occurred: ${response.statusText}`;
+            window.alert(message);
+            return;
+          }
+          const result = await response.json();
+          if (!result) {
+            toast.error(`Listing couldn't be removed from wishlist`, {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
+          } else{
+            setUserWishlist(updatedOwnerWishlist);
+            toast.success(`Listing removed from wishlist`, {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
+          }
+        } else {
+          toast.error(`Listing is not in wishlist`, {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          return;
+        }
+      }
+
+     removeFromWishlist();
+
+     return;
  }
  function itemPhotos() {
     return item.images.map((source) => {

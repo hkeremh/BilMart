@@ -84,27 +84,41 @@ router.get('/wishlist/:username', async (req, res) => {
 router.patch('/wishlist/:username', async (req, res) => {
   try {
     const username = req.params.username;
-    const updates =  {
-      $set: {wishList: req.body.wishList}
+    const postId = req.body.editedPost.postId;
+
+    const updatesUser =  {
+      $set: {wishList: req.body.editedUser.wishList}
     };
-    const result = await userModel.addToWishlist(username, updates) //access model func.
-    const owner = req.body.postOwner;
-    const item = req.body.item;
+    const updatesPost = {
+      $set: {wishlist: req.body.editedPost.wishlist}
+    }
+
+    const resultUser = await userModel.addToWishlist(username, updatesUser) //access model func.
+    const resultPost = await userModel.addToPostWishlist(postId, updatesPost)
+
+    const owner = req.body.editedUser.postOwner;
+    const item = req.body.editedUser.item;
+
+
     if(item !== undefined){
       try {
-      await mailer.wishlistNotification(owner.email, item.title, req.body.username, item.wishlistCount);  
+      await mailer.wishlistNotification(owner.email, item.title, req.body.editedUser.username, item.wishlistCount);
       console.log("Email sent");
       } catch (error) {
         console.error(error);
         console.log("Email couldn't be sent");
       }      
     }
-    res.send(result).status(200);
+
+    res.send(resultUser).status(200);
+
   } catch (error) {
     console.error(error)
-    res.status(500).send({ error: 'Internal Server Error' })
+    res.status(500).send({ error: 'Internal Server Error: could not wishlist.' })
   }
 })
+
+
 router.patch('/editprofile/:username', async (req, res) => {
   try {
     const oldUsername = req.params.username;
