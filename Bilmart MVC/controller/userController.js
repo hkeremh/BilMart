@@ -8,6 +8,7 @@
  * 
  */
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import userModel from '../model/userModel.js'; //this line allows controller to use methods from model
 import tempUserModel from '../model/tempUserModel.js';
 import bcrypt from "bcrypt";
@@ -390,6 +391,34 @@ router.post("/forgotpassword", async (req, res, next) => {
   } else {
     let result = await mailer.forgotPasswordNotification(user);
     res.json({success: true, message: "Email sent successfully"});
+  }
+})
+
+router.post('/request-contact/:id', async (req, res) => {
+
+  const item = req.body.post;
+
+  const itemTitle = item.title;
+  const viewer = req.body.viewingUser;
+  const viewerMail = viewer.email;
+  const owner = await userModel.getUser(new ObjectId(item.postOwner));
+  const ownerMail = owner.email;
+  const ownerUsername = owner.username;
+
+  const requestingUsername = viewer.username;
+  const requestingURL = viewer._id; //not correct
+  const postURL = `http://localhost:3000/item/${item._id}`;
+
+  res.json({success: true, message: `Email sent to user`}).status(200);
+
+  if(item !== undefined){
+    try {
+      await mailer.requestForContactInfoNotification(ownerMail, requestingUsername, viewerMail,requestingURL, itemTitle, postURL);
+      console.log("Email sent");
+    } catch (error) {
+      console.error(error);
+      console.log("Email couldn't be sent");
+    }
   }
 })
 

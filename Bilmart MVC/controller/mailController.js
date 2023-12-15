@@ -38,6 +38,7 @@ exports.wishlistNotificationToViewer = (user, post) => {
       "Update to a wish-listed item",
           `<h1>BilMart</h1><h2>"${post.title}" has been recieved an update.</h2><h2></h2>`)
 }
+
 exports.forgotPasswordNotification = (user) => {
   const email = user.email;
   const username = user.username;
@@ -51,14 +52,14 @@ exports.ratingNotification = (posterMail, newRating) =>{
     "Your User Rating",    
     "<h1>BilMart</h1><h2>Your account has been rated. Your new rating is: " + newRating + ".</h2>")
 }
-exports.requestForContactInfoNotification = (posterMail, requestUserName, requestUserURL, itemName, postURL, ) =>{
-  sendMail(posterMail,
+exports.requestForContactInfoNotification = (posterMail, requestUserName, requestingMail, requestUserURL, itemName, postURL) =>{
+  exports.sendMail(posterMail,
     "Contact Request",    
     "<h1>BilMart</h1><h2> The user <a href=" + requestUserURL +">" + requestUserName + "</a> is interested in your item: <a href=" + postURL +">"  + itemName + "</a>."
+      + `<h1>Their mail: ${requestingMail}</h1>`
     + "</h2>"
     + "<button> Accept request</button>"
     )
-
 }
 exports.contactInfoRecievedNotification = (userMail, posterUserName, posterURL, itemName, postURL, posterContact) => {
   sendMail(userMail,
