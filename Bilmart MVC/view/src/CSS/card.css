@@ -9,6 +9,22 @@
 /*    background-color: #eef5ff;*/
 /*}*/
 
+.textback {
+    height: 30px;
+    background-color: rgba(213, 213, 213, 0.43);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--primary-accent)
+
+}
+
+.text-in-card {
+    font-weight: bold;
+}
+
 .itemCard {
     position: relative;
     /*background-color: blue;*/

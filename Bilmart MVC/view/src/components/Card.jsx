@@ -43,13 +43,25 @@ function ItemCard(props) {
         {props.record.description.toString().length >= 40 && <div className="text">{props.record.description.toString().substring(0, 37) + "..." }</div>}
       </Card.Text>
     </Card.Body>
-    <ListGroup className="list-group-flush">
-      {props.record.type === "Sale Item" && <ListGroup.Item><div className="text">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div></ListGroup.Item>}
-      {props.record.type === "Borrowal Item" && <ListGroup.Item><div className="text">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div></ListGroup.Item>}
-      {(props.record.type === "Lost Item" || props.record.type === "Found Item") && <ListGroup.Item><div className="text">{props.record.typeSpecific.status === true ? "Found" : "Still Lost"}</div></ListGroup.Item>}
-      {props.record.type === "Donation" && <ListGroup.Item><div className="text">{props.record.typeSpecific.organizationName}</div></ListGroup.Item>}
-      <ListGroup.Item><div className="text" style={{fontWeight: "bold"}}>{props.record.type}</div></ListGroup.Item>
-    </ListGroup>
+    {/*<ListGroup className="list-group-flush">*/}
+      <div className="textback">
+      {props.record.type === "Sale Item" && <div>
+        <div className="text-in-card">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div>
+      </div>}
+      {props.record.type === "Borrowal Item" && <div>
+        <div className="text-in-card">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div>
+      </div>}
+      {(props.record.type === "Lost Item" || props.record.type === "Found Item") && <div>
+        <div className="text-in-card">{props.record.typeSpecific.status === true ? "Found" : "Still Lost"}</div>
+      </div>}
+      {props.record.type === "Donation" && <div>
+        <div className="text-in-card">{props.record.typeSpecific.organizationName}</div>
+      </div>}
+      </div>
+      {/*<ListGroup.Item>*/}
+        <div className="text textback" style={{fontWeight: "bold"}}>{props.record.type}</div>
+      {/*</ListGroup.Item>*/}
+    {/*</ListGroup>*/}
     <Card.Body>
       <div>
       <Row>
