@@ -285,12 +285,11 @@ useEffect(() => {
 
         let list = item.wishlist;
         if (item.wishlist.includes(profileUser._id)) {
-            const indexToRemove = item.wishlist.indexOf(profileUser._id);
-            if (indexToRemove !== -1) {
-                list = item.wishlist.splice(indexToRemove, 1);
-            }
+          list = list.filter((userID) => userID !== profileUser._id);
+            // if (indexToRemove !== -1) {
+            //     list = item.wishlist.splice(indexToRemove, 1);
+            // }
         }
-
         const updatedPostWishlist = list;
 
           const editedUser = {

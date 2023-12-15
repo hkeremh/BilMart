@@ -53,14 +53,14 @@ export default function Home() {
       const { status, user } = data;
       setUsername(user);
       return status
-        ?  (setIsUserLoading(false))
+        ? (setIsUserLoading(false))
         : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie, currentPage]);
- const [records, setRecords] = useState([]);
- // This method fetches the records from the database.
-   async function getRecords(pageNumber){
+  const [records, setRecords] = useState([]);
+  // This method fetches the records from the database.
+  async function getRecords(pageNumber) {
     const response = await fetch(`http://localhost:4000/listing/home?pageNumber=${pageNumber}`);
 
     if (!response.ok) {
@@ -76,7 +76,7 @@ export default function Home() {
     navigate(`/home?pageNumber=${pageNumber}`);
   }
 
-    useEffect(() => {
+  useEffect(() => {
     getAllTags();
   }, []);
 
@@ -109,251 +109,264 @@ export default function Home() {
   }
 
 
-function tagList() {
+  function tagList() {
 
-  return allTags.map((t) => {
-    return <Form.Check className="text" type="checkbox" defaultChecked={searchTags.includes(t.name)} label={t.name} onClick={(e) => (setSearchTags(updateArray(searchTags, t.name, e.target.checked)))} />
-  });
-}
+    return allTags.map((t) => {
+      return <Form.Check className="text" type="checkbox" defaultChecked={searchTags.includes(t.name)} label={t.name} onClick={(e) => (setSearchTags(updateArray(searchTags, t.name, e.target.checked)))} />
+    });
+  }
 
-function updateArray(array, value, add) {
-  if (add) {
-    if (!array.includes(value)) {
-      array.push(value);
+  function updateArray(array, value, add) {
+    if (add) {
+      if (!array.includes(value)) {
+        array.push(value);
+      }
+
     }
 
-  }
+    else {
+      if (array.includes(value)) {
+        array.splice(array.indexOf(value), 1);
+      }
 
-  else {
-    if (array.includes(value)) {
-      array.splice(array.indexOf(value), 1);
     }
 
+    setShowPriceSort(isPriceItems());
+    return array;
   }
 
-  setShowPriceSort(isPriceItems());
-  return array;
-}
+  async function getAllTags() {
+    const response = await fetch(`http://localhost:4000/listing/tags`);
 
-async function getAllTags() {
-  const response = await fetch(`http://localhost:4000/listing/tags`);
+    if (!response.ok) {
+      const message = `An error occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
 
-  if (!response.ok) {
-    const message = `An error occurred: ${response.statusText}`;
-    window.alert(message);
-    return;
+    const allTags = await response.json();
+    setAllTags(allTags);
   }
 
-  const allTags = await response.json();
-  setAllTags(allTags);  }
-
-async function getSearchRecords(reqBody) {
+  async function getSearchRecords(reqBody) {
 
 
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: reqBody,
-    redirect: 'follow'
-  };
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: reqBody,
+      redirect: 'follow'
+    };
 
 
-  const response = await fetch("http://localhost:4000/listing/search", requestOptions);
+    const response = await fetch("http://localhost:4000/listing/search", requestOptions);
 
-  if (!response.ok) {
-    const message = `An error occurred: ${response.statusText}`;
-    window.alert(message);
-    return;
+    if (!response.ok) {
+      const message = `An error occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+
+
+    const records = await response.json();
+    console.log("search records: " + records);
+
+    setRecords(records);
+    setIsPostLoading(false);
+    console.log("current page is " + currentPage);
+    navigate(`/home?state=search`);
+
+
+  }
+
+  useEffect(() => {
+
+    
+      if (!searchDone)
+        getRecords(currentPage);
+      else
+        getSearchRecords(searchParamsJSON(currentPage))
+    
+
+
+
+  }, [currentPage, pageSize]);
+
+  useEffect(() => {
+
+
+      setCurrentPage(1);
+
+
+  }, [searchDone]);
+
+
+
+
+  //  useEffect(() => {
+  //    async function getRecords() {
+  //      const response = await fetch(`http://localhost:4000/listing/`);
+
+  //      if (!response.ok) {
+  //        const message = `An error occurred: ${response.statusText}`;
+  //        window.alert(message);
+  //        return;
+  //      }
+
+  //      const records = await response.json();
+  //      setRecords(records);
+  //      setIsLoading(false);
+  //    }
+
+  //    getRecords();
+
+  //    return;
+  //  }, [records.length]);
+
+  // This method will delete a record
+  async function deleteRecord(id) {
+    await fetch(`http://localhost:4000/listing/${id}`, {
+      method: "DELETE"
+    });
+
+    const newRecords = records.filter((el) => el._id !== id);
+    setRecords(newRecords);
+  }
+
+  // This method will map out the records on the table
+  function recordList() {
+    return records.map((record) => {
+      return <ItemCard record={record} key={record._id} deleteRecord={deleteRecord} />
+    });
   }
 
 
-  const records = await response.json();
-  console.log("search records: " + records);
 
-  setRecords(records);
+  // This following section will display the table with the records of individuals.
+  return (
+    <div>
+      <NavBar />
+      <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
+        {(isPostLoading || isUserLoading) ? (
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <Container fluid style={{ marginTop: "15px" }}>
+            <LogoBar />
+            <Container style={{ marginTop: "15px" }} fluid>
+              <Row>
+                <Col xl={3} md={4}>
+                  <Container className="selection" fluid>
 
-  navigate(`/home?state=search`);
-  setIsPostLoading(false);
+                    <div>
+                      <Container style={{ height: "10px" }}></Container>
+                      <Container className="itemDetail">
+                        <Form.Label className="text">Tags</Form.Label>
 
-}
+                        <div >
+                          {tagList()}
 
-useEffect(() => {
-
-  if (!searchDone)
-    getRecords(currentPage);
-  else
-    getSearchRecords(searchParamsJSON(currentPage))
-
-
-}, [currentPage, pageSize]);
-
-
-
-
-//  useEffect(() => {
-//    async function getRecords() {
-//      const response = await fetch(`http://localhost:4000/listing/`);
-
-//      if (!response.ok) {
-//        const message = `An error occurred: ${response.statusText}`;
-//        window.alert(message);
-//        return;
-//      }
-
-//      const records = await response.json();
-//      setRecords(records);
-//      setIsLoading(false);
-//    }
-
-//    getRecords();
-
-//    return;
-//  }, [records.length]);
-
-// This method will delete a record
-async function deleteRecord(id) {
-  await fetch(`http://localhost:4000/listing/${id}`, {
-    method: "DELETE"
-  });
-
-  const newRecords = records.filter((el) => el._id !== id);
-  setRecords(newRecords);
-}
-
-// This method will map out the records on the table
-function recordList() {
-  return records.map((record) => {
-    return <ItemCard record={record} key={record._id} deleteRecord={deleteRecord} />
-  });
-}
-
-
-
-// This following section will display the table with the records of individuals.
-return (
-  <div className="primary-color" >
-    <NavBar />
-    <div style={{marginTop: 15 }}>
-      {(isPostLoading || isUserLoading) ? (
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      ) : (
-        <Container fluid style={{ marginTop: "15px" }}>
-          <LogoBar />
-          <Container style={{ marginTop: "15px" }} fluid>
-            <Row>
-              <Col xl={3} md={4}>
-                <Container className="selection" fluid>
-
-                  <div>
-                    <Container style={{ height: "10px" }}></Container>
-                    <Container className="itemDetail ">
-                      <Form.Label className="text">Tags</Form.Label>
-
-                      <div >
-                        {tagList()}
-
-                      </div>
-
-                      <hr />
-                      <Form.Label className="text">Category Tag</Form.Label>
-
-                      <Form.Group className="mb-3" style={{ display: "flex" }}>
-                        <div style={{ marginLeft: "0", marginRight: "auto" }}>
-                          <Form.Check className="text" type="checkbox" label="Sale Item" defaultChecked={searchTypes.includes("Sale Item")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Sale Item", e.target.checked)))} />
-                          <Form.Check className="text" type="checkbox" label="Lost&Found" defaultChecked={searchTypes.includes("Lost&Found")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Lost&Found", e.target.checked, setSearchTypes)))} />
-                        </div>
-                        <div style={{ marginRight: "0", marginLeft: "auto" }}>
-                          <Form.Check className="text" type="checkbox" label="Borrowal Item" defaultChecked={searchTypes.includes("Borrowal Item")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Borrowal Item", e.target.checked, setSearchTypes)))} />
-                          <Form.Check className="text" type="checkbox" label="Donation" defaultChecked={searchTypes.includes("Donation")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Donation", e.target.checked, setSearchTypes)))} />
                         </div>
 
+                        <hr />
+                        <Form.Label className="text">Category Tag</Form.Label>
+
+                        <Form.Group className="mb-3" style={{ display: "flex" }}>
+                          <div style={{ marginLeft: "0", marginRight: "auto" }}>
+                            <Form.Check className="text" type="checkbox" label="Sale Item" defaultChecked={searchTypes.includes("Sale Item")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Sale Item", e.target.checked)))} />
+                            <Form.Check className="text" type="checkbox" label="Lost&Found" defaultChecked={searchTypes.includes("Lost&Found")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Lost&Found", e.target.checked, setSearchTypes)))} />
+                          </div>
+                          <div style={{ marginRight: "0", marginLeft: "auto" }}>
+                            <Form.Check className="text" type="checkbox" label="Borrowal Item" defaultChecked={searchTypes.includes("Borrowal Item")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Borrowal Item", e.target.checked, setSearchTypes)))} />
+                            <Form.Check className="text" type="checkbox" label="Donation" defaultChecked={searchTypes.includes("Donation")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Donation", e.target.checked, setSearchTypes)))} />
+                          </div>
 
 
-                      </Form.Group>
 
-                      <Form.Group className="mb-3">
-                        <FloatingLabel
-                          controlId="floatingSelectGrid"
-                          label="Sort by"
-                          className="text"
+                        </Form.Group>
 
-                          onChange={(e) => setSearchOrderBy(e.target.value)}
-                        >
-                         {showPriceSort ? <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
+                        <Form.Group className="mb-3">
+                          <FloatingLabel
+                            controlId="floatingSelectGrid"
+                            label="Sort by"
+                            className="text"
+
+                            onChange={(e) => setSearchOrderBy(e.target.value)}
+                          >
+                            {showPriceSort ? <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
                               <option className="text" value="dateHigh">Date (New to Old)</option>
                               <option className="text" value="dateLow">Date (Old to New)</option>
                               <option className="text" value="priceLow" >Price (Low to High)</option>
-                            <option className="text" value="priceHigh">Price (High to Low)</option>
-                          </Form.Select> :
+                              <option className="text" value="priceHigh">Price (High to Low)</option>
+                            </Form.Select> :
 
-                          <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
-                              <option className="text" value="dateHigh">Date (New to Old)</option>
-                              <option className="text" value="dateLow">Date (Old to New)</option>
-                          </Form.Select>}
-                        </FloatingLabel>
+                              <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
+                                <option className="text" value="dateHigh">Date (New to Old)</option>
+                                <option className="text" value="dateLow">Date (Old to New)</option>
+                              </Form.Select>}
+                          </FloatingLabel>
 
-                      </Form.Group>
-                      <Form.Control
-                        type="search"
-                        placeholder="Search"
-                        className="me-2 text"
-                        aria-label="Search"
-                        defaultValue={searchText}
-                        onChange={(e) => (setSearchText(e.target.value))}
-                      />
-                      <hr />
-                    </Container>
-                    <Container className="itemDetail">
-                      <Form.Label className="text">Status</Form.Label>
-                      <hr />
-                      <Form.Group className="mb-3" style={{ display: "flex" }}>
-                        <div style={{ marginLeft: "0", marginRight: "auto" }}>
-                          <Form.Check className="text" type="checkbox" label="Available" onClick={(e) => (setSearchAvailability(updateArray(searchAvailability, "Available", e.target.checked)))} />
-                          <Form.Check className="text" type="checkbox" label="Lost" onClick={(e) => (setSearchAvailability(updateArray(searchAvailability, "Lost", e.target.checked)))} />
-                        </div>
-                        <div style={{ marginRight: "0", marginLeft: "auto" }}>
+                        </Form.Group>
+                        <Form.Control
+                          type="search"
+                          placeholder="Search"
+                          className="me-2 text"
+                          aria-label="Search"
+                          defaultValue={searchText}
+                          onChange={(e) => (setSearchText(e.target.value))}
+                        />
+                        <hr />
+                      </Container>
+                      <Container className="itemDetail">
+                        <Form.Label className="text">Status</Form.Label>
+                        <hr />
+                        <Form.Group className="mb-3" style={{ display: "flex" }}>
+                          <div style={{ marginLeft: "0", marginRight: "auto" }}>
+                            <Form.Check className="text" type="checkbox" label="Available" onClick={(e) => (setSearchAvailability(updateArray(searchAvailability, "Available", e.target.checked)))} />
+                            <Form.Check className="text" type="checkbox" label="Lost" onClick={(e) => (setSearchAvailability(updateArray(searchAvailability, "Lost", e.target.checked)))} />
+                          </div>
+                          <div style={{ marginRight: "0", marginLeft: "auto" }}>
 
-                          <Form.Check className="text" type="checkbox" label="Found" onClick={(e) => (setSearchAvailability(updateArray(searchAvailability, "Found", e.target.checked)))} />
-                        </div>
-                      </Form.Group>
-                    </Container>
-                    <Container>
-                      <Form.Group style={{ justifyContent: "center", textAlign: "center" }}>
-                        <Button className="text" variant="secondary" onClick={(e) => ( setIsPostLoading(true),setSearchDone(true), setCurrentPage(1), getSearchRecords(searchParamsJSON(currentPage)))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
-                      </Form.Group>
-                    </Container>
-                    <Container style={{ height: "1px" }}></Container>
+                            <Form.Check className="text" type="checkbox" label="Found" onClick={(e) => (setSearchAvailability(updateArray(searchAvailability, "Found", e.target.checked)))} />
+                          </div>
+                        </Form.Group>
+                      </Container>
+                      <Container>
+                        <Form.Group style={{ justifyContent: "center", textAlign: "center" }}>
+                          <Button className="text" variant="secondary" onClick={(e) => (setIsPostLoading(true), setSearchDone(true))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
+                        </Form.Group>
+                      </Container>
+                      <Container style={{ height: "1px" }}></Container>
+                    </div>
+
+
+                  </Container>
+                </Col>
+                <Col xl={9} md={8}>
+                  <Container className="items" style={{ textAlign: "center" }} fluid>
+                    {recordList()}
+
+
+                  </Container>
+                  <div style={{ textAlign: "center", marginTop: "10px" }}>
+                    <Button variant="secondary" onClick={() => (setCurrentPage(currentPage - 1), setIsPostLoading(true))} disabled={currentPage === 1} style={{ marginRight: "5px" }}>Previous</Button>
+                    <Button variant="secondary" onClick={() => (setCurrentPage(currentPage + 1), setIsPostLoading(true))} disabled={records.length < pageSize} style={{ marginLeft: "5px" }}>Next</Button>
                   </div>
-
-
-                </Container>
-              </Col>
-              <Col xl={9} md={8}>
-                <Container className="items" style={{ textAlign: "center" }} fluid>
-                  {recordList()}
-
-
-                </Container>
-                <div style={{ textAlign: "center", marginTop: "10px" }}>
-                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage - 1), setIsPostLoading(true))} disabled={currentPage === 1} style={{ marginRight: "5px" }}>Previous</Button>
-                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage + 1), setIsPostLoading(true))} disabled={records.length < pageSize} style={{ marginLeft: "5px" }}>Next</Button>
-                </div>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
+            </Container>
           </Container>
-        </Container>
-      )}
-      <ToastContainer />
+        )}
+        <ToastContainer />
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 // export default Home;
