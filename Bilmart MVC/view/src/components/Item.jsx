@@ -48,6 +48,7 @@ export default function Item() {
   createdAt: ""
  });
  const [userWishlist, setUserWishlist] = useState([]);
+ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
  async function fetchData(username) {
   const response = await fetch(`http://localhost:4000/user/username/${username}`);
   if (!response.ok) {
@@ -188,7 +189,6 @@ useEffect(() => {
       }
 
       const result = await response.json();
-      console.log(result);
       if (!result) {
         toast.error(`Listing couldn't be added to wishlist`, {
         position: "top-center",
@@ -220,6 +220,62 @@ useEffect(() => {
 
   return;
  }
+
+ function requestContact() {
+     async function sendRequestContact() {
+
+         const contact = {
+             viewingUser: profileUser,
+             post: item
+         }
+
+         const response = await fetch(`http://localhost:4000/user/request-contact/${profileUser.username}`, {
+             method: "POST",
+             body: JSON.stringify(contact),
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+         });
+
+         if (!response.ok) {
+             const message = `Could not add to wishlist, an error has occurred: ${response.statusText}`;
+             window.alert(message);
+             return;
+         }
+
+         const result = await response.json();
+         console.log(result);
+         if (!result) {
+             toast.error(`Email could not be sent due to server issues`, {
+                 position: "top-center",
+                 autoClose: 1500,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored",
+             });
+         } else{
+             setIsButtonDisabled(true);
+             toast.success(`Email sent`, {
+                 position: "top-center",
+                 autoClose: 1500,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored",
+             });
+         }
+
+     }
+
+     sendRequestContact();
+     return;
+ }
+
  function removeFromWishlist() {
       async function removeFromWishlist() {
         if (userWishlist.includes(item._id)) {
@@ -399,7 +455,7 @@ useEffect(() => {
                     </div>
                     <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      {item.type === "Donation" ? <h3 className="text">{"IBAN: "+item.typeSpecific.IBAN}</h3> : <Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Request Contact</div></Button>}
+                      {item.type === "Donation" ? <h3 className="text">{"IBAN: "+item.typeSpecific.IBAN}</h3> : <Button disabled={isButtonDisabled} variant="secondary" style={{backgroundColor: "#192655"}}><div className="text" onClick={requestContact}>Request Contact</div></Button>}
                     </div> : <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <Button className="primary-accent" variant="secondary" href="/profile"><div className="text">Go to Profile</div></Button>
                     </div>  }
