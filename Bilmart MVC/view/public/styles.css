@@ -1,6 +1,7 @@
 :root {
   --primary-color: white;
-  --secondary-color: #ccdbff;
+  /*--secondary-color: #ccdbff;*/
+  --secondary-color: white;
   --primary-accent: #192655;
 }
 

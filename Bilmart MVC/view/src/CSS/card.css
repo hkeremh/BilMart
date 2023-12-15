@@ -1,6 +1,17 @@
+/*:root {*/
+/*    --primary-color: white;*/
+/*    !*--secondary-color: #ccdbff;*!*/
+/*    --secondary-color: white;*/
+/*    --primary-accent: #192655;*/
+/*}*/
+
+/*.card-body {*/
+/*    background-color: #eef5ff;*/
+/*}*/
+
 .itemCard {
     position: relative;
-    background-color: white;
+    /*background-color: blue;*/
     border-radius: 20px;
     overflow: hidden;
     z-index: 0;
@@ -34,7 +45,7 @@
 }
 
 .other-background {
-    background-color: #ccdbff; /* Blue */
+    background-color: lightgray; /* Blue */
 }
 
 .card {

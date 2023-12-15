@@ -18,20 +18,21 @@ function ItemCard(props) {
     let typeToBackground = {
       'Sale Item': 'sale-background',
       'Borrowal Item': 'borrowal-background',
-      'Donation Item': 'donation-background',
+      'Donation': 'donation-background',
+      'Lost Item': 'lostFound-background',
       'Found Item': 'lostFound-background',
       'Other Item': 'other-background',
     };
 
-
-
     setBackgroundType(typeToBackground[type] || 'other-background');
   }, [props.record.type]);
 
+  //className={['itemCard', backgroundType].join(' ')}
   return (
   <div className="itemCard">
   <Card style={{ width: '280px', height: "500px", border: "1px solid #DED0B6"}}>
-    <Card.Img className="centered-and-cropped" variant="top" src={props.record.image} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6"}}/>
+    <div className={['circleBackground', backgroundType].join(' ')}/>
+    <Card.Img className="centered-and-cropped" variant="top" src={props.record.image} height={"220px"} width={"auto"} style={{maxWidth: "280px", borderBottom: "1px solid #DED0B6", borderRadius: "4px"}}/>
     <Card.Body>
       <Card.Title>
       {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
