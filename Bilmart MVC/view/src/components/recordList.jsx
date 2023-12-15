@@ -234,9 +234,9 @@ function recordList() {
 
 // This following section will display the table with the records of individuals.
 return (
-  <div>
+  <div className="primary-color" >
     <NavBar />
-    <div style={{ backgroundColor: "#D6C7AE", marginTop: 15 }}>
+    <div style={{marginTop: 15 }}>
       {(isPostLoading || isUserLoading) ? (
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
           <Spinner animation="border" role="status">
@@ -253,7 +253,7 @@ return (
 
                   <div>
                     <Container style={{ height: "10px" }}></Container>
-                    <Container className="itemDetail">
+                    <Container className="itemDetail ">
                       <Form.Label className="text">Tags</Form.Label>
 
                       <div >

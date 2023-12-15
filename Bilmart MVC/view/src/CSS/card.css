@@ -43,25 +43,46 @@
     z-index: -1;
 }
 
+/*.sale-background {*/
+/*    !*background-color: #ff0000;*!*/
+/*    background-color: hsl(0, 71%, 55%);*/
+/*}*/
+/*.borrowal-background {*/
+/*    background-color: #ffa500; !* Orange-Yellow *!*/
+/*}*/
+/*.donation-background {*/
+/*    background-color: #0a9f17; !* Green *!*/
+/*}*/
+/*.lostFound-background {*/
+/*    background-color: #1192d2; !* Blue *!*/
+/*}*/
+/*.other-background {*/
+/*    background-color: lightgray; !* Blue *!*/
+/*}*/
+
 .sale-background {
-    /*background-color: #ff0000;*/
-    background-color: hsl(0, 70%, 60%);
+    background-color: #ff0000; /* Red */
+    box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5); /* Adjusted glow color for red */
 }
 
 .borrowal-background {
-    background-color: #ffa500; /* Orange-Yellow */
+    background-color: #0a9f17; /* Green */
+    box-shadow: 0 0 10px 5px rgba(10, 159, 23, 0.5); /* Adjusted glow color for green */
 }
 
 .donation-background {
-    background-color: #0a9f17; /* Green */
+    background-color: #ffa500; /* Orange-Yellow */
+    box-shadow: 0 0 10px 5px rgba(255, 165, 0, 0.5); /* Adjusted glow color for orange-yellow */
 }
 
 .lostFound-background {
     background-color: #1192d2; /* Blue */
+    box-shadow: 0 0 20px 10px rgba(123, 123, 255, 0.5);
 }
 
 .other-background {
-    background-color: lightgray; /* Blue */
+    background-color: lightgray; /* Light Gray */
+    box-shadow: 0 0 10px 5px rgba(169, 169, 169, 0.5); /* Adjusted glow color for light gray */
 }
 
 .card {

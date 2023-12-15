@@ -134,7 +134,7 @@ useEffect(() => {
  
  function addToWishlist() {
   async function addToWishlist() {
-    if (userWishlist.includes(item._id)) {
+    if (userWishlist.includes(item._id) || item.wishlist.includes(profileUser._id)) {
       toast.error(`Listing is already in wishlist`, {
         position: "top-center",
         autoClose: 1500,
@@ -282,12 +282,16 @@ useEffect(() => {
         if (userWishlist.includes(item._id)) {
 
         const updatedOwnerWishlist = userWishlist.filter((listing) => listing !== item._id);
-        const indexToRemove = item.wishlist.indexOf(item._id);
 
-        if (indexToRemove !== -1) {
-            item.wishlist.splice(indexToRemove, 1);
+        let list = item.wishlist;
+        if (item.wishlist.includes(profileUser._id)) {
+            const indexToRemove = item.wishlist.indexOf(profileUser._id);
+            if (indexToRemove !== -1) {
+                list = item.wishlist.splice(indexToRemove, 1);
+            }
         }
-        const updatedPostWishlist = item.wishlist;
+
+        const updatedPostWishlist = list;
 
           const editedUser = {
             email: profileUser.email,
@@ -381,7 +385,7 @@ useEffect(() => {
  }
  // This following section will display the form that takes input from the user to update the data.
  return (
-  <div>
+  <div className="primary-color">
    <NavBar />
    <div>
    {(isPostLoading || isUserLoading) ? (
@@ -432,7 +436,7 @@ useEffect(() => {
                     </div> 
                     <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                     <div className="postDate" style={{alignItems: "center", display: "flex"}}>
-                      <h3 style={{fontWeight: "bolder", color: "var(--primary-accent)"}}>Post Date: </h3>
+                      <h3 style={{fontWeight: "bolder", color: "var(--text-color)"}}>Post Date: </h3>
                       <h3 style={{color: "black", marginLeft: "10px"}}>{item.postDate.toString().substring(0, 10)}</h3>
                     </div>
                   </Container>
@@ -472,10 +476,10 @@ useEffect(() => {
                         <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>ID: </span>{item._id}</p>
                     </div>
                     <div style={{alignItems: "center", display: "flex"}}>
-                        {item.type !== "Donation" && <h3  style={{color: "var(--primary-accent)"}}>Condition: </h3>}
+                        {item.type !== "Donation" && <h3  style={{color: "var(--text-color)"}}>Condition: </h3>}
                         {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
                         {(item.type === "Lost Item" || item.type === "Found Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.status === true ? "Found" : "Still Lost"}</h3>}
-                        {item.type === "Donation" && <h3 style={{color: "var(--primary-accent)"}}>Progress: </h3>}
+                        {item.type === "Donation" && <h3 style={{color: "var(--text-color)"}}>Progress: </h3>}
                         {item.type === "Donation" && <ProgressBar variant="secondary" className="text" style={{marginBottom: "5px", marginLeft: "15px", width: "915px", height: "30px"}} now={item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100} label={`${(item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100)}% Reached`} animated/>}
                         {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}
                     </div>
