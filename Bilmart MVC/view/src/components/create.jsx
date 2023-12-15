@@ -62,7 +62,7 @@ export default function Create() {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   
       // Get the compressed image data as a base64-encoded string
-      var compressedImageData = canvas.toDataURL('image/jpeg', compressionQuality);
+      var compressedImageData = canvas.toDataURL('image/jpeg', 1.0);
 
   
       // Pass the compressed image data to the callback function
