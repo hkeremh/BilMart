@@ -15,6 +15,8 @@ class User {
     profileImage;
     createdAt;
     ratedamount;
+    phoneNumber;
+    contactInfoPublic;
     // Constructor
     constructor({username, password, email, bilkentID, department, verification, rating, settings, description, postList, wishList, profileImage, ratedamount, createdAt}) {
         this.username = username || '';
@@ -31,6 +33,8 @@ class User {
         this.profileImage = profileImage || '';
         this.ratedamount = ratedamount;
         this.createdAt = createdAt || new Date();
+        this.phoneNumber = '';
+        this.contactInfoPublic = false;
     }
 
     // toJSON function
@@ -49,7 +53,9 @@ class User {
             wishList: this.wishList,
             profileImage: this.profileImage,
             ratedamount: this.ratedamount,
-            createdAt: this.createdAt
+            createdAt: this.createdAt,
+            phoneNumber: this.phoneNumber,
+            contactInfoPublic: this.contactInfoPublic
         };
     }
 }

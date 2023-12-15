@@ -404,16 +404,19 @@ router.post('/request-contact/:id', async (req, res) => {
   const owner = await userModel.getUser(new ObjectId(item.postOwner));
   const ownerMail = owner.email;
   const ownerUsername = owner.username;
-
+  const viewerPhoneNum = viewer.phoneNumber
   const requestingUsername = viewer.username;
   const requestingURL = viewer._id; //not correct
   const postURL = `http://localhost:3000/item/${item._id}`;
+  const contactInfoPublic = viewer.contactInfoPublic;
+
+  console.log("viewerPhoneNum:" + viewerPhoneNum)
 
   res.json({success: true, message: `Email sent to user`}).status(200);
 
   if(item !== undefined){
     try {
-      await mailer.requestForContactInfoNotification(ownerMail, requestingUsername, viewerMail,requestingURL, itemTitle, postURL);
+      await mailer.requestForContactInfoNotification(ownerMail, requestingUsername, viewerMail, requestingURL, itemTitle, postURL, viewerPhoneNum, contactInfoPublic);
       console.log("Email sent");
     } catch (error) {
       console.error(error);
