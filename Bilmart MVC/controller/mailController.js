@@ -38,14 +38,12 @@ exports.wishlistNotificationToViewer = (user, post) => {
       "Update to a wish-listed item",
           `<h1>BilMart</h1><h2>"${post.title}" has been recieved an update.</h2><h2></h2>`)
 }
-
-exports.forgotPasswordNotification = (user) => {
+exports.forgotPasswordNotification = (user, token) => {
   const email = user.email;
   const username = user.username;
-  const id = user._id;
   exports.sendMail(email,
     "Forgot Password",
-    `<h1>BilMart</h1><h2>Dear ${username},</h2><h2><a className="btn btn-dark" href="http://localhost:3000/changePassword/${id}">Click here to change your password</a></h2>`)
+    `<h1>BilMart</h1><h2>Dear ${username},</h2><h2><a className="btn btn-dark" href="http://localhost:3000/changePassword/${token}">Click here to change your password</a></h2>`)
 }
 exports.ratingNotification = (posterMail, newRating) =>{
   sendMail(posterMail,
