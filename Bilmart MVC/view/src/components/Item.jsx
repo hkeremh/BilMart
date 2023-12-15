@@ -282,12 +282,15 @@ useEffect(() => {
         if (userWishlist.includes(item._id)) {
 
         const updatedOwnerWishlist = userWishlist.filter((listing) => listing !== item._id);
-        const indexToRemove = item.wishlist.indexOf(item._id);
 
-        if (indexToRemove !== -1) {
-            item.wishlist.splice(indexToRemove, 1);
+        let list = item.wishlist;
+        if (item.wishlist.includes(profileUser._id)) {
+          list = list.filter((userID) => userID !== profileUser._id);
+            // if (indexToRemove !== -1) {
+            //     list = item.wishlist.splice(indexToRemove, 1);
+            // }
         }
-        const updatedPostWishlist = item.wishlist;
+        const updatedPostWishlist = list;
 
           const editedUser = {
             email: profileUser.email,
