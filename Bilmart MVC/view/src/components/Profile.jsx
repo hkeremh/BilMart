@@ -79,11 +79,13 @@ function Profile(){
  
   // This method will delete a record
   async function deleteRecord(id) {
+    setIsPostLoading(true);
     const newRecords = userPosts.filter((el) => el._id !== id);
     setUserPosts(newRecords);    
     await fetch(`http://localhost:4000/listing/${id}`, {
       method: "DELETE"
     });
+    setIsPostLoading(false);
   }
  
   // This method will map out the records on the table
