@@ -434,9 +434,6 @@ router.patch("/:id", async (req, res) => {
       }
     };
 
-    console.log("----------------------")
-    console.log(req.body)
-    console.log("----------------------")
 
     const wishlist = req.body.wishlist;
     const post = req.body

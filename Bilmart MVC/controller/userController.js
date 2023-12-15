@@ -57,7 +57,6 @@ router.get('/username/:username', async (req, res) => {
 })
 router.get('/id/:id', async (req, res) => {
   try {
-    console.log(req.params.id);
     const id = req.params.id.toString();
     let user = await userModel.getUser(id);
     if(!user) {
@@ -194,12 +193,11 @@ router.patch('/changePassword/:userID', async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const user = await userModel.getUserByEmail(req.body.email)
-        console.log(user)
         if(!user) {
           return res.json({success: false, message: 'User not found'})
         }
-        console.log(req.body.password)
-        console.log(user.password)
+        // console.log(req.body.password)
+        // console.log(user.password)
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
           return res.json({success: false, message: 'Invalid password'})
