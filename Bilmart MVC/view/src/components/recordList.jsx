@@ -18,16 +18,15 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
-const Home = () => {
 
-
+export default function Home() {
   const navigate = useNavigate();
   const [isPostLoading, setIsPostLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(9);
   const [searchDone, setSearchDone] = useState(false);
   const [allTags, setAllTags] = useState([]);
   const [searchTypes, setSearchTypes] = useState([]);
@@ -37,7 +36,47 @@ const Home = () => {
   const [searchOrderBy, setSearchOrderBy] = useState("dateHigh");
   const [showPriceSort, setShowPriceSort] = useState(false);
 
+  function handlePageChange(pageNumber) {
+    setCurrentPage(pageNumber);
+  }
   useEffect(() => {
+    const verifyCookie = async () => {
+      if (!cookies.userToken) {
+        console.log("test")
+        navigate("/login");
+      }
+      const { data } = await axios.post(
+        "http://localhost:4000/user/",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+      setUsername(user);
+      return status
+        ?  (setIsUserLoading(false))
+        : (removeCookie("userToken"), navigate("/login"));
+    };
+    verifyCookie();
+  }, [cookies, navigate, removeCookie, currentPage]);
+ const [records, setRecords] = useState([]);
+ // This method fetches the records from the database.
+   async function getRecords(pageNumber){
+    const response = await fetch(`http://localhost:4000/listing/home?pageNumber=${pageNumber}`);
+
+    if (!response.ok) {
+      const message = `An error occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+
+    const records = await response.json();
+    console.log(records);
+    setRecords(records);
+    setIsPostLoading(false);
+    navigate(`/home?pageNumber=${pageNumber}`);
+  }
+
+    useEffect(() => {
     getAllTags();
   }, []);
 
@@ -106,55 +145,7 @@ async function getAllTags() {
   }
 
   const allTags = await response.json();
-  setAllTags(allTags);
-
-const Home = () => {
-  const navigate = useNavigate();
-  const [isPostLoading, setIsPostLoading] = useState(true);
-  const [isUserLoading, setIsUserLoading] = useState(true);
-  const [cookies, removeCookie] = useCookies([]);
-  const [username, setUsername] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(9);
-  function handlePageChange(pageNumber) {
-    setCurrentPage(pageNumber);
-  }
-  useEffect(() => {
-    const verifyCookie = async () => {
-      if (!cookies.userToken) {
-        console.log("test")
-        navigate("/login");
-      }
-      const { data } = await axios.post(
-        "http://localhost:4000/user/",
-        {},
-        { withCredentials: true }
-      );
-      const { status, user } = data;
-      setUsername(user);
-      return status
-        ?  (setIsUserLoading(false), getRecords(currentPage))
-        : (removeCookie("userToken"), navigate("/login"));
-    };
-    verifyCookie();
-  }, [cookies, navigate, removeCookie, currentPage]);
- const [records, setRecords] = useState([]);
- // This method fetches the records from the database.
-   async function getRecords(pageNumber){
-    const response = await fetch(`http://localhost:4000/listing/home?pageNumber=${pageNumber}`);
-
-    if (!response.ok) {
-      const message = `An error occurred: ${response.statusText}`;
-      window.alert(message);
-      return;
-    }
-
-    const records = await response.json();
-    console.log(records);
-    setRecords(records);
-    setIsPostLoading(false);
-    navigate(`/home?pageNumber=${pageNumber}`);
-  }
+  setAllTags(allTags);  }
 
 async function getSearchRecords(reqBody) {
 
@@ -183,8 +174,9 @@ async function getSearchRecords(reqBody) {
   console.log("search records: " + records);
 
   setRecords(records);
-  setIsPostLoading(false);
+
   navigate(`/home?state=search&pageNumber=${currentPage}`);
+  setIsPostLoading(false);
 
 }
 
@@ -334,7 +326,7 @@ return (
                     </Container>
                     <Container>
                       <Form.Group style={{ justifyContent: "center", textAlign: "center" }}>
-                        <Button className="text" variant="secondary" onClick={(e) => (setSearchDone(true), setIsPostLoading(true), getSearchRecords(searchParamsJSON(currentPage)))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
+                        <Button className="text" variant="secondary" onClick={(e) => ( setIsPostLoading(true),setSearchDone(true), setCurrentPage(1), getSearchRecords(searchParamsJSON(currentPage)))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
                       </Form.Group>
                     </Container>
                     <Container style={{ height: "1px" }}></Container>
@@ -350,8 +342,8 @@ return (
 
                 </Container>
                 <div style={{ textAlign: "center", marginTop: "10px" }}>
-                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage - 1), setIsPostLoading(true), getRecords(currentPage - 1))} disabled={currentPage === 1} style={{ marginRight: "5px" }}>Previous</Button>
-                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage + 1), setIsPostLoading(true), getRecords(currentPage + 1))} disabled={records.length < pageSize} style={{ marginLeft: "5px" }}>Next</Button>
+                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage - 1), setIsPostLoading(true))} disabled={currentPage === 1} style={{ marginRight: "5px" }}>Previous</Button>
+                  <Button variant="secondary" onClick={() => (setCurrentPage(currentPage + 1), setIsPostLoading(true))} disabled={records.length < pageSize} style={{ marginLeft: "5px" }}>Next</Button>
                 </div>
               </Col>
             </Row>
@@ -364,4 +356,4 @@ return (
 );
 }
 
-export default Home;
+// export default Home;

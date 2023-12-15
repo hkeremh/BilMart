@@ -42,12 +42,6 @@ async function getPageListings(pageNumber) {
   return result;
 }
 
-async function getPageListings(pageNumber) {
-  let collection = await db.collection('Posts'); //name of collection
-  let result = await collection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
-  return result;
-}
-
 async function postListing(newListing) {
     let collection = await db.collection('Posts'); //name of collection
     let result = await collection.insertOne(newListing);
@@ -81,7 +75,7 @@ async function addToWishlist(id, updates) {
 }
 */
 async function searchListings(searchQuery) {
-  let collection = await db.collection('Posts'); //name of collection
+  let collection = await db.collection('QueryPosts'); //name of collection
   let isPrice = searchQuery.orderBy.includes("price");
   let isLow =  searchQuery.orderBy.includes("Low");
 
@@ -98,7 +92,7 @@ async function searchListings(searchQuery) {
 
     ]
 
-  }).sort(isPrice ? {"typeSpecific.price": isLow ? 1 : -1 } : {"postDate": isLow ? 1 : -1}).skip((searchQuery.pageNumber - 1) * 3).limit(3).toArray();
+  }).sort(isPrice ? {"typeSpecific.price": isLow ? 1 : -1 } : {"postDate": isLow ? 1 : -1}).skip((searchQuery.pageNumber - 1) * 9).limit(9).toArray();
   return result;
 }
 

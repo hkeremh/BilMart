@@ -138,6 +138,17 @@ router.get("/home", async (req, res) => {
 //     res.status(500).send({ error: 'Internal Server Error' })
 //   }
 // });
+
+router.get('/tags', async (req, res) => {
+  try {
+    const tags = await listingModel.getAllTags() //access model func.
+    res.send(tags) //return value
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+})
+
 router.get('/:id', async (req, res) => {
   try {
     const query = {_id: new ObjectId(req.params.id)};
@@ -153,15 +164,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.get('/tags', async (req, res) => {
-  try {
-    const tags = await listingModel.getAllTags() //access model func.
-    res.send(tags) //return value
-  } catch (error) {
-    console.error(error)
-    res.status(500).send({ error: 'Internal Server Error' })
-  }
-})
+
 router.get('/proxy/:id', async (req, res) => {
   try {
     const query = {realID: new ObjectId(req.params.id)};
