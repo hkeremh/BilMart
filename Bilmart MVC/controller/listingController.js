@@ -26,6 +26,7 @@ import LendItem from "../model/Classes/LendItemClass.js";
 import LostFound from "../model/Classes/LostFoundClass.js";
 import Donation from "../model/Classes/DonationClass.js";
 import ProxyPost from "../model/Classes/ProxyPostClass.js";
+import mailer from "./mailController.js";
 //-----------------------
 
 async function isValidWebLink(link) {
@@ -48,6 +49,16 @@ async function isValidWebLink(link) {
     return false;
   }
 
+}
+async function sendNotification(wishlist, post) {
+  for (const id of wishlist) {
+    try {
+      const user = await userModel.getUser(id);
+      await mailer.wishlistNotificationToViewer(user,post); //change
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
 
 //from the model.
@@ -386,7 +397,6 @@ router.patch("/:id", async (req, res) => {
     if (hasEmptyProperty) {
       return res.json({ success: false, message: 'Please fill in all properties' });
     }
-    console.log("---------After checks---------")
     if (req.body.type === "Sale Item") {
       itemStrategy = new TransactionalItem(typeSpec.price, typeSpec.quality, typeSpec.available);
     } else if (req.body.type === "Borrowal Item") {
@@ -410,7 +420,6 @@ router.patch("/:id", async (req, res) => {
       res.status(500).send({ error: 'No appropriate item type was selected when creating a post.' })
     }
     //edit real post
-    console.log("---------After strategy---------")
     let query = { _id: new ObjectId(req.params.id) };
     let updates =  {
       $set: {
@@ -424,12 +433,19 @@ router.patch("/:id", async (req, res) => {
         typeSpecific: itemStrategy
       }
     };
-    console.log("---------after query and update---------")
+
+    console.log("----------------------")
+    console.log(req.body)
+    console.log("----------------------")
+
+    const wishlist = req.body.wishlist;
+    const post = req.body
+    await sendNotification(wishlist, post)
 
     const result = await listingModel.updateListing(query, updates) //access model func.
     //edit proxy post
 
-    console.log("---------after listing model---------")
+
 
     query = { realID: new ObjectId(req.params.id) };
     let proxyUpdates =  {

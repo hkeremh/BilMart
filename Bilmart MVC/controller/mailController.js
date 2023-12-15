@@ -1,4 +1,5 @@
 import nodeMailer from 'nodemailer'
+import userModel from "../model/userModel.js";
 
 const bilmartMail = 'bilmart12@hotmail.com'
 const transporter = nodeMailer.createTransport({
@@ -10,10 +11,10 @@ const transporter = nodeMailer.createTransport({
 })
 let exports = {}
 
-exports.sendMail = (reciever, subject, html) => {
+exports.sendMail = (receiver, subject, html) => {
   let options = {
     from: bilmartMail,
-    to: reciever,
+    to: receiver,
     subject: subject,
     html: html
   }
@@ -27,9 +28,18 @@ exports.sendMail = (reciever, subject, html) => {
 }
 exports.wishlistNotification = (posterMail, itemName, wishlister, wishlistCount) => {
   exports.sendMail(posterMail,
-    "Wishlisting",    
+    "Wish-listing",
     `<h1>BilMart</h1><h2>Your item "${itemName}" has been wishlisted by ${wishlister}.</h2><h2>It has been wishlisted ${wishlistCount} times.</h2>`)
 }
+
+exports.wishlistNotificationToViewer = (user, post) => {
+  const email = user.email
+
+  exports.sendMail(email,
+      "Update to a wish-listed item",
+          `<h1>BilMart</h1><h2>"${post.title}" has been recieved an update.</h2><h2></h2>`)
+}
+
 exports.ratingNotification = (posterMail, newRating) =>{
   sendMail(posterMail,
     "Your User Rating",    
