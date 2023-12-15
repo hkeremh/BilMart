@@ -28,6 +28,7 @@ export default function Item() {
    description: "",
    availability: "",
    type: "",
+   tags: "",
    postOwner: "",
    images: [],
    tags: [],
@@ -487,7 +488,21 @@ useEffect(() => {
                     </div>
                     <h3 >{item.description}</h3>
                     <div style={{height: "10px"}}></div>
+                    <h1 style={{ fontWeight: "bolder" }}>Tags</h1>
+                    <h3>{item.tags.join(', ')}</h3>
+                    <div style={{ height: "10px" }}></div>
                   </div>
+
+                  {/* <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
+                  <div style={{marginBottom: "15px"}}>
+                    <div style={{display: "flex", alignItems: "center", marginTop: "-10px"}}>
+                        <h1 style={{fontWeight: "bolder"}}>Tags</h1>
+                        {item.type === "Donation" && <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>Website Link: </span>{item.typeSpecific.weblink}</p>}
+                    </div>
+                    <h3 >{item.tags}</h3>
+                    <div style={{height: "10px"}}></div>
+                  </div> */}
+
                   </Container>
               </Col>
           </Row>
