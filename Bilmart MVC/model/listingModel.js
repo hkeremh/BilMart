@@ -68,9 +68,9 @@ async function deleteListing(query) {
 }
 */
 async function searchListings(searchQuery) {
-  let collection = await db.collection('QueryPosts'); //name of collection
-  let isPrice = searchQuery.includes("price");
-  let isLow =  searchQuery.includes("Low");
+  let collection = await db.collection('Posts'); //name of collection
+  let isPrice = searchQuery.orderBy.includes("price");
+  let isLow =  searchQuery.orderBy.includes("Low");
 
   let result = await collection.find({
     "$and": [
