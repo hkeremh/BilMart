@@ -3,6 +3,7 @@
   /*--secondary-color: #ccdbff;*/
   --secondary-color: white;
   --primary-accent: #192655;
+  --card-info-background: rgba(109, 158, 213, 0.4);
 }
 
 html{
@@ -63,20 +64,23 @@ html{
 }
 .itemCardInfo{
   justify-content: center;
-  background-color: var(--secondary-color);
+  /*background-color: var(--secondary-color);*/
+  background-color: var(--card-info-background);
   border-radius: 15px;
   height: 250px;
   margin-bottom: 20px;
 }
 .itemCardUserInfo{
   justify-content: center;
-  background-color: var(--secondary-color);
+  /*background-color: var(--secondary-color);*/
+  background-color: var(--card-info-background);
   border-radius: 15px;
   height: 250px;
 }
 .itemCardDetails{
   justify-content: center;
-  background-color: var(--secondary-color);
+  /*background-color: var(--secondary-color);*/
+  background-color: var(--card-info-background);
   border-radius: 15px;
   height: auto;
 }
