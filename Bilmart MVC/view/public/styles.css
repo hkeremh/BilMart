@@ -4,9 +4,9 @@
   --secondary-color: rgba(61, 58, 58, 0.29);
   --primary-accent: #192655;
   --card-info-background: var(--secondary-color);
-  --text-color: #dcdcdc;
+  --text-color: #F4DFC8;
   --text-color2: #AAAAAA;
-  --text-color3: #2078f3;
+  --text-color3: #265073;
 }
 
 input[type="checkbox"] {
@@ -30,7 +30,7 @@ input[type="radio"]:checked{
 }
 
 input[type="search"] {
-  background-color: var(--text-color);
+  background-color: white;
   border: var(--text-color);
 }
 
@@ -40,9 +40,12 @@ html{
 }
 .text{
   font-family: 'Montserrat', sans-serif;
-  color: var(--text-color)
+  color: var(--text-color);
 }
-
+.formSelectText{
+  font-family: 'Montserrat', sans-serif;
+  color: black;
+}
 .itemCard{
     display: inline-block;
     margin: 10px;
@@ -144,7 +147,7 @@ html{
 .profilePhoto{
   border-radius: 50%;
   /*border: 7px solid var(--secondary-color);*/
-  border: 2px solid gray;
+  border: 4px solid var(--text-color3);
   width: 180px;
   height: 180px;
   margin-top: 15px;
@@ -152,7 +155,7 @@ html{
 .itemProfilePhoto{
   border-radius: 50%;
   /*border: 7px solid var(--secondary-color);*/
-  border: 2px solid gray;
+  border: 4px solid var(--text-color3);
   margin-top: 15px;
 }
 .userInfo h1{
@@ -266,13 +269,13 @@ html{
   margin-top: 5px;
 }
 .gradient-background {
-    background: linear-gradient(300deg, #192655, var(--secondary-color), #FFFFEF,var(--secondary-color),#192655);
+    background: linear-gradient(300deg, var(--text-color3), var(--text-color2), var(--text-color), var(--text-color2),var(--text-color3));
     background-size: 180% 180%;
     animation: gradient-animation 18s ease infinite;
   }
 
   .gradient-background-2{
-    background: linear-gradient(300deg, var(--primary-color), var(--secondary-color), var(--text-color), var(--secondary-color),var(--primary-color));
+    background: linear-gradient(300deg, var(--primary-color), var(--secondary-color), var(--text-color2), var(--secondary-color),var(--primary-color));
     background-size: 180% 180%;
     animation: gradient-animation 20s ease infinite;
   }

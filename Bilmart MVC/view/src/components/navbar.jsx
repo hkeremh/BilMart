@@ -17,6 +17,7 @@ function NavBar(props) {
   const [cookies, removeCookie] = useCookies([]);
   const [disabled, setDisabled] = useState(true);
   const [username, setUsername] = useState(""); 
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.userToken) {
@@ -44,8 +45,12 @@ function NavBar(props) {
   const Wishlist = () => {
     navigate(`/wishlist/${username}`);
   };
+  function searchItem(){
+    props.setText(searchText);
+    navigate(`/home?pageNumber=1`);
+  };
   return (
-    <Navbar className="navbar-dark" style={{backgroundColor: "#192655"}} expand="lg">
+    <Navbar className="navbar-dark" style={{backgroundColor: "var(--text-color3)"}} expand="lg">
       <Container fluid>
         <Navbar.Brand href="/home?pageNumber=1" disabled={disabled}><img src={logo} width={170} height={36}/></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -72,8 +77,10 @@ function NavBar(props) {
               placeholder="Search"
               className="me-2 text"
               aria-label="Search"
+              value={searchText}
+              onChange={(e) => (setSearchText(e.target.value))}
             />
-            <Button variant="secondary" disabled={disabled}><span className="text">Search</span></Button>
+            <Button variant="secondary" disabled={disabled} onClick={(e) => searchItem()}><span className="text">Search</span></Button>
           </Form>
         </Navbar.Collapse>
       </Container>

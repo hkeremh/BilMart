@@ -106,7 +106,7 @@ const handleSuccess = (msg) =>
                         <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"/>
                       </svg>
                       <div className="form-outline flex-column flex-fill mb-0">
-                        <label className="form-label fw-bold text" htmlFor="password">Password</label>
+                        <label className="form-label fw-bold text" htmlFor="password" style={{color: "black"}}>Password</label>
                         <input
                           className="form-control text"
                           type="password"

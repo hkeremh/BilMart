@@ -261,7 +261,7 @@ function Home() {
   // This following section will display the table with the records of individuals.
   return (
     <div style={{ backgroundColor: "var(--primary-color)"}}>
-      <NavBar />
+      <NavBar setText={setSearchText}/>
       <div style={{marginTop: 15 }}>
         {(isPostLoading || isUserLoading) ? (
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
@@ -271,25 +271,24 @@ function Home() {
           </div>
         ) : (
           <Container fluid style={{ marginTop: "15px" }}>
-            <LogoBar />
             <Container style={{ marginTop: "15px" }} fluid>
               <Row>
                 <Col xl={3} md={4}>
                   <Container className="selection" fluid>
-
                     <div>
                       <Container style={{ height: "10px" }}></Container>
                       <Container className="itemDetail">
-                        <Form.Label className="text">Tags</Form.Label>
-
+                        <Form.Label><h2 className="text"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                          <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                          <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+                        </svg> Tags</h2></Form.Label>
                         <div >
                           {tagList()}
-
                         </div>
-
-                        <hr />
-                        <Form.Label className="text">Category Tag</Form.Label>
-
+                        <hr style={{border: "1px solid #544C4C", marginLeft: "10px", marginRight: "10px"}}/>
+                        <Form.Label><h2 className="text"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5z"/>
+                        </svg> Category Tags</h2></Form.Label>
                         <Form.Group className="mb-3" style={{ display: "flex" }}>
                           <div style={{ marginLeft: "0", marginRight: "auto" }}>
                             <Form.Check className="text" type="checkbox" label="Sale Item" defaultChecked={searchTypes.includes("Sale Item")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Sale Item", e.target.checked)))} />
@@ -299,32 +298,25 @@ function Home() {
                             <Form.Check className="text" type="checkbox" label="Borrowal Item" defaultChecked={searchTypes.includes("Borrowal Item")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Borrowal Item", e.target.checked, setSearchTypes)))} />
                             <Form.Check className="text" type="checkbox" label="Donation" defaultChecked={searchTypes.includes("Donation")} onClick={(e) => (setSearchTypes(updateArray(searchTypes, "Donation", e.target.checked, setSearchTypes)))} />
                           </div>
-
-
-
                         </Form.Group>
-
                         <Form.Group className="mb-3">
                           <FloatingLabel
                             controlId="floatingSelectGrid"
                             label="Sort by"
                             className="text"
-
                             onChange={(e) => setSearchOrderBy(e.target.value)}
                           >
                             {showPriceSort ? <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
-                              <option className="text" value="dateHigh">Date (New to Old)</option>
-                              <option className="text" value="dateLow">Date (Old to New)</option>
-                              <option className="text" value="priceLow" >Price (Low to High)</option>
-                              <option className="text" value="priceHigh">Price (High to Low)</option>
+                              <option className="formSelectText" value="dateHigh">Date (New to Old)</option>
+                              <option className="formSelectText" value="dateLow">Date (Old to New)</option>
+                              <option className="formSelectText" value="priceLow" >Price (Low to High)</option>
+                              <option className="formSelectText" value="priceHigh">Price (High to Low)</option>
                             </Form.Select> :
-
                               <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
-                                <option className="text" value="dateHigh">Date (New to Old)</option>
-                                <option className="text" value="dateLow">Date (Old to New)</option>
+                                <option className="formSelectText" value="dateHigh">Date (New to Old)</option>
+                                <option className="formSelectText" value="dateLow">Date (Old to New)</option>
                               </Form.Select>}
                           </FloatingLabel>
-
                         </Form.Group>
                         <Form.Control
                           type="search"
@@ -334,11 +326,14 @@ function Home() {
                           defaultValue={searchText}
                           onChange={(e) => (setSearchText(e.target.value))}
                         />
-                        <hr />
+                        <hr style={{border: "1px solid #544C4C", marginLeft: "10px", marginRight: "10px"}}/>
                       </Container>
                       <Container className="itemDetail">
-                        <Form.Label className="text">Status</Form.Label>
-                        <hr />
+                        <Form.Label><h2 className="text"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-patch-question" viewBox="0 0 16 16">
+                          <path d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745"/>
+                          <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>
+                          <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
+                        </svg> Status</h2></Form.Label>
                         <Form.Group className="mb-3" style={{ display: "flex" }}>
                           <div style={{ marginLeft: "0", marginRight: "auto" }}>
                             <Form.Check className="text" type="checkbox" label="Available" onClick={(e) => (setSearchAvailability(updateArray(searchAvailability, "Available", e.target.checked)))} />
@@ -350,9 +345,10 @@ function Home() {
                           </div>
                         </Form.Group>
                       </Container>
+                      <hr style={{border: "1px solid #544C4C", marginLeft: "10px", marginRight: "10px"}}/>
                       <Container>
                         <Form.Group style={{ justifyContent: "center", textAlign: "center" }}>
-                          <Button className="text" variant="secondary" onClick={(e) => (setCurrentPage(1), setSearchDone(true), setToggleState(!toggleState))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
+                          <Button className="text" variant="secondary" onClick={(e) => (setCurrentPage(1), setSearchDone(true), setToggleState(!toggleState))} style={{ backgroundColor: "var(--text-color3)", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
                         </Form.Group>
                       </Container>
                       <Container style={{ height: "1px" }}></Container>

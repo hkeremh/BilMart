@@ -203,16 +203,13 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                     </div>
                       {/*;*/}
                       <div className="d-flex flex-row align-items-center mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32"
-                               fill="currentColor" className="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                              <path fillRule="evenodd"
-                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                          <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-info-circle-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
                           </svg>
                           <div className="form-outline flex-fill mb-0">
                               <label className="form-label fw-bold text" htmlFor="username">Contact Info</label>
                               <div style={{ marginTop: '10px' }}>
-                                  <label style={{ marginRight: '30px', fontSize: '16px', color: 'var(--text-color)' }}>
+                                  <label className="text" style={{ marginRight: '30px', fontSize: '16px', color: 'var(--text-color)' }}>
                                       <input
                                           type="radio"
                                           name="contactInfoPublic"
@@ -223,7 +220,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                                       Public
                                   </label>
 
-                                  <label style={{ marginLeft: '10px', fontSize: '16px', color: 'var(--text-color)' }}>
+                                  <label className="text" style={{ marginLeft: '10px', fontSize: '16px', color: 'var(--text-color)' }}>
                                       <input
                                           type="radio"
                                           name="contactInfoPublic"
@@ -240,10 +237,8 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                       </div>
                       {/*/*/}
                       <div className="d-flex flex-row align-items-center mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="40" height="40"
-                               fill="currentColor" className="bi bi-image-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                              <path
-                                  d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+                          <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-telephone-plus-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM12.5 1a.5.5 0 0 1 .5.5V3h1.5a.5.5 0 0 1 0 1H13v1.5a.5.5 0 0 1-1 0V4h-1.5a.5.5 0 0 1 0-1H12V1.5a.5.5 0 0 1 .5-.5"/>
                           </svg>
                           <div className="form-outline flex-fill mb-0">
                               <label className="form-label fw-bold text" htmlFor="phoneNumber">Phone Number (exclude +90)</label>
@@ -251,7 +246,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                                   <input
                                       type="tel"
                                       id="phoneNumber"
-                                      className="form-control"
+                                      className="form-control text"
                                       pattern="[0-9\s]+"
                                       maxLength="10"
                                       value={user.phoneNumber}

@@ -230,8 +230,6 @@ export default function Create() {
         // Handle errors here
         window.alert(error.message);
       }
-
-
     }
     else {
       if((sources.length === 0 || sources.length > 5) && form.type !== ""){
@@ -258,6 +256,7 @@ export default function Create() {
           });        
       }
     }
+    setIsUserLoading(false);
   }
 
   // This following section will display the form that takes the input from the user.

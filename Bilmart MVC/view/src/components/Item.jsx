@@ -412,16 +412,16 @@ useEffect(() => {
               <Col xl={5}>
                   <Container className="itemCardInfo" fluid>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center"}}>
-                      {item.type === "Donation" && <h1 className="itemPrice">{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
-                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice" style={{color: "var(--text-color2)"}}>{item.typeSpecific.price}₺</h1>}
+                      {item.type === "Donation" && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
+                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>{item.typeSpecific.price}₺</h1>}
                       {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
                       {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
-                      {userWishlist.includes(item._id) ? <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
+                      {userWishlist.includes(item._id) ? <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px", backgroundColor: "var(--text-color3)"}} onClick={removeFromWishlist}>
                         <div className="text" style={{alignItems: "center"}}>Remove from Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                             <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                           </svg></span>
                         </div>
-                      </Button>: <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px"}} onClick={addToWishlist}>
+                      </Button>: <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px", backgroundColor: "var(--text-color3)"}} onClick={addToWishlist}>
                         <div className="text" style={{alignItems: "center"}}>Add to Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                             <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                           </svg></span>
@@ -446,14 +446,14 @@ useEffect(() => {
                   <Container className="itemCardUserInfo" fluid style={{marginBottom: "20px"}}>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <div style={{marginRight: "10px"}}>
-                      {owner.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="white" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
+                      {owner.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="var(--text-color)" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                       </svg> : <img className="itemProfilePhoto" width="150" height="150" style={{borderRadius: "50%"}} src={owner.profileImage}/>}
                       </div>
                       <div className="itemUserInfo" style={{marginLeft: "10px"}}>
                         <h1 style={{color: "var(--text-color3)"}}>{owner.username}</h1>
-                        <hr/>
+                        <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                         <h5 style={{alignItems: "center", fontWeight: "bold"}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" className="bi bi-person-lines-fill me-3" viewBox="0 0 16 16">
                               <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
@@ -463,7 +463,7 @@ useEffect(() => {
                     </div>
                     <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      {item.type === "Donation" ? <h3 className="text">{"IBAN: "+item.typeSpecific.IBAN}</h3> : <Button disabled={isButtonDisabled} variant="secondary" style={{backgroundColor: "#192655"}}><div className="text" onClick={requestContact}>Request Contact</div></Button>}
+                      {item.type === "Donation" ? <h3 className="text">{"IBAN: "+item.typeSpecific.IBAN}</h3> : <Button disabled={isButtonDisabled} variant="secondary" style={{backgroundColor: "var(--text-color3)"}}><div className="text" onClick={requestContact}>Request Contact</div></Button>}
                     </div> : <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <Button className="primary-accent" variant="secondary" href="/profile"><div className="text">Go to Profile</div></Button>
                     </div>  }
@@ -474,11 +474,10 @@ useEffect(() => {
               <Col lg={12}>
                   <Container className="itemCardDetails text" fluid>
                   <div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderRadius: "5px", backgroundColor: "rgba(143, 140, 140, 0.53)", padding: "3px", marginBottom: "15px" }}>
-                          <h1 style={{ fontWeight: "bolder", margin: 0}}>Details</h1>
-                          <p style={{ margin: 0, position: "relative", right: "45px" }}><span className="text" style={{ fontWeight: "bold" }}>ID: </span>{item._id}</p>
-                      </div>
-
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <h1 style={{fontWeight: "bolder"}}>Details</h1>
+                        <p style={{position: "absolute", right: "45px", color: "var(--text-color2)"}}><span className="text" style={{fontWeight: "bold",}}>ID: </span>{item._id}</p>
+                    </div>
                     <div style={{alignItems: "center", display: "flex"}}>
                         {item.type !== "Donation" && <h3  style={{color: "var(--text-color)"}}>Condition: </h3>}
                         {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "var(--text-color2)", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
@@ -491,20 +490,15 @@ useEffect(() => {
                   <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
                   <div style={{marginBottom: "15px"}}>
                     <div style={{display: "flex", alignItems: "center", marginTop: "-10px"}}>
-                        <div style={{ borderRadius: "5px", backgroundColor: "rgba(143, 140, 140, 0.53)", padding: "3px", display: "inline-block" }}>
-                            <h1 style={{ fontWeight: "bolder", margin: 0 }}>Description</h1>
-                        </div>
-                        {item.type === "Donation" && <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>Website Link: </span>{item.typeSpecific.weblink}</p>}
+                        <h1 style={{fontWeight: "bolder"}}>Description</h1>
+                        {item.type === "Donation" && <p style={{position: "absolute", right: "45px", color: "var(--text-color2)"}}><span className="text" style={{fontWeight: "bold", color: "var(--text-color2)"}}>Website Link: </span>{item.typeSpecific.weblink}</p>}
                     </div>
-                    <h3 >{item.description}</h3>
+                    <h3 style={{color: "var(--text-color2)"}}>{item.description}</h3>
                     <div style={{height: "10px"}}></div>
-                      <div style={{ borderRadius: "5px", backgroundColor: "rgba(143, 140, 140, 0.53)", padding: "3px", display: "inline-block" }}>
-                          <h1 style={{ fontWeight: "bolder", margin: 0 }}>Tags</h1>
-                      </div>
-                    <h3>{item.tags.join(', ')}</h3>
+                    <h1 style={{ fontWeight: "bolder" }}>Tags</h1>
+                    <h3 style={{color: "var(--text-color2)"}}>{item.tags.join(', ')}</h3>
                     <div style={{ height: "10px" }}></div>
                   </div>
-
                   {/* <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
                   <div style={{marginBottom: "15px"}}>
                     <div style={{display: "flex", alignItems: "center", marginTop: "-10px"}}>
