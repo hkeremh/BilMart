@@ -149,6 +149,10 @@ router.patch('/editprofile/:username', async (req, res) => {
         }
       };
       try {
+        if(!(req.body.profileImage) || req.body.profileImage == "") {
+          result = await userModel.editProfile(oldUsername, updates) //access model func.  
+          return res.json(result).status(200);  
+        }
         const uri = req.body.profileImage.split(';base64,').pop()
         let imgBuffer = await Buffer.from(uri, 'base64');
         await sharp(imgBuffer)
