@@ -4,7 +4,9 @@
   --secondary-color: rgba(61, 58, 58, 0.29);
   --primary-accent: #192655;
   --card-info-background: var(--secondary-color);
-  --text-color: #505050;
+  --text-color: white;
+  --text-color2: #AAAAAA;
+  --text-color3: #2078f3;
 }
 
 input[type="checkbox"] {

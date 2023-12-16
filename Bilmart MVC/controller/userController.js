@@ -20,6 +20,7 @@ import cookieParser from 'cookie-parser';
 import { passwordStrength } from 'check-password-strength';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import TempUser from "../model/Classes/tempUserClass.js"
+import sharp from 'sharp';
 
 cookieParser()
 const router = express.Router()
@@ -130,14 +131,13 @@ router.patch('/editprofile/:username', async (req, res) => {
     } else if(!usernameRegex.test(req.body.username)) {
       result = "Usernames can only contain alphanumeric characters, dot, dash and underscore";
     } else {
-      const updates =  {
+      let updates =  {
         $set: {
           email: req.body.email,
           username: req.body.username,
           password: req.body.password,
           postList: req.body.postList,
           settings: req.body.settings,
-          profileImage: req.body.profileImage,
           wishList: req.body.wishList,
           description: req.body.description,
           rating: req.body.rating,
@@ -145,9 +145,29 @@ router.patch('/editprofile/:username', async (req, res) => {
           createdAt: req.body.createdAt
         }
       };
-      result = await userModel.editProfile(oldUsername, updates) //access model func.    
+      try {
+        const uri = req.body.profileImage.split(';base64,').pop()
+        let imgBuffer = await Buffer.from(uri, 'base64');
+        await sharp(imgBuffer)
+            .resize(300, 300, {fit: 'cover'})
+            .toFormat('png')
+            .toBuffer()
+            .then( async data => {
+              console.log('success')
+              updates.$set.profileImage = await `data:image/png;base64,${data.toString('base64')}`;
+              result = await userModel.editProfile(oldUsername, updates) //access model func.  
+            })
+            .catch(err => {
+              console.log(`downisze issue ${err}`)
+            })
+      } catch (err) {
+        console.log(`downisze issue ${err}`)
+        return res.json({success: false, message: `downisze issue ${err}`})
+      }
+      res.json(result).status(200);  
+        
     }
-    res.json(result).status(200);  
+    
   } catch (error) {
     console.error(error)
     res.status(500).send({ error: 'Internal Server Error' })
