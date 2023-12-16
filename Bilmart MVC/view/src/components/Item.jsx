@@ -474,10 +474,11 @@ useEffect(() => {
               <Col lg={12}>
                   <Container className="itemCardDetails text" fluid>
                   <div>
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <h1 style={{ fontWeight: "bolder", margin: 0 }}>Details</h1>
-                        <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>ID: </span>{item._id}</p>
-                    </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderRadius: "5px", backgroundColor: "rgba(143, 140, 140, 0.53)", padding: "3px", marginBottom: "15px" }}>
+                          <h1 style={{ fontWeight: "bolder", margin: 0}}>Details</h1>
+                          <p style={{ margin: 0, position: "relative", right: "45px" }}><span className="text" style={{ fontWeight: "bold" }}>ID: </span>{item._id}</p>
+                      </div>
+
                     <div style={{alignItems: "center", display: "flex"}}>
                         {item.type !== "Donation" && <h3  style={{color: "var(--text-color)"}}>Condition: </h3>}
                         {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "var(--text-color2)", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
@@ -490,12 +491,16 @@ useEffect(() => {
                   <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
                   <div style={{marginBottom: "15px"}}>
                     <div style={{display: "flex", alignItems: "center", marginTop: "-10px"}}>
-                        <h1 style={{fontWeight: "bolder"}}>Description</h1>
+                        <div style={{ borderRadius: "5px", backgroundColor: "rgba(143, 140, 140, 0.53)", padding: "3px", display: "inline-block" }}>
+                            <h1 style={{ fontWeight: "bolder", margin: 0 }}>Description</h1>
+                        </div>
                         {item.type === "Donation" && <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>Website Link: </span>{item.typeSpecific.weblink}</p>}
                     </div>
                     <h3 >{item.description}</h3>
                     <div style={{height: "10px"}}></div>
-                    <h1 style={{ fontWeight: "bolder" }}>Tags</h1>
+                      <div style={{ borderRadius: "5px", backgroundColor: "rgba(143, 140, 140, 0.53)", padding: "3px", display: "inline-block" }}>
+                          <h1 style={{ fontWeight: "bolder", margin: 0 }}>Tags</h1>
+                      </div>
                     <h3>{item.tags.join(', ')}</h3>
                     <div style={{ height: "10px" }}></div>
                   </div>
