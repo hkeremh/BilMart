@@ -21,9 +21,6 @@ function setToggleState2(bool) {
   toggleState2 = bool;
 
 }
-function searchFromNavBar(search){
-  console.log(search);
-}
 function Home() {
   const navigate = useNavigate();
   const [isPostLoading, setIsPostLoading] = useState(true);
@@ -264,7 +261,7 @@ function Home() {
   // This following section will display the table with the records of individuals.
   return (
     <div style={{ backgroundColor: "var(--primary-color)"}}>
-      <NavBar />
+      <NavBar setText={setSearchText}/>
       <div style={{marginTop: 15 }}>
         {(isPostLoading || isUserLoading) ? (
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
@@ -383,5 +380,5 @@ function Home() {
   
 }
 export default Home;
-export { setToggleState2, searchFromNavBar, toggleState2 };
+export { setToggleState2, toggleState2 };
 // export default Home;

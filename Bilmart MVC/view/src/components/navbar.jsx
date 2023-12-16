@@ -11,7 +11,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../img/BilMart-logos_transparent.png';
 import "../CSS/general.css"
-import { searchFromNavBar } from "./recordList";
 
 function NavBar(props) {
   const navigate = useNavigate();
@@ -47,15 +46,8 @@ function NavBar(props) {
     navigate(`/wishlist/${username}`);
   };
   function searchItem(){
-    const search = {
-      text: searchText,
-      type: [],
-      tags: [],
-      availability: [],
-      orderBy: "dateHigh",
-      pageNumber: 1,
-    }
-    searchFromNavBar(search);
+    props.setText(searchText);
+    navigate(`/home?pageNumber=1`);
   };
   return (
     <Navbar className="navbar-dark" style={{backgroundColor: "var(--text-color3)"}} expand="lg">
