@@ -11,12 +11,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../img/BilMart-logos_transparent.png';
 import "../CSS/general.css"
+import { searchFromNavBar } from "./recordList";
 
 function NavBar(props) {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [disabled, setDisabled] = useState(true);
   const [username, setUsername] = useState(""); 
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.userToken) {
@@ -43,6 +45,17 @@ function NavBar(props) {
   };
   const Wishlist = () => {
     navigate(`/wishlist/${username}`);
+  };
+  function searchItem(){
+    const search = {
+      text: searchText,
+      type: [],
+      tags: [],
+      availability: [],
+      orderBy: "dateHigh",
+      pageNumber: 1,
+    }
+    searchFromNavBar(search);
   };
   return (
     <Navbar className="navbar-dark" style={{backgroundColor: "var(--text-color3)"}} expand="lg">
@@ -72,8 +85,10 @@ function NavBar(props) {
               placeholder="Search"
               className="me-2 text"
               aria-label="Search"
+              value={searchText}
+              onChange={(e) => (setSearchText(e.target.value))}
             />
-            <Button variant="secondary" disabled={disabled}><span className="text">Search</span></Button>
+            <Button variant="secondary" disabled={disabled} onClick={(e) => searchItem()}><span className="text">Search</span></Button>
           </Form>
         </Navbar.Collapse>
       </Container>

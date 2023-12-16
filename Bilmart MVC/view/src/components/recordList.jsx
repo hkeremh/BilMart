@@ -21,6 +21,9 @@ function setToggleState2(bool) {
   toggleState2 = bool;
 
 }
+function searchFromNavBar(search){
+  console.log(search);
+}
 function Home() {
   const navigate = useNavigate();
   const [isPostLoading, setIsPostLoading] = useState(true);
@@ -380,5 +383,5 @@ function Home() {
   
 }
 export default Home;
-export { setToggleState2, toggleState2 };
+export { setToggleState2, searchFromNavBar, toggleState2 };
 // export default Home;
