@@ -413,7 +413,7 @@ useEffect(() => {
                   <Container className="itemCardInfo" fluid>
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center"}}>
                       {item.type === "Donation" && <h1 className="itemPrice">{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
-                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.typeSpecific.price}₺</h1>}
+                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice" style={{color: "var(--text-color2)"}}>{item.typeSpecific.price}₺</h1>}
                       {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
                       {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
                       {userWishlist.includes(item._id) ? <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px"}} onClick={removeFromWishlist}>
@@ -435,24 +435,24 @@ useEffect(() => {
                     </div>}
                     <hr style={{border: "1px solid #544C4C", marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      <h3>{item.title || "Title"}</h3>
+                      <h3 style ={{color: "var(--text-color2)"}}>{item.title || "Title"} </h3>
                     </div> 
                     <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                     <div className="postDate" style={{alignItems: "center", display: "flex"}}>
                       <h3 style={{fontWeight: "bolder", color: "var(--text-color)"}}>Post Date: </h3>
-                      <h3 style={{color: "black", marginLeft: "10px"}}>{item.postDate.toString().substring(0, 10)}</h3>
+                      <h3 style={{color: "var(--text-color2)", marginLeft: "10px"}}>{item.postDate.toString().substring(0, 10)}</h3>
                     </div>
                   </Container>
                   <Container className="itemCardUserInfo" fluid style={{marginBottom: "20px"}}>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       <div style={{marginRight: "10px"}}>
-                      {owner.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
+                      {owner.profileImage === "" ? <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="white" className="itemProfilePhoto bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                       </svg> : <img className="itemProfilePhoto" width="150" height="150" style={{borderRadius: "50%"}} src={owner.profileImage}/>}
                       </div>
                       <div className="itemUserInfo" style={{marginLeft: "10px"}}>
-                        <h1>{owner.username}</h1>
+                        <h1 style={{color: "var(--text-color3)"}}>{owner.username}</h1>
                         <hr/>
                         <h5 style={{alignItems: "center", fontWeight: "bold"}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" className="bi bi-person-lines-fill me-3" viewBox="0 0 16 16">
@@ -480,8 +480,8 @@ useEffect(() => {
                     </div>
                     <div style={{alignItems: "center", display: "flex"}}>
                         {item.type !== "Donation" && <h3  style={{color: "var(--text-color)"}}>Condition: </h3>}
-                        {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
-                        {(item.type === "Lost Item" || item.type === "Found Item") && <h3 style={{color: "black", marginLeft: "10px"}}>{item.typeSpecific.status === true ? "Found" : "Still Lost"}</h3>}
+                        {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h3 style={{color: "var(--text-color2)", marginLeft: "10px"}}>{item.typeSpecific.quality}</h3>}
+                        {(item.type === "Lost Item" || item.type === "Found Item") && <h3 style={{color: "var(--text-color2)", marginLeft: "10px"}}>{item.typeSpecific.status === true ? "Found" : "Still Lost"}</h3>}
                         {item.type === "Donation" && <h3 style={{color: "var(--text-color)"}}>Progress: </h3>}
                         {item.type === "Donation" && <ProgressBar variant="secondary" className="text" style={{marginBottom: "5px", marginLeft: "15px", width: "915px", height: "30px"}} now={item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100} label={`${(item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100)}% Reached`} animated/>}
                         {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}

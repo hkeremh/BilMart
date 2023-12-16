@@ -5,6 +5,8 @@
   --primary-accent: #192655;
   --card-info-background: var(--secondary-color);
   --text-color: #c5c5c5;
+  --text-color2: #AAAAAA;
+  --text-color3: #2078f3;
 }
 
 input[type="checkbox"] {
