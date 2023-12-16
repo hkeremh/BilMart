@@ -30,9 +30,14 @@ async function getAllListings() {
   return result;
 }
 
-async function getAllTags() {
+ async function getAllTags() {
   let collection = await db.collection('Tags'); //name of collection
   let result = await collection.find({}).toArray();
+  return result;
+} 
+async function getPostAllTags() {
+  let collection = await db.collection('Posts'); //name of collection
+  let result = await collection.distinct('tags');
   return result;
 }
 
@@ -79,20 +84,46 @@ async function searchListings(searchQuery) {
   let isPrice = searchQuery.orderBy.includes("price");
   let isLow =  searchQuery.orderBy.includes("Low");
 
+  /* let tagCondition = Array.isArray(searchQuery.tags)
+  ? { "tags": { $in: searchQuery.tags.map(tag => new RegExp(tag, 'i')) } }
+  : { "tags": { $regex: searchQuery.tags, $options: "i" } }; */
+
+  /* let tagCondition = Array.isArray(searchQuery.tags)
+  ? { "tags": { $in: searchQuery.tags.map(tag => new RegExp(tag, 'i')) } }
+  : { "tags": { $regex: new RegExp(searchQuery.tags, 'i') } };   */
+  
+  ////////////////////works below
+  /* let searchTextRegex = new RegExp(searchQuery.text, 'i');
+
   let result = await collection.find({
     "$and": [
-      { "type": searchQuery.type.length > 0 ? { $in: searchQuery.type  } : {$exists: true} },
-      //{ "availability": searchQuery.availability.length > 0 ? { $in: searchQuery.availability  } : {$exists: true}},
-      {"$or": [
+      { "type": searchQuery.type.length > 0 ? { $in: searchQuery.type } : {$exists: true} },
+      {
+        "$or": [
+          { "title": { $regex: searchTextRegex } },
+          { "description": { $regex: searchTextRegex } },
+          { "tags": { $in: [searchQuery.text] } }, // check if the search text is in any tag
+          { "tags": { $elemMatch: { $regex: searchTextRegex } } } // check if any tag matches the search text
+        ]
+      }
+    ] */
+    //////////////////////////////
+    const inputTagsArray = searchQuery.text.split(',').map(tag => tag.trim());
+
+// Use this array in your search functionality
+const result = await collection.find({
+  "$and": [
+    { "type": searchQuery.type.length > 0 ? { $in: searchQuery.type  } : {$exists: true} },
+    { 
+      "$or": [
         { "title": { $regex: searchQuery.text, $options: "i" } },
-        { "description": { $regex: searchQuery.text, $options: "i" } }
-      ]},
-      { "tags": searchQuery.tags.length > 0 ? { $in: searchQuery.tags  } : {$exists: true}}
-
-
-    ]
-
+        { "description": { $regex: searchQuery.text, $options: "i" } },
+        { "tags": { $in: inputTagsArray } } // Check if any of the input tags are in the post's tags
+      ]
+    }
+  ]
   }).sort(isPrice ? {"typeSpecific.price": isLow ? 1 : -1 } : {"postDate": isLow ? 1 : -1}).skip((searchQuery.pageNumber - 1) * 9).limit(9).toArray();
+
   return result;
 }
 
@@ -106,5 +137,6 @@ export default {
     updateListing,
     deleteListing,
     searchListings,
-    getAllTags
+    getAllTags,
+    getPostAllTags
 };
