@@ -95,7 +95,7 @@ function Profile(){
     });
   }
   return (
-    <div>
+    <div style={{backgroundColor: "var(--primary-color)"}}>
     <NavBar />
     <div style={{marginTop: 15 }}>
     {(isUserLoading || isPostLoading) ? (

@@ -4,7 +4,7 @@
   --secondary-color: rgba(61, 58, 58, 0.29);
   --primary-accent: #192655;
   --card-info-background: var(--secondary-color);
-  --text-color: #505050;
+  --text-color: #7c7c7c;
 }
 
 input[type="checkbox"] {
@@ -12,6 +12,16 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked{
+  background-color: var(--primary-accent);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+}
+
+input[type="radio"] {
+  background-color: var(--text-color);
+}
+
+input[type="radio"]:checked{
   background-color: var(--primary-accent);
   border-color: var(--primary-accent);
   color: var(--primary-accent);
@@ -41,27 +51,27 @@ html{
 }
 .items{
     background-color: var(--secondary-color);
-    border-radius: 15px;
+    border-radius: 5px;
 }
 .profileItems{
   background-color: var(--secondary-color);
-  border-radius: 15px;
+  border-radius: 5px;
   margin-top: 15px;
 }
 .selection{
     justify-content: center;
     background-color: var(--secondary-color);
-    border-radius: 15px;
+    border-radius: 5px;
     width: 300px;
 }
 .itemDetail{
     /*background-color: var(--primary-color);*/
-    border-radius: 15px;
+    border-radius: 5px;
 }
 .logoBar{
   justify-content: center;
   background-color: var(--secondary-color);
-  border-radius: 15px;
+  border-radius: 5px;
   width: 1000px;
   height: 50px;
   display: flex;
@@ -78,7 +88,7 @@ html{
 .itemCarousel{
   justify-content: center;
   background-color:#0F0E0E;
-  border-radius: 15px;
+  border-radius: 5px;
   height: 520px;
 }
 .itemCardInfo{

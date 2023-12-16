@@ -28,7 +28,7 @@
 .itemCard {
     position: relative;
     /*background-color: blue;*/
-    border-radius: 20px;
+    border-radius: 5px;
     overflow: hidden;
     z-index: 0;
 }
@@ -61,6 +61,8 @@
 /*}*/
 
 .sale-background {
+    /*background-color: #ff3b3b; !* Red *!*/
+    /*box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5); !* Adjusted glow color for red *!*/
     background-color: #ff0000; /* Red */
     box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5); /* Adjusted glow color for red */
 }
