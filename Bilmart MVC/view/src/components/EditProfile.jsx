@@ -161,7 +161,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
     } 
  }
  return(
-    <div>
+    <div style={{ backgroundColor: "var(--primary-color)"}}>
     <NavBar />
     <div style={{ marginTop: 15 }}>
     {isUserLoading ? (
@@ -174,14 +174,14 @@ const [isUserLoading, setIsUserLoading] = useState(true);
       <div class="container" style={{marginTop: "5rem", width: "100%", height: "100%", marginTop: "3rem"}}>
       <div class="row d-flex justify-content-center align-items-center h-100" >
         <div class="col-lg-12 col-xl-11">
-          <div class="card text-black" style={{width: "100%", height: "100%", borderRadius: "25px"}}>
+          <div class="card text-black" style={{backgroundColor: "var(--secondary-color)",width: "100%", height: "100%", borderRadius: "25px"}}>
             <div class="card-body p-md-5">
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Edit your profile</p>
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text" style={{color: "var(--text-color)"}}>Edit your profile</p>
                   <form class="mx-1 mx-md-4" onSubmit={onSubmit}>
                     <div class="d-flex flex-row align-items-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
                           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                           <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                         </svg>
@@ -198,7 +198,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                         </div>
                     </div>
                     <div class="d-flex flex-row align-items-center mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-image-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                      <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="40" height="40" fill="currentColor" class="bi bi-image-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
                           <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
                       </svg>
                       <div class="form-outline flex-fill mb-0">
@@ -233,7 +233,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                   </form>
                 </div>
                 <div class="justify-content-center col-md-10 col-lg-6 col-xl-7 align-items-center order-1 order-lg-2">
-                  <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4 text">Selected Picture:</p>
+                  <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4 text" style={{color: "var(--text-color)"}}>Selected Picture:</p>
                   <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                       {photo === "" ? <h1></h1> : <img className="centered-and-cropped" width="auto" height="250" style={{borderRadius: "5%", maxWidth: "500px"}} src={photo} />}
                   </div>
