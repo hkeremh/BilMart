@@ -82,7 +82,7 @@ const Wishlist = () => {
 
  // This following section will display the table with the records of individuals.
  return (
-  <div>
+  <div style={{backgroundColor: "var(--primary-color)"}}>
   <NavBar />
   <div style={{marginTop: 15 }}>
   {isLoading ? (

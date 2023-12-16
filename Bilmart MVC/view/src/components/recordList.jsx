@@ -19,8 +19,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 let toggleState2 = true;
 function setToggleState2(bool) {
   toggleState2 = bool;
-}
 
+}
 function Home() {
   const navigate = useNavigate();
   const [isPostLoading, setIsPostLoading] = useState(true);
@@ -212,7 +212,9 @@ function Home() {
     console.log(currentPage);
     console.log("Toggle State 2: ", toggleState2);
     if(!searchDone){
-      getRecords(currentPage);
+      if(toggleState2){
+        getRecords(currentPage);
+      }
     } else {
       getSearchRecords(searchParamsJSON(currentPage));
     }
@@ -379,5 +381,5 @@ function Home() {
   
 }
 export default Home;
-export { setToggleState2 };
+export { setToggleState2, toggleState2 };
 // export default Home;

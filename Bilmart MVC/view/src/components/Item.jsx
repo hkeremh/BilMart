@@ -14,9 +14,11 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
 import NavBar from "./navbar";
 import "../CSS/general.css"
-import profile from "./Profile.jsx";
+import { toggleState2, setToggleState2 } from "./recordList.jsx";
 
 export default function Item() {
+ setToggleState2(false);
+ console.log("Toggle state 2 in Item: ", toggleState2);
  const navigate = useNavigate();
  const [isPostLoading, setIsPostLoading] = useState(true);
  const [isUserLoading, setIsUserLoading] = useState(true);
