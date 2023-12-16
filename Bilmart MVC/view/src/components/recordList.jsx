@@ -31,6 +31,7 @@ function Home() {
   const [pageSize, setPageSize] = useState(9);
   const [searchDone, setSearchDone] = useState(false);
   const [allTags, setAllTags] = useState([]);
+  const [tags, setTags] = useState([]);
   const [searchTypes, setSearchTypes] = useState([]);
   const [searchTags, setSearchTags] = useState([]);
   const [searchAvailability, setSearchAvailability] = useState([]);
@@ -77,7 +78,7 @@ function Home() {
   useEffect(() => {
     getAllTags();
   }, []);
-
+  
   function searchParamsJSON(pageNumber) {
     return JSON.stringify({
       "text": searchText,
@@ -107,14 +108,27 @@ function Home() {
   }
 
 
-  function tagList() {
+   function tagList() {
 
     return allTags.map((t) => {
       return <Form.Check className="text" type="checkbox" defaultChecked={searchTags.includes(t.name)} label={t.name} onClick={(e) => (setSearchTags(updateArray(searchTags, t.name, e.target.checked)))} />
     });
   }
+ /* function tagListForpostTags() {
+    const tagsArray = searchTags.join(',').split(',').map(tag => tag.trim());
+  
+    return tags.map((t) => (
+      <Form.Check
+        className="text"
+        type="checkbox"
+        defaultChecked={tagsArray.includes(t.name)}
+        label={t.name}
+        onClick={(e) => (setSearchTags(updateArray(searchTags, t.name, e.target.checked)))}
+      />
+    ));
+  }*/
 
-  function updateArray(array, value, add) {
+   function updateArray(array, value, add) {
     if (add) {
       if (!array.includes(value)) {
         array.push(value);
@@ -129,6 +143,24 @@ function Home() {
 
     }
 
+    setShowPriceSort(isPriceItems());
+    return array;
+  } 
+ function updateArrayforPostTags(array, value, add) {
+    if (add) {
+      // Split tags by comma and trim spaces
+      const newTags = value.split(',').map(tag => tag.trim());
+      
+      // Add new tags to the array
+      array.push(...newTags);
+    } else {
+      // Remove the specified value from the array
+      const index = array.indexOf(value);
+      if (index !== -1) {
+        array.splice(index, 1);
+      }
+    }
+  
     setShowPriceSort(isPriceItems());
     return array;
   }
