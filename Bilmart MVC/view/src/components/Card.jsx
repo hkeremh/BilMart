@@ -47,9 +47,9 @@ function ItemCard(props) {
       </Card.Text>
     </Card.Body>
     {/*<ListGroup className="list-group-flush">*/}
-      <div className="textback">
+      <div className="textback" style={{color: "var(--text-color)"}}>
       {props.record.type === "Sale Item" && <div>
-        <div className="text-in-card">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div>
+        <div className="text-in-card" >{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div>
       </div>}
       {props.record.type === "Borrowal Item" && <div>
         <div className="text-in-card">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div>
@@ -62,7 +62,7 @@ function ItemCard(props) {
       </div>}
       </div>
       {/*<ListGroup.Item>*/}
-        <div className="text textback" style={{fontWeight: "bold"}}>{props.record.type}</div>
+        <div className="text textback" style={{fontWeight: "bold", color: "var(--text-color)"}}>{props.record.type}</div>
       {/*</ListGroup.Item>*/}
     {/*</ListGroup>*/}
     <Card.Body>
