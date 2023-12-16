@@ -153,8 +153,7 @@ useEffect(() => {
       return;
     } else{
       const updatedOwnerWishlist = [...userWishlist, item._id];
-      let updatedPostWishlist;
-      updatedPostWishlist = [...item.wishlist, profileUser._id]
+      const updatedPostWishlist = [...itemWishlist, profileUser._id]; //works correctly
 
       const editedUser = {
         email: profileUser.email,
@@ -289,7 +288,7 @@ useEffect(() => {
 
         const updatedOwnerWishlist = userWishlist.filter((listing) => listing !== item._id);
 
-        let list = item.wishlist;
+        let list = itemWishlist;
         if (item.wishlist.includes(profileUser._id)) {
           list = list.filter((userID) => userID !== profileUser._id);
         }
@@ -345,6 +344,7 @@ useEffect(() => {
           } else{
             setUserWishlist(updatedOwnerWishlist);
             setItemWishlist(updatedPostWishlist);
+
             toast.success(`Listing removed from wishlist`, {
               position: "top-center",
               autoClose: 1500,

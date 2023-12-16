@@ -19,8 +19,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const App = () => {
   return (
-    <div>
-      <div>
+    <div style={{backgroundColor: "var(--primary-color)"}}>
+      <div style={{backgroundColor: "var(--primary-color)"}}>
       <Routes>
         <Route exact path="/home?" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
