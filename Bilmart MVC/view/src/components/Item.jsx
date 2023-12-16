@@ -49,6 +49,7 @@ export default function Item() {
   createdAt: ""
  });
  const [userWishlist, setUserWishlist] = useState([]);
+ const [itemWishlist, setItemWishlist] = useState([]);
  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
  async function fetchData(username) {
   console.log(params);
@@ -126,6 +127,7 @@ useEffect(() => {
      }
 
      setItem(record);
+     setItemWishlist(record.wishlist);
      const userID = record.postOwner;
      fetchUserData(userID);
    }
@@ -133,9 +135,9 @@ useEffect(() => {
    return;
  }, [params.id, navigate]);
  
- function addToWishlist() {
+ async function addToWishlist() {
   async function addToWishlist() {
-    if (userWishlist.includes(item._id) || item.wishlist.includes(profileUser._id)) {
+    if (userWishlist.includes(item._id) || itemWishlist.includes(profileUser._id)) {
       toast.error(`Listing is already in wishlist`, {
         position: "top-center",
         autoClose: 1500,
@@ -150,7 +152,7 @@ useEffect(() => {
     } else{
       const updatedOwnerWishlist = [...userWishlist, item._id];
       let updatedPostWishlist;
-          updatedPostWishlist = [...item.wishlist, profileUser._id]
+      updatedPostWishlist = [...item.wishlist, profileUser._id]
 
       const editedUser = {
         email: profileUser.email,
@@ -204,6 +206,7 @@ useEffect(() => {
         });
       } else{
         setUserWishlist(updatedOwnerWishlist);
+        setItemWishlist(updatedPostWishlist);
         toast.success(`Listing added to wishlist`, {
           position: "top-center",
           autoClose: 1500,
@@ -218,12 +221,12 @@ useEffect(() => {
     }
   }
 
-  addToWishlist();
+  await addToWishlist();
 
   return;
  }
 
- function requestContact() {
+ async function requestContact() {
      async function sendRequestContact() {
 
          const contact = {
@@ -274,11 +277,11 @@ useEffect(() => {
 
      }
 
-     sendRequestContact();
+     await sendRequestContact();
      return;
  }
 
- function removeFromWishlist() {
+ async function removeFromWishlist() {
       async function removeFromWishlist() {
         if (userWishlist.includes(item._id)) {
 
@@ -287,9 +290,6 @@ useEffect(() => {
         let list = item.wishlist;
         if (item.wishlist.includes(profileUser._id)) {
           list = list.filter((userID) => userID !== profileUser._id);
-            // if (indexToRemove !== -1) {
-            //     list = item.wishlist.splice(indexToRemove, 1);
-            // }
         }
         const updatedPostWishlist = list;
 
@@ -342,6 +342,7 @@ useEffect(() => {
             });
           } else{
             setUserWishlist(updatedOwnerWishlist);
+            setItemWishlist(updatedPostWishlist);
             toast.success(`Listing removed from wishlist`, {
               position: "top-center",
               autoClose: 1500,
@@ -368,7 +369,7 @@ useEffect(() => {
         }
       }
 
-     removeFromWishlist();
+     await removeFromWishlist();
 
      return;
  }
