@@ -475,7 +475,7 @@ useEffect(() => {
                   <Container className="itemCardDetails text" fluid>
                   <div>
                     <div style={{display: "flex", alignItems: "center"}}>
-                        <h1 style={{fontWeight: "bolder"}}>Details</h1>
+                        <h1 style={{ fontWeight: "bolder", margin: 0 }}>Details</h1>
                         <p style={{position: "absolute", right: "45px"}}><span className="text" style={{fontWeight: "bold"}}>ID: </span>{item._id}</p>
                     </div>
                     <div style={{alignItems: "center", display: "flex"}}>

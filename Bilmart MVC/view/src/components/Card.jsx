@@ -35,7 +35,7 @@ function ItemCard(props) {
     <div className={['circleBackground', backgroundType].join(' ')}/>
     <Card.Img className="centered-and-cropped" variant="top" src={props.record.image} height={"220px"} width={"undefined"} style={{width: '100%',
     height: undefined,
-    objectFit: 'contain', maxWidth: "280px", borderBottom: "none", borderTopRightRadius: "5px", borderTopLeftRadius: "5px", backgroundColor: "var(--text-color)"}}/>
+    objectFit: 'contain', maxWidth: "280px", borderBottom: "none", borderTopRightRadius: "5px", borderTopLeftRadius: "5px", backgroundColor: "var(--primary-color)"}}/>
     <Card.Body>
       <Card.Title>
       {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
