@@ -107,7 +107,7 @@ function Profile(){
     ) : (
       <div>
         <Container fluid>
-            <LogoBar />
+            <LogoBar text="Profile"/>
             <Container style={{marginTop: "15px"}} fluid>
             <Row>
                 <Col lg={3}>
@@ -123,7 +123,7 @@ function Profile(){
                       <h1>{userPosts.length}</h1>
                       <h3>Posts</h3>
                       <hr/>
-                      <Link to={`/create`}><Button className="createListing primary-accent" variant="secondary"><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
+                      <Link to={`/create`}><Button className="createListing" variant="secondary" style={{backgroundColor: "var(--text-color3)"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
                     </div>
                     </Container>
                 </Col>

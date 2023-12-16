@@ -271,7 +271,6 @@ function Home() {
           </div>
         ) : (
           <Container fluid style={{ marginTop: "15px" }}>
-            <LogoBar />
             <Container style={{ marginTop: "15px" }} fluid>
               <Row>
                 <Col xl={3} md={4}>
@@ -313,15 +312,15 @@ function Home() {
                             onChange={(e) => setSearchOrderBy(e.target.value)}
                           >
                             {showPriceSort ? <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
-                              <option className="text" value="dateHigh">Date (New to Old)</option>
-                              <option className="text" value="dateLow">Date (Old to New)</option>
-                              <option className="text" value="priceLow" >Price (Low to High)</option>
-                              <option className="text" value="priceHigh">Price (High to Low)</option>
+                              <option className="formSelectText" value="dateHigh">Date (New to Old)</option>
+                              <option className="formSelectText" value="dateLow">Date (Old to New)</option>
+                              <option className="formSelectText" value="priceLow" >Price (Low to High)</option>
+                              <option className="formSelectText" value="priceHigh">Price (High to Low)</option>
                             </Form.Select> :
 
                               <Form.Select aria-label="Floating label select1" defaultValue={searchOrderBy} >
-                                <option className="text" value="dateHigh">Date (New to Old)</option>
-                                <option className="text" value="dateLow">Date (Old to New)</option>
+                                <option className="formSelectText" value="dateHigh">Date (New to Old)</option>
+                                <option className="formSelectText" value="dateLow">Date (Old to New)</option>
                               </Form.Select>}
                           </FloatingLabel>
 
@@ -352,7 +351,7 @@ function Home() {
                       </Container>
                       <Container>
                         <Form.Group style={{ justifyContent: "center", textAlign: "center" }}>
-                          <Button className="text" variant="secondary" onClick={(e) => (setCurrentPage(1), setSearchDone(true), setToggleState(!toggleState))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
+                          <Button className="text" variant="secondary" onClick={(e) => (setCurrentPage(1), setSearchDone(true), setToggleState(!toggleState))} style={{ backgroundColor: "var(--text-color3)", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
                         </Form.Group>
                       </Container>
                       <Container style={{ height: "1px" }}></Container>

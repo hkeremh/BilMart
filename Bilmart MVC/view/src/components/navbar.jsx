@@ -45,7 +45,7 @@ function NavBar(props) {
     navigate(`/wishlist/${username}`);
   };
   return (
-    <Navbar className="navbar-dark" style={{backgroundColor: "#192655"}} expand="lg">
+    <Navbar className="navbar-dark" style={{backgroundColor: "var(--text-color3)"}} expand="lg">
       <Container fluid>
         <Navbar.Brand href="/home?pageNumber=1" disabled={disabled}><img src={logo} width={170} height={36}/></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

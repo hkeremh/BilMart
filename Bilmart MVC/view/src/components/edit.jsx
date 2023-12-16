@@ -240,11 +240,13 @@ const handleSuccess = (msg) =>
     )
     const { success, message } = data;
      if (success) {
+      setIsPostLoading(false);
        handleSuccess(message);
        setTimeout(() => {
          navigate("/profile");
        }, 1500);
      } else {
+       setIsPostLoading(false);
        handleError(message);
 
      }
@@ -268,7 +270,7 @@ const handleSuccess = (msg) =>
  return (
   <div>
   <NavBar />
-  <div style={{marginTop: "-30px" }}>
+  <div style={{marginTop: "-30px"}}>
   {(isUserLoading || isPostLoading) ? (
     <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
       <Spinner animation="border" role="status">

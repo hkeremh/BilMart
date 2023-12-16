@@ -218,11 +218,13 @@ export default function Create() {
         console.log(data)
         const { success, message } = data;
         if (success) {
+          setIsUserLoading(false);
           handleSuccess(message);
           setTimeout(() => {
             navigate("/profile");
           }, 1500);
         } else {
+          setIsUserLoading(false);
           handleError(message);
         }
 
