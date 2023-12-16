@@ -20,7 +20,9 @@ export default function EditProfile() {
     description: "",
     rating: 0,
     ratedamount: 0,
-    createdAt: ""
+    createdAt: "",
+    phoneNumber: '',
+    contactInfoPublic: false
  });
  const [photo, setPhoto] = useState("");
 const [isUserLoading, setIsUserLoading] = useState(true);
@@ -111,7 +113,9 @@ const [isUserLoading, setIsUserLoading] = useState(true);
     description: user.description,
     rating: user.rating,
     ratedamount: user.ratedamount,
-    createdAt: user.createdAt
+    createdAt: user.createdAt,
+   phoneNumber: user.phoneNumber,
+   contactInfoPublic: user.contactInfoPublic
    };
     // This will send a post request to update the data in the database.
     const result = await fetch(`http://localhost:4000/user/editprofile/${params.username}`, {
@@ -197,6 +201,77 @@ const [isUserLoading, setIsUserLoading] = useState(true);
                           />
                         </div>
                     </div>
+                      {/*;*/}
+                      <div className="d-flex flex-row align-items-center mb-4">
+                          <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32"
+                               fill="currentColor" className="bi bi-person-circle fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                              <path fillRule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                          </svg>
+                          <div className="form-outline flex-fill mb-0">
+                              <label className="form-label fw-bold text" htmlFor="username">Contact Info</label>
+                              <div style={{ marginTop: '10px' }}>
+                                  <label style={{ marginRight: '30px', fontSize: '16px', color: 'var(--text-color)' }}>
+                                      <input
+                                          type="radio"
+                                          name="contactInfoPublic"
+                                          value="public"
+                                          checked={user.contactInfoPublic === true}
+                                          onChange={() => updateUser({ contactInfoPublic: true })}
+                                      />
+                                      Public
+                                  </label>
+
+                                  <label style={{ marginLeft: '10px', fontSize: '16px', color: 'var(--text-color)' }}>
+                                      <input
+                                          type="radio"
+                                          name="contactInfoPublic"
+                                          value="private"
+                                          checked={user.contactInfoPublic === false}
+                                          onChange={() => updateUser({ contactInfoPublic: false })}
+                                      />
+                                      Private
+                                  </label>
+                              </div>
+
+
+                          </div>
+                      </div>
+                      {/*/*/}
+                      <div className="d-flex flex-row align-items-center mb-4">
+                          <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="40" height="40"
+                               fill="currentColor" className="bi bi-image-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                              <path
+                                  d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+                          </svg>
+                          <div className="form-outline flex-fill mb-0">
+                              <label className="form-label fw-bold text" htmlFor="phoneNumber">Phone Number (exclude +90)</label>
+                              <div style={{ marginTop: '10px' }}>
+                                  <input
+                                      type="tel"
+                                      id="phoneNumber"
+                                      className="form-control"
+                                      pattern="[0-9\s]+"
+                                      maxLength="10"
+                                      value={user.phoneNumber}
+                                      onChange={(e) => {
+                                          // Remove non-numeric and non-space characters
+                                          const cleanedValue = e.target.value.replace(/[^0-9]/g, '');
+                                          // Ignore numbers starting with "+90"
+                                          const filteredValue = cleanedValue.startsWith('+90') ? '' : cleanedValue;
+                                          // Trim to max length
+                                          const trimmedValue = filteredValue.slice(0, 10);
+                                          // Update the state with the cleaned and trimmed value
+                                          updateUser({ phoneNumber: trimmedValue });
+                                      }}
+                                      placeholder="Enter your phone number"
+                                  />
+                              </div>
+                          </div>
+
+                      </div>
+                      {/*/*/}
                     <div class="d-flex flex-row align-items-center mb-4">
                       <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="40" height="40" fill="currentColor" class="bi bi-image-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
                           <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>

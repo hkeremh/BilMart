@@ -126,6 +126,7 @@ router.patch('/editprofile/:username', async (req, res) => {
     const oldUsername = req.params.username;
     let existingUser = await userModel.getUserByUserName(req.body.username);
     let result;
+
     if(existingUser && (existingUser.username != oldUsername)) {
       result = "This username is taken";
     } else if(!usernameRegex.test(req.body.username)) {
@@ -142,7 +143,9 @@ router.patch('/editprofile/:username', async (req, res) => {
           description: req.body.description,
           rating: req.body.rating,
           ratedamount: req.body.ratedamount,
-          createdAt: req.body.createdAt
+          createdAt: req.body.createdAt,
+          phoneNumber: req.body.phoneNumber,
+          contactInfoPublic: req.body.contactInfoPublic
         }
       };
       try {
