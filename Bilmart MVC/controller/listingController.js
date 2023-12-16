@@ -507,9 +507,21 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.post('/search', async (req, res) => {
-
   try {
-    const listings = await listingModel.searchListings(req.body) //access model func.
+    console.log(req.body);
+    let searchQuery = {
+      text: req.body.text,
+      type: req.body.type,
+      tags: req.body.tags,
+      availability: req.body.availability,
+      orderBy: req.body.orderBy,
+      pageNumber: req.body.pageNumber
+    }
+    if(req.body.type.includes("Lost&Found")) {
+      searchQuery.type = [ ...searchQuery.type.filter((e) => e !== "Lost&Found"), "Lost Item", "Found Item"];
+      console.log("UPDATED:", searchQuery.type);
+    }
+    const listings = await listingModel.searchListings(searchQuery) //access model func.
     res.send(listings) //return value
   } catch (error) {
     console.error(error)

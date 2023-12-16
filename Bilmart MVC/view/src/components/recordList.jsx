@@ -16,10 +16,12 @@ import NavBar from "./navbar.jsx";
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import "bootstrap/dist/css/bootstrap.min.css";
+let toggleState2 = true;
+function setToggleState2(bool) {
+  toggleState2 = bool;
+}
 
-
-
-export default function Home() {
+function Home() {
   const navigate = useNavigate();
   const [isPostLoading, setIsPostLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(true);
@@ -35,10 +37,7 @@ export default function Home() {
   const [searchText, setSearchText] = useState("");
   const [searchOrderBy, setSearchOrderBy] = useState("dateHigh");
   const [showPriceSort, setShowPriceSort] = useState(false);
-
-  function handlePageChange(pageNumber) {
-    setCurrentPage(pageNumber);
-  }
+  const [toggleState, setToggleState] = useState(true);
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.userToken) {
@@ -61,19 +60,18 @@ export default function Home() {
   const [records, setRecords] = useState([]);
   // This method fetches the records from the database.
   async function getRecords(pageNumber) {
+    setIsPostLoading(true);
     const response = await fetch(`http://localhost:4000/listing/home?pageNumber=${pageNumber}`);
-
     if (!response.ok) {
       const message = `An error occurred: ${response.statusText}`;
       window.alert(message);
       return;
     }
-
     const records = await response.json();
     console.log(records);
     setRecords(records);
-    setIsPostLoading(false);
     navigate(`/home?pageNumber=${pageNumber}`);
+    setIsPostLoading(false);
   }
 
   useEffect(() => {
@@ -95,7 +93,7 @@ export default function Home() {
     const cloneSearchTypes = [...searchTypes];
 
     console.log(cloneSearchTypes);
-    if (cloneSearchTypes.length == 0) return false;
+    if (cloneSearchTypes.length === 0) return false;
 
     if (cloneSearchTypes.includes("Sale Item"))
       cloneSearchTypes.splice(cloneSearchTypes.indexOf("Sale Item"), 1);
@@ -103,7 +101,7 @@ export default function Home() {
     if (cloneSearchTypes.includes("Borrowal Item"))
       cloneSearchTypes.splice(cloneSearchTypes.indexOf("Borrowal Item"), 1);
 
-    return cloneSearchTypes == 0;
+    return cloneSearchTypes === 0;
 
 
   }
@@ -149,8 +147,7 @@ export default function Home() {
   }
 
   async function getSearchRecords(reqBody) {
-
-
+    setIsPostLoading(true);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -169,41 +166,25 @@ export default function Home() {
       window.alert(message);
       return;
     }
-
-
     const records = await response.json();
     console.log("search records: " + records);
-
     setRecords(records);
     setIsPostLoading(false);
     console.log("current page is " + currentPage);
     navigate(`/home?state=search`);
-
-
+    setIsPostLoading(false);
   }
 
   useEffect(() => {
-
-    
-      if (!searchDone)
-        getRecords(currentPage);
-      else
-        getSearchRecords(searchParamsJSON(currentPage))
-    
-
-
-
-  }, [currentPage, pageSize]);
-
-  useEffect(() => {
-
-
-      setCurrentPage(1);
-
-
-  }, [searchDone]);
-
-
+    console.log(searchDone);
+    console.log(currentPage);
+    console.log("Toggle State 2: ", toggleState2);
+    if(!searchDone){
+      getRecords(currentPage);
+    } else {
+      getSearchRecords(searchParamsJSON(currentPage));
+    }
+  }, [searchDone, currentPage, pageSize, toggleState]);
 
 
   //  useEffect(() => {
@@ -239,11 +220,9 @@ export default function Home() {
   // This method will map out the records on the table
   function recordList() {
     return records.map((record) => {
-      return <ItemCard record={record} key={record._id} deleteRecord={deleteRecord} />
+      return <ItemCard record={record} key={record._id} deleteRecord={deleteRecord}/>
     });
   }
-
-
 
   // This following section will display the table with the records of individuals.
   return (
@@ -339,13 +318,11 @@ export default function Home() {
                       </Container>
                       <Container>
                         <Form.Group style={{ justifyContent: "center", textAlign: "center" }}>
-                          <Button className="text" variant="secondary" onClick={(e) => (setIsPostLoading(true), setSearchDone(true))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
+                          <Button className="text" variant="secondary" onClick={(e) => (setCurrentPage(1), setSearchDone(true), setToggleState(!toggleState))} style={{ backgroundColor: "#192655", marginBottom: "15px" }}><span className="text">Find Listings</span></Button>
                         </Form.Group>
                       </Container>
                       <Container style={{ height: "1px" }}></Container>
                     </div>
-
-
                   </Container>
                 </Col>
                 <Col xl={9} md={8}>
@@ -367,6 +344,8 @@ export default function Home() {
       </div>
     </div>
   );
+  
 }
-
+export default Home;
+export { setToggleState2 };
 // export default Home;

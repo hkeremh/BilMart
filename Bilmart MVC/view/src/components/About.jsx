@@ -8,10 +8,10 @@ function About(){
     const date = new Date();
     const year = date.getFullYear();
     return(
-      <div>
+      <div className="gradient-background">
       <NavBar />
         <div style={{ margin: "-50px" }}>
-        <div className="gradient-background px-4 pt-5 my-5 text-center border-bottom " >
+        <div className="px-4 pt-5 my-5 text-center border-bottom " >
         <h1 className="display-4 fw-bold text-body-emphasis">Welcome to BilMart!</h1>
         <div className="col-lg-6 mx-auto">
           <p className="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>

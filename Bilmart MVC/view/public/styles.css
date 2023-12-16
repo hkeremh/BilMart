@@ -37,7 +37,7 @@ html{
     justify-content: center;
     text-align: center;
     width: 280px;
-    border-radius: 5px; !important;
+    border-radius: 5px; /*!important;*/
 }
 .items{
     background-color: var(--secondary-color);
@@ -125,7 +125,6 @@ html{
 .itemUserInfo{
   justify-content: center;
   text-align: center;
-  background-color: var(--secondary-color);
   border-radius: 5px;
   width: 300px;
   margin-bottom: 15px;
@@ -259,7 +258,12 @@ html{
     background-size: 180% 180%;
     animation: gradient-animation 18s ease infinite;
   }
-  
+
+  .gradient-background-2{
+    background: linear-gradient(300deg, var(--primary-color), var(--secondary-color), var(--text-color), var(--secondary-color),var(--primary-color));
+    background-size: 180% 180%;
+    animation: gradient-animation 20s ease infinite;
+  }
   @keyframes gradient-animation {
     0% {
       background-position: 0% 50%;

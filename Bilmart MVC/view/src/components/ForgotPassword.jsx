@@ -3,13 +3,12 @@ import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
-import PasswordStrengthBar from 'react-password-strength-bar';
+import Button from "react-bootstrap/esm/Button.js";
 import NavBar from "./navbar.jsx";
 import signUp from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import logo from "../img/1.png";
-
 
 const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/
 
@@ -79,9 +78,9 @@ const handleSuccess = (msg) =>
   }
  }
     return(
-      <div>
+      <div className="gradient-background-2" style={{position: "fixed", width: "100%", height: "100%"}}>
       <NavBar />
-    <div className="container h-100" style={{width: "100%", height: "100%", marginTop: "3rem"}}>
+    <div className="container" style={{marginTop: "8rem"}}>
       <div className="row d-flex justify-content-center align-items-center h-100">
         <div className="col-lg-12 col-xl-11">
           <div className="card text-black" style={{width: "100%", height: "100%", borderRadius: "25px"}}>
@@ -109,6 +108,11 @@ const handleSuccess = (msg) =>
                     </div>                    
                     <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="submit" value="SignUp" className="btn btn-dark"><span className="text">Send Link</span></button>
+                    </div>
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <span className="text">
+                          <Button variant="outline-danger" href="/login">Cancel</Button>
+                      </span>
                     </div>
                   </form>
                 </div>

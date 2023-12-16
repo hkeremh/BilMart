@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import deleteIcon from "../img/bin.png";
 import "../CSS/card.css"
+import { setToggleState2 } from "./recordList";
 
 
 function ItemCard(props) {
@@ -29,12 +30,12 @@ function ItemCard(props) {
 
   //className={['itemCard', backgroundType].join(' ')}
   return (
-  <div className="itemCard" style={{borderRadius: "0px"}}>
+  <div className="itemCard" style={{borderRadius: "20px"}}>
   <Card style={{ backgroundColor: "var(--primary-color)", width: '280px', height: "500px", border: "none", borderRadius: "10px"}}>
     <div className={['circleBackground', backgroundType].join(' ')}/>
     <Card.Img className="centered-and-cropped" variant="top" src={props.record.image} height={"220px"} width={"undefined"} style={{width: '100%',
     height: undefined,
-    objectFit: 'contain', maxWidth: "280px", borderBottom: "none", borderTopRightRadius: "50px", borderTopLeftRadius: "0px"}}/>
+    objectFit: 'contain', maxWidth: "280px", borderBottom: "none", borderTopRightRadius: "20px", borderTopLeftRadius: "20px", backgroundColor: "var(--text-color)"}}/>
     <Card.Body>
       <Card.Title>
       {props.record.title.toString().length < 20 && <div className="text" style={{fontWeight: "bold"}}>{props.record.title}</div>}
@@ -67,7 +68,7 @@ function ItemCard(props) {
     <Card.Body>
       <div>
       <Row>
-      <Col><Link to={`/item/${props.record.realID}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">View</div></Button></Link></Col>
+      <Col><Link to={`/item/${props.record.realID}`}><Button variant="secondary" style={{backgroundColor: "#192655"}} onClick={setToggleState2(false)}><div className="text">View</div></Button></Link></Col>
       {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length < 6) && <Col><div className="text" style={{backgroundColor: "#192655", border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price + "₺"}</h4></div></Col>}
       {props.onProfile !== true && (props.record.type === "Sale Item" || props.record.type === "Borrowal Item") && (props.record.typeSpecific.price.toString().length >= 6) && <Col><div className="text" style={{backgroundColor: "#192655", border: "2px solid grey", borderRadius: "5px", height: "36px",padding: "3px"}}><h4 style={{color: "white"}}>{props.record.typeSpecific.price.substring(0,5) + "...₺"}</h4></div></Col>}
       {props.onProfile === true && <Col><Link to={`/edit/${props.record.realID}`}><Button variant="secondary" style={{backgroundColor: "#192655"}}><div className="text">Edit</div></Button></Link></Col>}
