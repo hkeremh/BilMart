@@ -1,0 +1,107 @@
+/*:root {*/
+/*    --primary-color: white;*/
+/*    !*--secondary-color: #ccdbff;*!*/
+/*    --secondary-color: white;*/
+/*    --primary-accent: #192655;*/
+/*}*/
+
+/*.card-body {*/
+/*    background-color: #eef5ff;*/
+/*}*/
+
+.textback {
+    height: 30px;
+    background-color: rgba(213, 213, 213, 0.43);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--primary-accent)
+
+}
+
+.text-in-card {
+    font-weight: bold;
+}
+
+.itemCard {
+    position: relative;
+    /*background-color: blue;*/
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.circleBackground {
+    position: absolute;
+    top: 65%;
+    left: 25%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/*.sale-background {*/
+/*    !*background-color: #ff0000;*!*/
+/*    background-color: hsl(0, 71%, 55%);*/
+/*}*/
+/*.borrowal-background {*/
+/*    background-color: #ffa500; !* Orange-Yellow *!*/
+/*}*/
+/*.donation-background {*/
+/*    background-color: #0a9f17; !* Green *!*/
+/*}*/
+/*.lostFound-background {*/
+/*    background-color: #1192d2; !* Blue *!*/
+/*}*/
+/*.other-background {*/
+/*    background-color: lightgray; !* Blue *!*/
+/*}*/
+
+.sale-background {
+    /*background-color: #ff3b3b; !* Red *!*/
+    /*box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5); !* Adjusted glow color for red *!*/
+    background-color: rgba(255, 74, 74, 0.91); /* Red */
+    box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5); /* Adjusted glow color for red */
+}
+
+.borrowal-background {
+    background-color: #21912b; /* Green */
+    box-shadow: 0 0 10px 5px rgba(10, 159, 23, 0.5); /* Adjusted glow color for green */
+}
+
+.donation-background {
+    background-color: #ffa500; /* Orange-Yellow */
+    box-shadow: 0 0 10px 5px rgba(255, 165, 0, 0.5); /* Adjusted glow color for orange-yellow */
+}
+
+.lostFound-background {
+    background-color: #1192d2; /* Blue */
+    box-shadow: 0 0 20px 10px rgba(123, 189, 255, 0.5);
+}
+
+.other-background {
+    background-color: lightgray; /* Light Gray */
+    box-shadow: 0 0 10px 5px rgba(169, 169, 169, 0.5); /* Adjusted glow color for light gray */
+}
+
+.card {
+    width: 280px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    z-index: 20;
+}
+
+.list-group-item {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
+.rounded-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

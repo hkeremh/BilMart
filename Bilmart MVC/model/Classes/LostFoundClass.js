@@ -1,10 +1,17 @@
-import Post from "./PostClass.js"
+import PostStrategy from "./PostStrategyClass.js"
 
-class LostFound extends Post {
+class LostFound extends PostStrategy {
     found; //status bool
 
-    constructor() {
+    constructor(found) {
         super();
+        this.found = found || false;
+    }
+
+    getProperty() {
+        return {
+            found: this.found,
+        };
     }
 
 }

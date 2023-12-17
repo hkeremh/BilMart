@@ -1,15 +1,24 @@
-import Post from "./PostClass.js"
-import Donation from "./DonationClass.js";
+import PostStrategy from "./PostStrategyClass.js"
 
-class TransactionalItem extends Post {
+class TransactionalItem extends PostStrategy {
     price; //double
-    quality; // 1-10 int value
+    quality; //
     available; //bool
 
-    constructor() {
-        super(); //calls Post constructor
+    constructor(price, quantity, available) {
+        super();
+        this.price = price;
+        this.quality = quantity;
+        this.available = available;
     }
 
+    getProperty() {
+        return {
+            price: this.price,
+            quality: this.quality,
+            available: this.available
+        };
+    }
 }
 
 export default TransactionalItem

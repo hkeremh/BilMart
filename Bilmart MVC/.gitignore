@@ -1,5 +1,4 @@
 # Ignore visual paradigm backup files
-.idea/
 .DS_Store
 Diagrams/*.vpp.bak*
 node_modules/

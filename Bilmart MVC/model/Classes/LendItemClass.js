@@ -1,11 +1,20 @@
 import TransactionalItem from "./TransactionalItemClass.js"
-import Donation from "./DonationClass.js";
 
 class LendItem extends TransactionalItem {
     lendDuration; //during of lending (number of days in int)
 
-    constructor() {
-        super(); //calls transactional item constructor
+    constructor(price, quality, available, lendDuration) {
+        super(price,quality, available); //calls transactional item constructor
+        this.lendDuration = lendDuration;
+    }
+
+    getProperty() {
+        return {
+            price: this.price,
+            quality: this.quality,
+            available: this.available,
+            lendDuration: this.lendDuration
+        };
     }
 
 }

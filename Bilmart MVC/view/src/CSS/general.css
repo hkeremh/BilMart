@@ -1,0 +1,18 @@
+/*:root {*/
+/*    --primary-color: white;*/
+/*    !*--secondary-color: #ccdbff;*!*/
+/*    --secondary-color: white;*/
+/*    --primary-accent: #192655;*/
+/*}*/
+
+.primary-color {
+    background-color: var(--primary-color);
+}
+
+.secondary-color {
+    background-color: var(--secondary-color);
+}
+
+.primary-accent {
+    background-color: var(--primary-accent);
+}
