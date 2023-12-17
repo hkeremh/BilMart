@@ -14,7 +14,7 @@ import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
-import NavBar from "./NavBar";
+import NavBar from "./NavBar.jsx";
 import "../CSS/general.css"
 import { toggleState2, setToggleState2 } from "./Home.jsx";
 
