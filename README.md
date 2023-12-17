@@ -22,3 +22,19 @@ At the start of every semester, many students need to purchase new books for the
 - Notification page that displays updates on their posts, notifies when someone is interested in their item, updates users upon contact info sharing, and more.
 ## Why BilMart?
 BilMart allows Bilkent community members to engage with all the above-mentioned features on one website instead of searching through several of them. Since BilMart only allows Bilkent University members to join, it is secure and customer-oriented.
+# Build Instructions
+## Prerequisites
+### Node.js >= v18.17.0
+To build this project, you will need Node.js with version 18.17.0 or higher. Refer to [npm docs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) for the installation progress. If you already have Node.js installed please check the verion with ```node -v```. If your verison is lower that 18.17.0, please [update your Node.js](https://mcengkuru.medium.com/how-to-update-node-js-to-any-version-a-step-by-step-guide-d4ce747ac50f). We reccomend Node.js verison 21.2.0 and npm version 10.2.3 as these are the versions used during development.
+## Building
+1. You should have a working IDE. In case you already do not have it, here are two links: Visual Studio Code and IntelliJ IDEA.
+2. You need to clone/fork the repository.
+3. If you have Visual Studio code, you can directly click on Clone git repository. If you do not have Visual Studio Code, you should download git desktop and access the repository from there. After successfully cloning the repository, you can open the file in your IDE in the folder where you cloned it. 
+4. After opening the folder in the IDE, you need to make sure you are in the main branch. 
+5. You will need to open two terminals. In the first one, you need to make sure you are in the ‘Bilmart MVC’ folder by writing this line: ```cd Bilmart\ MVC```. then you will run this line to download modules: ```npm i```.
+6. In the second terminal, you will need to again open the ‘Bilmart MVC’ folder and then open the view folder by writing this line: cd view by using ```cd Bilmart\ MVC/view```. Inside the view folder, you will need to install node modules here too: ```npm i```. 
+7. Returning to your IDE, you will need to run this line in the ‘Bilmart MVC’ folder: ```nodemon index.js```. 
+And then in the view shell run: ```npm start```.
+8. Running these two lines should automatically open this website: http://localhost:3000.
+9. You have successfully accessed the website.
+10. To terminate, you will need to run CTRL+C in both shells if you are using Windows and CMD+C if you are using Mac.
