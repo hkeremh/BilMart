@@ -22,11 +22,22 @@ const Wishlist = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [cookies, removeCookie] = useCookies([]);
   const [profileUser, setProfileUser] = useState({});
+  const handleError = (err) =>
+  toast.error(err, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
   async function fetchData(username) {
     const response = await fetch(`http://localhost:4000/user/username/${username}`);
     if (!response.ok) {
       const message = `An error has occurred: ${response.statusText}`;
-      window.alert(message);
+      handleError(message);
       return;
     }
     const user = await response.json();
@@ -57,12 +68,11 @@ const Wishlist = () => {
  // This method fetches the records from the database.
  useEffect(() => {
    async function getRecords() {
-    console.log(profileUser.username);
      const response = await fetch(`http://localhost:4000/user/wishlist/${params.username}`);
 
      if (!response.ok) {
        const message = `An error occurred: ${response.statusText}`;
-       window.alert(message);
+       handleError(message);
        return;
      }
 
@@ -72,7 +82,7 @@ const Wishlist = () => {
          const response = await fetch(`http://localhost:4000/listing/proxy/${records[i]}`);
          if (!response.ok) {
             const message = `An error occurred: ${response.statusText}`;
-            window.alert(message);
+            handleError(message);
             return;
          }
          const record = await response.json();

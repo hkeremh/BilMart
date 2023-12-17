@@ -8,7 +8,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import Dropdown from 'react-bootstrap/Dropdown';
 import axios from "axios";
 import NavBar from "./NavBar.jsx";
-import compress from "lz-string";
 import deleteIcon from "../img/bin.png";
 
 export default function Create() {
@@ -38,49 +37,25 @@ export default function Create() {
     wishlistCount: 0
   });
   const [tags, setTags] = useState([]);
-  /*
-  const [tags, setTags] = useState({});
-  const KeyCodes = {
-    comma: 188,
-    enter: 13
-  };
-  const delimiters = [KeyCodes.comma, KeyCodes.enter];
-  const handleDelete = i => {
-    setTags(tags.filter((tag, index) => index !== i));
-  };
 
-  const handleAddition = tag => {
-    setTags([...tags, tag]);
-  };*/
   function compressImage(inputImage, compressionQuality, callback) {
-
     var img = new Image();
-  
     // Load the image
     img.src = inputImage;
-  
     // Handle the image onload event
     img.onload = function () {
       // Create a canvas element
       var canvas = document.createElement('canvas');
       var ctx = canvas.getContext('2d');
-      
       let reduceRatio = 10000000.0 / (img.width * img.height)
       if(reduceRatio > 1) reduceRatio = 1
-
       // Set the canvas size to the image size
       canvas.width = img.width * reduceRatio;
-      canvas.height = img.height * reduceRatio;
-      
-      
-  
+      canvas.height = img.height * reduceRatio;     
       // Draw the image on the canvas
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height); 
       // Get the compressed image data as a base64-encoded string
       var compressedImageData = canvas.toDataURL('image/jpeg', 1.0);
-
-  
       // Pass the compressed image data to the callback function
       callback(compressedImageData);
     };
@@ -202,7 +177,6 @@ export default function Create() {
       const typeSpecificItem = await updateTypeSpecific();
       typeSpecificItem.images = sources;
       typeSpecificItem.postOwner = userID;
-      console.log(typeSpecificItem);
       try {
         const { data } = await axios.post('http://localhost:4000/listing', typeSpecificItem, {
           headers: {
@@ -223,7 +197,7 @@ export default function Create() {
 
       } catch (error) {
         // Handle errors here
-        window.alert(error.message);
+        handleError(error.message);
       }
     }
     else {

@@ -60,7 +60,6 @@ const handleSuccess = (msg) =>
       const updatedUser = {
         password: form.password
       }
-      console.log(updatedUser);
       const result = await fetch(`http://localhost:4000/user/changePassword/${params.changePasswordToken}`, {
         method: "PATCH",
         body: JSON.stringify(updatedUser),
@@ -69,7 +68,6 @@ const handleSuccess = (msg) =>
         },
       });
       const response = await result.json();
-      console.log(response);
     if (response.success) {
         handleSuccess(`${response.message}` + " Closing this tab...");
         setTimeout(() => {
@@ -83,7 +81,6 @@ const handleSuccess = (msg) =>
     } catch (error) {
       handleError(error);
     }    
-  //setForm({username: "", email: "", password: ""});
  }
     return(
       <div style={{position: "relative", width: "100%", height: "100vh", overflow: "auto", backgroundColor: "#15191f"}}>

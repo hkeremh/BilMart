@@ -107,7 +107,6 @@ function Home() {
 
     return cloneSearchTypes === 0;
 
-
   }
 
    function tagList() {
@@ -116,33 +115,6 @@ function Home() {
       return <Form.Check className="text" type="checkbox" defaultChecked={searchTags.includes(t.name)} label={t.name} onClick={(e) => (setSearchTags(updateArray(searchTags, t.name, e.target.checked)))} />
     });
   }
-/*   function tagListForPostTags() {
-    const tagsArray = searchTags.join(',').split(',').map(tag => tag.trim());
-    return tags.map((t) => (
-      <Form.Check
-        className="text"
-        type="checkbox"
-        key={t.name}
-        defaultChecked={tagsArray.includes(t.name)}
-        label={t.name}
-        onClick={(e) => setSearchTags(updateArrayForPostTags(searchTags, t.name, e.target.checked))}
-      />
-    ));
-  }
-   */
- /* function tagListForpostTags() {
-    const tagsArray = searchTags.join(',').split(',').map(tag => tag.trim());
-  
-    return tags.map((t) => (
-      <Form.Check
-        className="text"
-        type="checkbox"
-        defaultChecked={tagsArray.includes(t.name)}
-        label={t.name}
-        onClick={(e) => (setSearchTags(updateArray(searchTags, t.name, e.target.checked)))}
-      />
-    ));
-  }*/
 
    function updateArray(array, value, add) {
     if (add) {
@@ -223,9 +195,7 @@ function Home() {
     
       const selectedTagsIncluded = searchTags.length === 0 || searchTags.some(selectedTag => lowercaseTags.includes(selectedTag.toLowerCase()));
       const inputTagsIncluded = searchText === '' || searchText.split(',').map(tag => tag.trim()).some(inputTag => lowercaseTags.includes(inputTag.toLowerCase()));
-      /* const availabilityMatch = (availability) => (
-        availability !== null && availability.toLowerCase() === searchAvailability.toLowerCase()
-      ); */
+
       if (searchText.trim() === '') 
         return (
           selectedTagsIncluded &&
@@ -242,30 +212,20 @@ function Home() {
         selectedTagsIncluded || inputTagsIncluded &&
         (!searchText || lowercaseTitle.includes(searchText.toLowerCase()) || lowercaseDescription.includes(searchText.toLowerCase())) &&
         ((searchTypes.length === 0) || searchTypes.includes(record.type) || (searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item"))) &&
-        //(searchAvailability.length === 0 || searchAvailability.includes(record.availability))
         (searchAvailability.length === 0 || 
           (searchAvailability.includes("Lost") && record.type.toLowerCase()==="lost item" )||
            searchAvailability.includes("Found") && record.type.toLowerCase()==="found item" ||
            searchAvailability.includes("Available") && (record.type.toLowerCase() !== "lost item" && record.type.toLowerCase() !== "found item")  // If no specific status selected, include all
         ));
     });
-  
-      console.log("search records: " + filteredRecords);
-      //setRecords(records);
-      
       setRecords(filteredRecords);
-      
       setIsPostLoading(false);
-      console.log("current page is " + currentPage);
       navigate(`/home?state=search`);
       setIsPostLoading(false);
 
   }
 
   useEffect(() => {
-    console.log(searchDone);
-    console.log(currentPage);
-    console.log("Toggle State 2: ", toggleState2);
     if(!searchDone){
       if(toggleState2){
         getRecords(currentPage);
@@ -275,26 +235,6 @@ function Home() {
     }
   }, [searchDone, currentPage, pageSize, toggleState]);
 
-
-  //  useEffect(() => {
-  //    async function getRecords() {
-  //      const response = await fetch(`http://localhost:4000/listing/`);
-
-  //      if (!response.ok) {
-  //        const message = `An error occurred: ${response.statusText}`;
-  //        window.alert(message);
-  //        return;
-  //      }
-
-  //      const records = await response.json();
-  //      setRecords(records);
-  //      setIsLoading(false);
-  //    }
-
-  //    getRecords();
-
-  //    return;
-  //  }, [records.length]);
 
   // This method will delete a record
   async function deleteRecord(id) {

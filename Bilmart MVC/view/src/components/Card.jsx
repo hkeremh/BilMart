@@ -25,7 +25,6 @@ function ItemCard(props) {
     setBackgroundType(typeToBackground[type] || 'other-background');
   }, [props.record.type]);
 
-  //className={['itemCard', backgroundType].join(' ')}
   return (
   <div className="itemCard" style={{borderRadius: "5px"}}>
   <Card style={{ backgroundColor: "var(--primary-color)", width: '280px', height: "500px", border: "none", borderRadius: "10px"}}>
@@ -43,7 +42,6 @@ function ItemCard(props) {
         {props.record.description.toString().length >= 40 && <div className="text">{props.record.description.toString().substring(0, 37) + "..." }</div>}
       </Card.Text>
     </Card.Body>
-    {/*<ListGroup className="list-group-flush">*/}
       <div className="textback">
       {props.record.type === "Sale Item" && <div>
         <div className="text-in-card">{props.record.typeSpecific.available === true ? "Available" : "Unavailable"}</div>
@@ -58,10 +56,7 @@ function ItemCard(props) {
         <div className="text-in-card">{props.record.typeSpecific.organizationName}</div>
       </div>}
       </div>
-      {/*<ListGroup.Item>*/}
         <div className="text textback" style={{fontWeight: "bold"}}>{props.record.type}</div>
-      {/*</ListGroup.Item>*/}
-    {/*</ListGroup>*/}
     <Card.Body>
       <div>
       <Row>

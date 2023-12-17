@@ -54,7 +54,6 @@ const handleSuccess = (msg) =>
   e.preventDefault();
   if(bilkentMailRegex.test(form.email)){
     try {
-      console.log(form);
       const { data } = await axios.post(
         "http://localhost:4000/user/signup",
         {
@@ -77,7 +76,6 @@ const handleSuccess = (msg) =>
   } else{
     handleError("Please enter a Bilkent mail.");
   }
-  //setForm({username: "", email: "", password: ""});
  }
     return(
       <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
@@ -160,10 +158,7 @@ const handleSuccess = (msg) =>
                         />
                         {form.password !== "" && <div><PasswordStrengthBar password={form.password} height="200px"/></div>}
                       </div>
-                      
-                    </div>
-                    
-                    
+                    </div>                 
                     <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="submit" value="SignUp" className="btn btn-dark"><span className="text">Sign Up</span></button>
                     </div>

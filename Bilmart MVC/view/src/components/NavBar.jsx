@@ -58,7 +58,6 @@ function NavBar(props) {
             <Nav.Link href="/home?pageNumber=1" disabled={disabled} className="text">Home</Nav.Link>
             <Nav.Link onClick={Wishlist} disabled={disabled} className="text">Wishlist</Nav.Link>
             <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled} className="text">
-              {/*<NavDropdown.Item href="#action4" className="text">Action</NavDropdown.Item>*/}
               <NavDropdown.Item className="text">
               <a onClick={ChangeProfilePhoto}>Edit Profile</a>
               </NavDropdown.Item>

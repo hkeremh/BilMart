@@ -40,34 +40,23 @@ const [cookies, removeCookie] = useCookies([]);
  const params = useParams();
  const navigate = useNavigate();
  function compressImage(inputImage, compressionQuality, callback) {
-
   var img = new Image();
-
   // Load the image
   img.src = inputImage;
-
   // Handle the image onload event
   img.onload = function () {
     // Create a canvas element
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
-
     let reduceRatio = 10000000.0 / (img.width * img.height)
     if(reduceRatio > 1) reduceRatio = 1
-
     // Set the canvas size to the image size
     canvas.width = img.width * reduceRatio;
     canvas.height = img.height * reduceRatio;
-
-
-
     // Draw the image on the canvas
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
     // Get the compressed image data as a base64-encoded string
     var compressedImageData = canvas.toDataURL('image/jpeg', 1.0);
-
-
     // Pass the compressed image data to the callback function
     callback(compressedImageData);
   };
@@ -76,7 +65,7 @@ async function fetchData(username) {
   const response = await fetch(`http://localhost:4000/user/username/${username}`);
   if (!response.ok) {
     const message = `An error has occurred: ${response.statusText}`;
-    window.alert(message);
+    handleError(message);
     return;
   }
   const user = await response.json();
@@ -133,7 +122,7 @@ const handleSuccess = (msg) =>
 
      if (!response.ok) {
        const message = `An error has occurred: ${response.statusText}`;
-       window.alert(message);
+       handleError(message);
        return;
      }
 
@@ -217,20 +206,12 @@ const handleSuccess = (msg) =>
  async function onSubmit(e) {
    e.preventDefault();
    setIsPostLoading(true);
-   console.log("test");
    const userID = owner._id;
    const editedItem = await updateTypeSpecific();
    editedItem.images = sources;
    editedItem.postOwner = userID;
    if ((sources.length !== 0 && sources.length <= 5)){
     // This will send a post request to update the data in the database.
-    /*await fetch(`http://localhost:4000/listing/${params.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(editedListing),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });*/
     const { data } = await axios.patch(
       `http://localhost:4000/listing/${params.id}`,
       {
