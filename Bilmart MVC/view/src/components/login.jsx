@@ -71,12 +71,12 @@ export default function Login() {
    }
   }
     return(
-    <div className="gradient-background-2" style={{position: "fixed", width: "100%", height: "100%"}}>
+    <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
     <NavBar />
-  <div className="container" style={{ marginTop: "6rem"}}>
+  <div className="container" style={{ marginTop: "5rem"}}>
     <div className="row d-flex justify-content-center align-items-center h-100">
       <div className="col-lg-12 col-xl-11">
-        <div className="card text-black" style={{backgroundColor: "white",width: "100%", height: "100%", borderRadius: "25px"}}>
+        <div className="card text-black" style={{backgroundColor: "white", width: "100%", height: "100%", borderRadius: "25px"}}>
           <div className="card-body p-md-5">
             <div className="row justify-content-center">
               <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">

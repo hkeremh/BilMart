@@ -78,7 +78,7 @@ const handleSuccess = (msg) =>
   }
  }
     return(
-      <div className="gradient-background-2" style={{position: "fixed", width: "100%", height: "100%"}}>
+      <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
       <NavBar />
     <div className="container" style={{marginTop: "8rem"}}>
       <div className="row d-flex justify-content-center align-items-center h-100">
