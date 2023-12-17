@@ -105,7 +105,7 @@ router.patch('/wishlist/:username', async (req, res) => {
 
     if(item !== undefined){
       try {
-      await mailer.wishlistNotification(owner.email, item.title, req.body.editedUser.username, item.wishlistCount);
+      await mailer.wishlistNotification(owner.email, item.title, req.body.editedUser.username, updatesPost.wishlistCount);
       console.log("Email sent");
       } catch (error) {
         console.error(error);
