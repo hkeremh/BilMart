@@ -68,9 +68,9 @@ const handleSuccess = (msg) =>
  
  }
     return(
-      <div>
+      <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
       <NavBar />
-    <div class="container h-100" style={{width: "100%", height: "100%", marginTop: "3rem"}}>
+    <div class="container" style={{marginTop: "8rem"}}>
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-11">
           <div class="card text-black" style={{width: "100%", height: "100%", borderRadius: "25px"}}>
@@ -90,7 +90,7 @@ const handleSuccess = (msg) =>
                         </svg>
                       </div>
                       <div class="form-outline flex-fill mb-0">
-                        <label className="form-label fw-bold text" htmlFor="verification code">We have sent a verification code to your email. Please check your inbox.</label>
+                        <label className="form-label fw-bold text" htmlFor="verification code" style={{color: "black"}}>We have sent a verification code to your email. Please check your inbox.</label>
                         <input
                           className="form-control text"
                           type="verification code"
@@ -105,7 +105,7 @@ const handleSuccess = (msg) =>
                       <button type="submit" value="SignUp" className="btn btn-dark"><span className="text">Verify your email</span></button>
                     </div>
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <span className="text">
+                      <span className="text" style={{color: "black"}}>
                         Already have an account? <Link to={"/login"}>Log In</Link>
                       </span>
                     </div>
