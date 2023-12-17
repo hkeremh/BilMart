@@ -71,17 +71,6 @@ function NavBar(props) {
             </NavDropdown>
             <Nav.Link href="/profile" disabled={disabled} className="text">Profile</Nav.Link>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2 text"
-              aria-label="Search"
-              value={searchText}
-              onChange={(e) => (setSearchText(e.target.value))}
-            />
-            <Button variant="secondary" disabled={disabled} onClick={(e) => searchItem()}><span className="text">Search</span></Button>
-          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
