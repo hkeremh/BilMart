@@ -542,8 +542,77 @@ router.post('/search', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 
-})
+}) 
+/* router.post('/search', async (req, res) => {
+  try {
+    console.log(req.body);
+    let searchQuery = {
+      text: req.body.text,
+      type: req.body.type,
+      tags: req.body.tags,
+      availability: req.body.availability,
+      orderBy: req.body.orderBy,
+      pageNumber: req.body.pageNumber
+    };
 
+    // Include logic to handle general tags
+    if (req.body.generalTag) {
+      // Assuming general tags are stored in a separate collection or field
+      const generalTagsList = await listingModel.getAllTags(); // You need to implement this method
+      searchQuery.tags = [...searchQuery.tags, ...generalTagsList];
+      console.log(searchQuery.tags);
+    }
+
+    if (searchQuery.type.includes("Lost&Found")) {
+      searchQuery.type = [...searchQuery.type.filter((e) => e !== "Lost&Found"), "Lost Item", "Found Item"];
+      console.log("UPDATED:", searchQuery.type);
+    }
+
+    const listings = await listingModel.searchListings(searchQuery); // Access model func.
+    res.send(listings); // Return value
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+}) */
+/*router.post('/search', async (req, res) => {
+  try {
+    let searchQuery = {
+      text: req.body.text,
+      type: req.body.type,
+      tags: req.body.tags,
+      availability: req.body.availability,
+      orderBy: req.body.orderBy,
+      pageNumber: req.body.pageNumber,
+    };
+
+    // Include logic to handle general tags
+    if (req.body.generalTag) {
+      const generalTagsList = await listingModel.getAllTags();
+      searchQuery.tags = [...searchQuery.tags, ...generalTagsList];
+    }
+
+    if (searchQuery.type.includes("Lost&Found")) {
+      searchQuery.type = [...searchQuery.type.filter((e) => e !== "Lost&Found"), "Lost Item", "Found Item"];
+    }
+
+    // Assuming each listing has a 'tags' field representing an array of tags
+    const listings = await listingModel.searchListings(searchQuery);
+
+    // Filter listings based on selected tags
+    if (searchQuery.tags.length > 0) {
+      const filteredListings = listings.filter((listing) =>
+        listing.tags.some((tag) => searchQuery.tags.includes(tag))
+      );
+      res.send(filteredListings);
+    } else {
+      res.send(listings);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+});*/
 
 
   export default router; //allows other files to access the routes

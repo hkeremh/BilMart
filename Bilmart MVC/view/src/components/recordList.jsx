@@ -79,10 +79,15 @@ function Home() {
   }, []);
   
   function searchParamsJSON(pageNumber) {
+    const inputTagsArray = searchText.split(',').map(tag => tag.trim());
+
+    // Combine tags from checkboxes and inputted tags
+    const combinedTags = Array.from(new Set([...searchTags, ...inputTagsArray]));
+  
     return JSON.stringify({
       "text": searchText,
       "type": searchTypes,
-      "tags": searchTags,
+      "tags": combinedTags,
       "availability": searchAvailability,
       "orderBy": searchOrderBy,
       "pageNumber": pageNumber,
@@ -106,13 +111,26 @@ function Home() {
 
   }
 
-
    function tagList() {
 
     return allTags.map((t) => {
       return <Form.Check className="text" type="checkbox" defaultChecked={searchTags.includes(t.name)} label={t.name} onClick={(e) => (setSearchTags(updateArray(searchTags, t.name, e.target.checked)))} />
     });
   }
+/*   function tagListForPostTags() {
+    const tagsArray = searchTags.join(',').split(',').map(tag => tag.trim());
+    return tags.map((t) => (
+      <Form.Check
+        className="text"
+        type="checkbox"
+        key={t.name}
+        defaultChecked={tagsArray.includes(t.name)}
+        label={t.name}
+        onClick={(e) => setSearchTags(updateArrayForPostTags(searchTags, t.name, e.target.checked))}
+      />
+    ));
+  }
+   */
  /* function tagListForpostTags() {
     const tagsArray = searchTags.join(',').split(',').map(tag => tag.trim());
   
@@ -145,7 +163,7 @@ function Home() {
     setShowPriceSort(isPriceItems());
     return array;
   } 
- function updateArrayforPostTags(array, value, add) {
+  function updateArrayForPostTags(array, value, add) {
     if (add) {
       // Split tags by comma and trim spaces
       const newTags = value.split(',').map(tag => tag.trim());
@@ -175,9 +193,10 @@ function Home() {
 
     const allTags = await response.json();
     setAllTags(allTags);
+    console.log(allTags);
   }
 
-  async function getSearchRecords(reqBody) {
+ /*  async function getSearchRecords(reqBody) {
     setIsPostLoading(true);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -197,13 +216,98 @@ function Home() {
       window.alert(message);
       return;
     }
+    
+
     const records = await response.json();
+    const filteredRecords = records.filter(record => {
+      return searchTags.some(selectedTag => record.tags.includes(selectedTag));
+    });
     console.log("search records: " + records);
     setRecords(records);
+    
+    setRecords(filteredRecords);
     setIsPostLoading(false);
     console.log("current page is " + currentPage);
     navigate(`/home?state=search`);
     setIsPostLoading(false);
+  } */
+  async function getSearchRecords(reqBody) {
+    setIsPostLoading(true);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+  
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: reqBody,
+      redirect: 'follow'
+    };
+  
+    const response = await fetch("http://localhost:4000/listing/search", requestOptions);
+  
+    if (!response.ok) {
+      const message = `An error occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+    const records = await response.json();
+
+    // Perform the filtered search
+    const filteredRecords = records.filter(record => {
+      const lowercaseTitle = record.title.toLowerCase();
+      const lowercaseDescription = record.description.toLowerCase();
+      const lowercaseTags = record.tags.map(tag => tag.toLowerCase());
+    
+      const selectedTagsIncluded = searchTags.length === 0 || searchTags.some(selectedTag => lowercaseTags.includes(selectedTag.toLowerCase()));
+      const inputTagsIncluded = searchText === '' || searchText.split(',').map(tag => tag.trim()).some(inputTag => lowercaseTags.includes(inputTag.toLowerCase()));
+      
+      if (searchText.trim() === '') 
+        return (
+          selectedTagsIncluded &&
+          ((searchTypes.length === 0) || searchTypes.includes(record.type) || (searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item"))) &&
+          (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
+        );
+    
+      return (
+        selectedTagsIncluded || inputTagsIncluded ||
+        (!searchText || lowercaseTitle.includes(searchText.toLowerCase()) || lowercaseDescription.includes(searchText.toLowerCase())) &&
+        //(searchTypes.length === 0 || searchTypes.includes(record.type)) ||
+        //((searchTypes.length === 0) || ((searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item")))||searchTypes.includes(record.type)) &&
+        ((searchTypes.length === 0) || searchTypes.includes(record.type) || (searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item"))) &&
+        (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
+      
+      /* selectedTagsIncluded || inputTagsIncluded ||
+      (!searchText || lowercaseTitle.includes(searchText.toLowerCase()) || lowercaseDescription.includes(searchText.toLowerCase())) ||
+      ((searchTypes.length === 0 && !searchTypes.includes("Lost&Found")) || (searchTypes.includes("Lost&Found") && record.type.toLowerCase() === "lost&found")) ||
+      (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
+     */);
+    });
+  
+  
+    /*can select several tags, and old to new works
+    const records = await response.json();
+  
+    // If search is done and other search parameters are present, combine the results
+    if (searchDone && (searchTags.length > 0 || searchText || searchTypes.length > 0 || searchAvailability.length > 0)) {
+      const filteredRecords = records.filter(record => {
+        return (
+          (searchTags.length === 0 || searchTags.some(selectedTag => record.tags.includes(selectedTag))) &&
+          (!searchText || record.title.toLowerCase().includes(searchText.toLowerCase())) &&
+          (searchTypes.length === 0 || searchTypes.includes(record.type)) &&
+          (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
+        );
+      });
+      */
+      console.log("search records: " + filteredRecords);
+      //setRecords(records);
+      
+      setRecords(filteredRecords);
+      
+      setIsPostLoading(false);
+      console.log("current page is " + currentPage);
+      navigate(`/home?state=search`);
+      setIsPostLoading(false);
+
   }
 
   useEffect(() => {
