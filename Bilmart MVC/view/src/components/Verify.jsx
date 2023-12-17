@@ -70,10 +70,10 @@ const handleSuccess = (msg) =>
     return(
       <div>
       <NavBar />
-    <div class="container h-100" style={{marginTop: "3rem"}}>
+    <div class="container h-100" style={{width: "100%", height: "100%", marginTop: "3rem"}}>
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-11">
-          <div class="card text-black" style={{borderRadius: "25px"}}>
+          <div class="card text-black" style={{width: "100%", height: "100%", borderRadius: "25px"}}>
             <div class="card-body p-md-5">
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">

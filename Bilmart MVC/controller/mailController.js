@@ -39,7 +39,7 @@ exports.reportListing = (reporter, reportedPost, reportReason) => {
 }
 exports.wishlistNotificationToViewer = (user, post) => {
   const email = user.email;
-
+  console.log(email)
   exports.sendMail(email,
       "Update to a wish-listed item",
           `<h1>BilMart</h1><h2>"${post.title}" has been recieved an update.</h2><h2></h2>`)
