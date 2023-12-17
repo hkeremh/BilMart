@@ -13,7 +13,7 @@ import createIcon from "../img/plus.png";
 import Button from "react-bootstrap/esm/Button.js";
 import { Link } from "react-router-dom";
 import LogoBar from "./LogoBar.jsx";
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 
 const Wishlist = () => {
   const navigate = useNavigate();

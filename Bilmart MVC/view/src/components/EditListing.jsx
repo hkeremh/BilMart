@@ -8,7 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import Spinner from 'react-bootstrap/Spinner';
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 import deleteIcon from "../img/bin.png";
 
 export default function Edit() {

@@ -2,11 +2,11 @@ import React from "react";
 // We use Route in order to define the different routes of our application
 import { Route, Routes } from "react-router-dom";
 // We import all the components we need in our app
-import Home from "./components/recordList.jsx";
-import Edit from "./components/edit.jsx";
-import Create from "./components/create.jsx";
+import Home from "./components/Home.jsx";
+import Edit from "./components/EditListing.jsx";
+import Create from "./components/CreateListing.jsx";
 import SignUp from "./components/SignUp.jsx";
-import Login from "./components/login.jsx";
+import Login from "./components/Login.jsx";
 import Profile from "./components/Profile.jsx";
 import EditProfile from "./components/EditProfile.jsx"; 
 import About from "./components/About.jsx";

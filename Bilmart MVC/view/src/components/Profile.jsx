@@ -13,7 +13,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import LogoBar from "./LogoBar.jsx";
 import ItemCard from "./Card.jsx";
 import createIcon from "../img/plus.png";
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 
 function Profile(){
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import Button from "react-bootstrap/esm/Button.js";
 import Spinner from 'react-bootstrap/Spinner';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 import compress from "lz-string";
 
 export default function EditProfile() {

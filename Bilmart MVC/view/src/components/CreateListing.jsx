@@ -7,14 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import Spinner from 'react-bootstrap/Spinner';
 import Dropdown from 'react-bootstrap/Dropdown';
 import axios from "axios";
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 import compress from "lz-string";
 import deleteIcon from "../img/bin.png";
-//import Tag from 'react-bootstrap/Navbar';
-//import { InputTags } from 'react-bootstrap-tagsinput'
-//import { WithContext as ReactTags } from 'react-tag-input';
-//import { TagsInput } from "react-tag-input-component";
-
 
 export default function Create() {
   const navigate = useNavigate();

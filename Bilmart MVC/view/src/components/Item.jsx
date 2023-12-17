@@ -14,9 +14,9 @@ import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
-import NavBar from "./navbar";
+import NavBar from "./NavBar";
 import "../CSS/general.css"
-import { toggleState2, setToggleState2 } from "./recordList.jsx";
+import { toggleState2, setToggleState2 } from "./Home.jsx";
 
 export default function Item() {
  setToggleState2(false);

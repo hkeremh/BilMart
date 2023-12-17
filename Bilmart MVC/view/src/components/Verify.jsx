@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 import signUp from "../img/signup-image.jpg";
 import { Link } from "react-router-dom";
 const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/

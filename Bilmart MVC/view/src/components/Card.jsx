@@ -2,14 +2,11 @@ import React, {useState, useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card';
 import Button from "react-bootstrap/Button";
-import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import deleteIcon from "../img/bin.png";
 import "../CSS/card.css"
-import { setToggleState2 } from "./recordList";
-
 
 function ItemCard(props) {
   const [backgroundType, setBackgroundType] = useState('');

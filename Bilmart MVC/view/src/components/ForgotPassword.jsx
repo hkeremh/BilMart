@@ -4,10 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button.js";
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 import signUp from "../img/signup-image.jpg";
-import { Link } from "react-router-dom";
-import Dropdown from 'react-bootstrap/Dropdown';
 import logo from "../img/1.png";
 
 const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/

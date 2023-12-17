@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import image from "../img/1.png";
-import NavBar from "./navbar.jsx";
+import NavBar from "./NavBar.jsx";
 
 function About(){
     const date = new Date();
