@@ -194,42 +194,6 @@ function Home() {
     setAllTags(allTags);
     console.log(allTags);
   }
-
- /*  async function getSearchRecords(reqBody) {
-    setIsPostLoading(true);
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: reqBody,
-      redirect: 'follow'
-    };
-
-
-    const response = await fetch("http://localhost:4000/listing/search", requestOptions);
-
-    if (!response.ok) {
-      const message = `An error occurred: ${response.statusText}`;
-      window.alert(message);
-      return;
-    }
-    
-
-    const records = await response.json();
-    const filteredRecords = records.filter(record => {
-      return searchTags.some(selectedTag => record.tags.includes(selectedTag));
-    });
-    console.log("search records: " + records);
-    setRecords(records);
-    
-    setRecords(filteredRecords);
-    setIsPostLoading(false);
-    console.log("current page is " + currentPage);
-    navigate(`/home?state=search`);
-    setIsPostLoading(false);
-  } */
   async function getSearchRecords(reqBody) {
     setIsPostLoading(true);
     var myHeaders = new Headers();
@@ -259,44 +223,33 @@ function Home() {
     
       const selectedTagsIncluded = searchTags.length === 0 || searchTags.some(selectedTag => lowercaseTags.includes(selectedTag.toLowerCase()));
       const inputTagsIncluded = searchText === '' || searchText.split(',').map(tag => tag.trim()).some(inputTag => lowercaseTags.includes(inputTag.toLowerCase()));
-      
+      /* const availabilityMatch = (availability) => (
+        availability !== null && availability.toLowerCase() === searchAvailability.toLowerCase()
+      ); */
       if (searchText.trim() === '') 
         return (
           selectedTagsIncluded &&
           ((searchTypes.length === 0) || searchTypes.includes(record.type) || (searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item"))) &&
-          (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
+         
+          (searchAvailability.length === 0 || 
+            (searchAvailability.includes("Lost") && record.type.toLowerCase()==="lost item" )||
+             searchAvailability.includes("Found") && record.type.toLowerCase()==="found item" ||
+             searchAvailability.includes("Available") && (record.type.toLowerCase() !== "lost item" && record.type.toLowerCase() !== "found item")  // If no specific status selected, include all
+          )
         );
-    
-      return (
-        selectedTagsIncluded || inputTagsIncluded ||
-        (!searchText || lowercaseTitle.includes(searchText.toLowerCase()) || lowercaseDescription.includes(searchText.toLowerCase())) &&
-        //(searchTypes.length === 0 || searchTypes.includes(record.type)) ||
-        //((searchTypes.length === 0) || ((searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item")))||searchTypes.includes(record.type)) &&
-        ((searchTypes.length === 0) || searchTypes.includes(record.type) || (searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item"))) &&
-        (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
       
-      /* selectedTagsIncluded || inputTagsIncluded ||
-      (!searchText || lowercaseTitle.includes(searchText.toLowerCase()) || lowercaseDescription.includes(searchText.toLowerCase())) ||
-      ((searchTypes.length === 0 && !searchTypes.includes("Lost&Found")) || (searchTypes.includes("Lost&Found") && record.type.toLowerCase() === "lost&found")) ||
-      (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
-     */);
+      return (
+        selectedTagsIncluded || inputTagsIncluded &&
+        (!searchText || lowercaseTitle.includes(searchText.toLowerCase()) || lowercaseDescription.includes(searchText.toLowerCase())) &&
+        ((searchTypes.length === 0) || searchTypes.includes(record.type) || (searchTypes.includes("Lost&Found") && (record.type.toLowerCase() === "lost item" || record.type.toLowerCase() === "found item"))) &&
+        //(searchAvailability.length === 0 || searchAvailability.includes(record.availability))
+        (searchAvailability.length === 0 || 
+          (searchAvailability.includes("Lost") && record.type.toLowerCase()==="lost item" )||
+           searchAvailability.includes("Found") && record.type.toLowerCase()==="found item" ||
+           searchAvailability.includes("Available") && (record.type.toLowerCase() !== "lost item" && record.type.toLowerCase() !== "found item")  // If no specific status selected, include all
+        ));
     });
   
-  
-    /*can select several tags, and old to new works
-    const records = await response.json();
-  
-    // If search is done and other search parameters are present, combine the results
-    if (searchDone && (searchTags.length > 0 || searchText || searchTypes.length > 0 || searchAvailability.length > 0)) {
-      const filteredRecords = records.filter(record => {
-        return (
-          (searchTags.length === 0 || searchTags.some(selectedTag => record.tags.includes(selectedTag))) &&
-          (!searchText || record.title.toLowerCase().includes(searchText.toLowerCase())) &&
-          (searchTypes.length === 0 || searchTypes.includes(record.type)) &&
-          (searchAvailability.length === 0 || searchAvailability.includes(record.availability))
-        );
-      });
-      */
       console.log("search records: " + filteredRecords);
       //setRecords(records);
       
