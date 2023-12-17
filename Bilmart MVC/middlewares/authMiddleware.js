@@ -4,6 +4,13 @@ dotenv.config({ path: "./config.env" });
 import jwt from "jsonwebtoken";
 import axios from "axios";
 
+/**
+ * Verifies the user token stored in cookies and returns the verification status.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - JSON object containing the verification status.
+ */
 const userVerification = (req, res) => {
   const token = req.cookies.userToken
   if (!token) {

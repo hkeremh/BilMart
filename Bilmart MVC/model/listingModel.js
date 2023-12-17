@@ -11,6 +11,12 @@
 import db from '../database/database.js'; //allows the model to access the db client
 import { ObjectId } from 'mongodb';
 
+/**
+ * Retrieves a single listing based on the provided query.
+ *
+ * @param {Object} query - The MongoDB query object.
+ * @returns {Object|string} - The listing if found, or "Listing not found" if not found.
+ */
 async function getListing(query) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.findOne(query);
@@ -18,11 +24,23 @@ async function getListing(query) {
   else {return result;}
 }
 
+/**
+ * Retrieves all listings for a specific user based on the provided query.
+ *
+ * @param {Object} query - The MongoDB query object for the user.
+ * @returns {Array} - An array of listings for the specified user.
+ */
 async function getUserListings(query) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.find({postOwner: query}).toArray();
   return result;
 }
+
+/**
+ * Retrieves all listings in the collection.
+ *
+ * @returns {Array} - An array containing all listings in the collection.
+ */
 async function getAllListings() {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.find({}).toArray();
@@ -39,43 +57,87 @@ async function getAllListings() {
   let result = await collection.distinct('name');
   return result;
 }  */
+
+/**
+ * Retrieves all tags from the "Tags" collection.
+ *
+ * @returns {Array} - An array containing all tags in the "Tags" collection.
+ */
 async function getAllTags() {
   let collection = await db.collection('Tags'); //name of collection
   let collection2 = await db.collection('Posts'); //name of collection
   let result2 = await collection2.distinct('tags');
   let result = await collection.find({}).toArray();
   return result;
-} 
+}
 
+/**
+ * Retrieves all tags associated with posts from the "Posts" collection.
+ *
+ * @returns {Array} - An array containing all distinct tags associated with posts.
+ */
 async function getPostAllTags() {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.distinct('tags');
   return result;
 }
 
+/**
+ * Retrieves a page of listings from the "Posts" collection based on the provided page number.
+ *
+ * @param {number} pageNumber - The page number.
+ * @returns {Array} - An array containing listings for the specified page.
+ */
 async function getPageListings(pageNumber) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.find({}).skip((pageNumber - 1) * 3).limit(3).toArray();
   return result;
 }
 
+/**
+ * Posts a new listing to the "Posts" collection.
+ *
+ * @param {Object} newListing - The new listing object to be inserted.
+ * @returns {Object} - The result of the insert operation.
+ */
 async function postListing(newListing) {
     let collection = await db.collection('Posts'); //name of collection
     let result = await collection.insertOne(newListing);
     return result;
 }
 
+/**
+ * Updates a listing in the "Posts" collection based on the provided query and updates.
+ *
+ * @param {Object} query - The query to find the listing to be updated.
+ * @param {Object} updates - The updates to be applied to the listing.
+ * @returns {Object} - The result of the update operation.
+ */
 async function updateListing(query, updates) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.updateOne(query, updates);
   return result;
 }
 
+/**
+ * Deletes a listing from the "Posts" collection based on the provided query.
+ *
+ * @param {Object} query - The query to find the listing to be deleted.
+ * @returns {Object} - The result of the delete operation.
+ */
 async function deleteListing(query) {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.deleteOne(query);
   return result;
 }
+
+/**
+ * Updates the wishlist of a listing in the "Posts" collection based on the provided ID and updates.
+ *
+ * @param {string} id - The ID of the listing to update the wishlist.
+ * @param {Object} updates - The updates to be applied to the listing's wishlist.
+ * @returns {Object} - The result of the update operation.
+ */
 async function addToWishlist(id, updates) {
   let collection = await db.collection('Posts'); //name of collection
   let query = {_id: new ObjectId(id)};
@@ -91,6 +153,13 @@ async function addToWishlist(id, updates) {
 	availability : ["Available",]
 }
 */
+
+/**
+ * Searches for listings in the "QueryPosts" collection based on the provided search query.
+ *
+ * @param {Object} searchQuery - The search query containing parameters such as text, type, tags, availability, orderBy, and pageNumber.
+ * @returns {Array} - An array of listings that match the search criteria.
+ */
 async function searchListings(searchQuery) {
   let collection = await db.collection('QueryPosts'); //name of collection
   let isPrice = searchQuery.orderBy.includes("price");
