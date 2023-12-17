@@ -31,7 +31,7 @@ function NavBar(props) {
       const { status, user } = data;
       return status
         ?  (setDisabled(false), setUsername(user))
-        : (removeCookie("userToken"), navigate("/login"));
+        : (removeCookie("userToken"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
