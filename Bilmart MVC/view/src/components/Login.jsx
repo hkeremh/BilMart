@@ -70,7 +70,7 @@ export default function Login() {
      console.log(error);
    }
   }
-    return(
+    return( //This is the login page
     <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
     <NavBar />
   <div className="container" style={{ marginTop: "5rem"}}>

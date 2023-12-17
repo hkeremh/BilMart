@@ -15,7 +15,7 @@ const params = useParams();
  const [form, setForm] = useState({
    newPassword: ""
  });
- const [isUserLoading, setIsUserLoading] = useState(true);
+ const [isUserLoading, setIsUserLoading] = useState(true); //This is for the loading screen
  const handleError = (err) =>
  toast.error(err, {
    position: "top-center",
@@ -69,20 +69,20 @@ const handleSuccess = (msg) =>
       });
       const response = await result.json();
     if (response.success) {
-        handleSuccess(`${response.message}` + " Closing this tab...");
+        handleSuccess(`${response.message}` + " Closing this tab..."); //This closes the tab after 3 seconds if the user successfully changes their password
         setTimeout(() => {
           window.close();
         }, 3000);
     } 
     else {
-        handleError(`${response.message}`);
-        setForm({password: ""});
+        handleError(`${response.message}`); 
+        setForm({password: ""}); //This clears the password field if the user enters an invalid password
     }
     } catch (error) {
       handleError(error);
     }    
  }
-    return(
+    return( //This renders the change password page
       <div style={{position: "relative", width: "100%", height: "100vh", overflow: "auto", backgroundColor: "#15191f"}}>
     <div className="container" style={{marginTop: "8rem"}}>
       <div className="row d-flex justify-content-center align-items-center h-100">

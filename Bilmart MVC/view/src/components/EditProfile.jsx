@@ -50,7 +50,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
       callback(compressedImageData);
     };
   }
- useEffect(() => {
+ useEffect(() => { //This fetches the user data from the database
    async function fetchData() {
      const username = params.username;
      const response = await fetch(`http://localhost:4000/user/username/${username}`);
@@ -99,7 +99,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
 
  async function onSubmit(e) {
    e.preventDefault();
-   const editedUser = {
+   const editedUser = { //This is the user object that will be sent to the database
     email: user.email,
     username: user.username,
     password: user.password,
@@ -168,7 +168,7 @@ const [isUserLoading, setIsUserLoading] = useState(true);
     <div style={{ backgroundColor: "var(--primary-color)"}}>
     <NavBar />
     <div style={{ marginTop: 15 }}>
-    {isUserLoading ? (
+    {isUserLoading ? ( //According to the state of isUserLoading, this will either display a loading spinner or the edit profile page
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

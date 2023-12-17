@@ -60,7 +60,7 @@ export default function Create() {
       callback(compressedImageData);
     };
   }
-  async function fetchData(username) {
+  async function fetchData(username) { //This function will fetch the user data from the database
     const response = await fetch(`http://localhost:4000/user/username/${username}`);
     if (!response.ok) {
       const message = `An error has occurred: ${response.statusText}`;
@@ -73,7 +73,7 @@ export default function Create() {
     }
     setOwner(user);
   }
-  useEffect(() => {
+  useEffect(() => { //This useEffect will check if the user is logged in or not
     const verifyCookie = async () => {
       if (!cookies.userToken) {
         navigate("/login");
@@ -127,7 +127,7 @@ export default function Create() {
     progress: undefined,
     theme: "colored",
   });
-  async function updateTypeSpecific() {
+  async function updateTypeSpecific() { //This function will update the typeSpecificItem according to the type of the listing
     if(form.type === "Sale Item"){
       const typeSpecificSale = {
         price: form.typeSpecific.price,
@@ -174,9 +174,9 @@ export default function Create() {
     if ((sources.length !== 0 && sources.length <= 5) || (form.type !== "")){
       // When a post request is sent to the create url, we'll add a new record to the database.
       const userID = owner._id;
-      const typeSpecificItem = await updateTypeSpecific();
+      const typeSpecificItem = await updateTypeSpecific(); //This function will update the typeSpecificItem according to the type of the listing
       typeSpecificItem.images = sources;
-      typeSpecificItem.postOwner = userID;
+      typeSpecificItem.postOwner = userID; 
       try {
         const { data } = await axios.post('http://localhost:4000/listing', typeSpecificItem, {
           headers: {
@@ -228,12 +228,12 @@ export default function Create() {
     setIsUserLoading(false);
   }
 
-  // This following section will display the form that takes the input from the user.
+  // This following section will display the create post form that takes the input from the user.
   return (
     <div style={{backgroundColor: "var(--primary-color)"}}>
     <NavBar />
     <div style={{marginTop: "-30px" }}>
-    {isUserLoading ? (
+    {isUserLoading ? ( //According to the state of isUserLoading, the page will either display the loading screen or the create post form
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

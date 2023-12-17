@@ -67,7 +67,7 @@ const Wishlist = () => {
  const [records, setRecords] = useState([]);
  // This method fetches the records from the database.
  useEffect(() => {
-   async function getRecords() {
+   async function getRecords() { // Fetch wishlist post data from backend
      const response = await fetch(`http://localhost:4000/user/wishlist/${params.username}`);
 
      if (!response.ok) {
@@ -78,7 +78,7 @@ const Wishlist = () => {
 
      const records = await response.json();
      const wishlistPosts = [];
-     for(var i = 0; i < records.length; i++){
+     for(var i = 0; i < records.length; i++){ // Fetch each wishlist post from backend
          const response = await fetch(`http://localhost:4000/listing/proxy/${records[i]}`);
          if (!response.ok) {
             const message = `An error occurred: ${response.statusText}`;
@@ -109,7 +109,7 @@ const Wishlist = () => {
   <div style={{backgroundColor: "var(--primary-color)"}}>
   <NavBar />
   <div style={{marginTop: 15 }}>
-  {(isLoading || isUserLoading) ? (
+  {(isLoading || isUserLoading) ? ( //According to the isLoading and isUserLoading variables, the page will display a loading screen or the actual page.
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

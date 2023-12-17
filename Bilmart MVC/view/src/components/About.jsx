@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import image from "../img/1.png";
 import NavBar from "./NavBar.jsx";
 
+//This function renders the About page
 function About(){
-    const date = new Date();
-    const year = date.getFullYear();
+    const date = new Date(); //Gets the current date
+    const year = date.getFullYear(); //Gets the current year
     return(
       <div className="gradient-background">
       <NavBar />

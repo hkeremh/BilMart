@@ -98,7 +98,7 @@ function Profile(){
     <div style={{backgroundColor: "var(--primary-color)"}}>
     <NavBar />
     <div style={{marginTop: 15 }}>
-    {(isUserLoading || isPostLoading) ? (
+    {(isUserLoading || isPostLoading) ? ( //According to the loading state, either show the spinner or the profile page.
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

@@ -58,7 +58,7 @@ const handleSuccess = (msg) =>
         { withCredentials: true }
       );
       const { success, message } = data;
-      if (success) {
+      if (success) { //If the user is successfully registered, redirect to login page.
         handleSuccess(message);
         setTimeout(() => {
           navigate("/login");
@@ -75,7 +75,7 @@ const handleSuccess = (msg) =>
     setForm({email: ""});
   }
  }
-    return(
+    return( //This is the form for the user to enter their email to receive a link to reset their password.
       <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
       <NavBar />
     <div className="container" style={{marginTop: "8rem"}}>

@@ -11,7 +11,7 @@ import "../CSS/card.css"
 function ItemCard(props) {
   const [backgroundType, setBackgroundType] = useState('');
 
-  useEffect(() => {
+  useEffect(() => { //This is for the background color of the card
     let type = props.record.type;
     let typeToBackground = {
       'Sale Item': 'sale-background',
@@ -25,7 +25,7 @@ function ItemCard(props) {
     setBackgroundType(typeToBackground[type] || 'other-background');
   }, [props.record.type]);
 
-  return (
+  return ( //This is the card component that is used in the home page, profile page and wishlist
   <div className="itemCard" style={{borderRadius: "5px"}}>
   <Card style={{ backgroundColor: "var(--primary-color)", width: '280px', height: "500px", border: "none", borderRadius: "10px"}}>
     <div className={['circleBackground', backgroundType].join(' ')}/>

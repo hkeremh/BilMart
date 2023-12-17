@@ -67,7 +67,7 @@ const handleSuccess = (msg) =>
   }    
  
  }
-    return(
+    return( //This page verifies the user's email address by checking the verification code sent to the user's email address.
       <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
       <NavBar />
     <div class="container" style={{marginTop: "8rem"}}>

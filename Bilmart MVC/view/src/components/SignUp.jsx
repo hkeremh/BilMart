@@ -52,7 +52,7 @@ const handleSuccess = (msg) =>
  // This function will handle the submission.
  async function onSubmit(e){
   e.preventDefault();
-  if(bilkentMailRegex.test(form.email)){
+  if(bilkentMailRegex.test(form.email)){ //If the email is a Bilkent mail
     try {
       const { data } = await axios.post(
         "http://localhost:4000/user/signup",
@@ -77,7 +77,7 @@ const handleSuccess = (msg) =>
     handleError("Please enter a Bilkent mail.");
   }
  }
-    return(
+    return( //This is the sign up page
       <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
       <NavBar />
     <div className="container" style={{marginTop: "4rem"}}>

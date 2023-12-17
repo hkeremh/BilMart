@@ -74,7 +74,7 @@ async function fetchData(username) {
   }
   setOwner(user);
 }
-useEffect(() => {
+useEffect(() => { //This checks if the user is logged in or not
   const verifyCookie = async () => {
     if (!cookies.userToken) {
       navigate("/login");
@@ -115,7 +115,7 @@ const handleSuccess = (msg) =>
    progress: undefined,
    theme: "colored",
  });
- useEffect(() => {
+ useEffect(() => { //This fetches the post data from the database
    async function fetchPostData() {
      const id = params.id.toString();
      const response = await fetch(`http://localhost:4000/listing/${params.id.toString()}`);
@@ -163,7 +163,7 @@ const handleSuccess = (msg) =>
     return [...prev, value];
   });
  }
- async function updateTypeSpecific() {
+ async function updateTypeSpecific() { //This updates the typeSpecific property of the item form
   if(form.type === "Sale Item"){
     const typeSpecificSale = {
       price: form.typeSpecific.price,
@@ -203,11 +203,11 @@ const handleSuccess = (msg) =>
     return {...form, typeSpecific: typeSpecificFound};
   }
 }
- async function onSubmit(e) {
+ async function onSubmit(e) { //This handles the submission of the form
    e.preventDefault();
    setIsPostLoading(true);
    const userID = owner._id;
-   const editedItem = await updateTypeSpecific();
+   const editedItem = await updateTypeSpecific(); //This updates the typeSpecific property of the editedItem, which is the item that will be sent as a patch request to the database
    editedItem.images = sources;
    editedItem.postOwner = userID;
    if ((sources.length !== 0 && sources.length <= 5)){
@@ -250,7 +250,7 @@ const handleSuccess = (msg) =>
   <div style={{backgroundColor: "var(--primary-color)"}}>
   <NavBar />
   <div style={{marginTop: "-30px"}}>
-  {(isUserLoading || isPostLoading) ? (
+  {(isUserLoading || isPostLoading) ? ( //According to the loading state, this will either display a loading screen or the edit listing page
     <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
       <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>

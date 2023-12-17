@@ -17,7 +17,7 @@ function NavBar(props) {
   const [username, setUsername] = useState(""); 
   const [searchText, setSearchText] = useState("");
   useEffect(() => {
-    const verifyCookie = async () => {
+    const verifyCookie = async () => { //This function is used to verify the cookie if it exists.
       if (!cookies.userToken) {
         setDisabled(true);
       }
@@ -33,21 +33,21 @@ function NavBar(props) {
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
-  const Logout = () => {
+  const Logout = () => { //This function is used to log out.
     removeCookie("userToken");
     navigate("/login");
   };
-  const ChangeProfilePhoto = () => {
+  const EditProfile = () => { //This function is used to navigate to the edit profile page.
     navigate(`/editprofile/${username}`);
   };
-  const Wishlist = () => {
+  const Wishlist = () => { //This function is used to navigate to the wishlist page.
     navigate(`/wishlist/${username}`);
   };
-  function searchItem(){
+  function searchItem(){ //This function is used to search for an item.
     props.setText(searchText);
     navigate(`/home?pageNumber=1`);
   };
-  return (
+  return ( //This is the navbar component. It is used in every page.
     <Navbar className="navbar-dark" style={{backgroundColor: "var(--text-color3)"}} expand="lg">
       <Container fluid>
         {disabled === true ? <Navbar.Brand><img src={logo} width={150} height={36}/></Navbar.Brand> : <Navbar.Brand href="/home?pageNumber=1"><img src={logo} width={150} height={36}/></Navbar.Brand>}
@@ -59,7 +59,7 @@ function NavBar(props) {
             <Nav.Link onClick={Wishlist} disabled={disabled} className="text">Wishlist</Nav.Link>
             <NavDropdown title="Settings" id="navbarScrollingDropdown" disabled={disabled} className="text">
               <NavDropdown.Item className="text">
-              <a onClick={ChangeProfilePhoto}>Edit Profile</a>
+              <a onClick={EditProfile}>Edit Profile</a>
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item className="text">

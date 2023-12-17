@@ -15,13 +15,13 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-let toggleState2 = true;
-function setToggleState2(bool) {
+let toggleState2 = true; //This variable is used to control the rendering of home page
+function setToggleState2(bool) { //This function is used to set the toggleState2 variable and it is used in the Item screen to disable redirecting to the home page when the user clicks on the View button
   toggleState2 = bool;
 }
 function Home() {
   const navigate = useNavigate();
-  const [isPostLoading, setIsPostLoading] = useState(true);
+  const [isPostLoading, setIsPostLoading] = useState(true); 
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
@@ -37,7 +37,7 @@ function Home() {
   const [searchOrderBy, setSearchOrderBy] = useState("dateHigh");
   const [showPriceSort, setShowPriceSort] = useState(false);
   const [toggleState, setToggleState] = useState(true);
-  useEffect(() => {
+  useEffect(() => { //This useEffect is used to check if the user is logged in or not
     const verifyCookie = async () => {
       if (!cookies.userToken) {
         console.log("test")
@@ -58,7 +58,7 @@ function Home() {
   }, [cookies, navigate, removeCookie, currentPage]);
   const [records, setRecords] = useState([]);
   // This method fetches the records from the database.
-  async function getRecords(pageNumber) {
+  async function getRecords(pageNumber) { //This function is used to get the listings from the database, by default it gets the first page and gets 9 listings per page
     setIsPostLoading(true);
     const response = await fetch(`http://localhost:4000/listing/home?pageNumber=${pageNumber}`);
     if (!response.ok) {
@@ -93,7 +93,7 @@ function Home() {
     });
   }
 
-  function isPriceItems() {
+  function isPriceItems() { //This function is used to check if the user is searching for items with price or not
     const cloneSearchTypes = [...searchTypes];
 
     console.log(cloneSearchTypes);
@@ -116,7 +116,7 @@ function Home() {
     });
   }
 
-   function updateArray(array, value, add) {
+   function updateArray(array, value, add) { //This function is used to update the array of tags
     if (add) {
       if (!array.includes(value)) {
         array.push(value);
@@ -134,26 +134,8 @@ function Home() {
     setShowPriceSort(isPriceItems());
     return array;
   } 
-  function updateArrayForPostTags(array, value, add) {
-    if (add) {
-      // Split tags by comma and trim spaces
-      const newTags = value.split(',').map(tag => tag.trim());
-      
-      // Add new tags to the array
-      array.push(...newTags);
-    } else {
-      // Remove the specified value from the array
-      const index = array.indexOf(value);
-      if (index !== -1) {
-        array.splice(index, 1);
-      }
-    }
-  
-    setShowPriceSort(isPriceItems());
-    return array;
-  }
 
-  async function getAllTags() {
+  async function getAllTags() { //This function is used to get all the tags from the database
     const response = await fetch(`http://localhost:4000/listing/tags`);
 
     if (!response.ok) {
@@ -166,7 +148,7 @@ function Home() {
     setAllTags(allTags);
     console.log(allTags);
   }
-  async function getSearchRecords(reqBody) {
+  async function getSearchRecords(reqBody) { //This function is used to get the listings from the database according to the search parameters
     setIsPostLoading(true);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -225,7 +207,7 @@ function Home() {
 
   }
 
-  useEffect(() => {
+  useEffect(() => { //This useEffect renders home page if there is no search parameters, otherwise it renders the search results
     if(!searchDone){
       if(toggleState2){
         getRecords(currentPage);
@@ -246,19 +228,18 @@ function Home() {
     setRecords(newRecords);
   }
 
-  // This method will map out the records on the table
+  // This method will map out the listings on the table
   function recordList() {
     return records.map((record) => {
       return <ItemCard record={record} key={record._id} deleteRecord={deleteRecord}/>
     });
   }
 
-  // This following section will display the table with the records of individuals.
-  return (
+  return ( //This renders the home page
     <div style={{ backgroundColor: "var(--primary-color)"}}>
       <NavBar setText={setSearchText}/>
       <div style={{marginTop: 15 }}>
-        {(isPostLoading || isUserLoading) ? (
+        {(isPostLoading || isUserLoading) ? ( //According to the loading states, this renders the loading spinner or the home page
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
             <Spinner animation="border" role="status">
               <span className="visually-hidden">Loading...</span>

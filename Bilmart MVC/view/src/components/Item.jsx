@@ -19,7 +19,7 @@ import "../CSS/general.css"
 import { toggleState2, setToggleState2 } from "./Home.jsx";
 
 export default function Item() {
- setToggleState2(false);
+ setToggleState2(false); //This changes the toggle state to prevent redirecting to the home page when the user clicks the View button.
  console.log("Toggle state 2 in Item: ", toggleState2);
  const navigate = useNavigate();
  const [showModal, setShowModal] = useState(false);
@@ -59,7 +59,7 @@ export default function Item() {
  const [userWishlist, setUserWishlist] = useState([]);
  const [itemWishlist, setItemWishlist] = useState([]);
  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
- async function fetchData(username) {
+ async function fetchData(username) { //This function fetches the user data from the backend.
   console.log(params);
   const response = await fetch(`http://localhost:4000/user/username/${username}`);
   if (!response.ok) {
@@ -75,7 +75,7 @@ export default function Item() {
   setUserWishlist(user.wishList);
 }
 useEffect(() => {
-  const verifyCookie = async () => {
+  const verifyCookie = async () => { //This function verifies the cookie and fetches the user data if the user is logged in.
     if (!cookies.userToken) {
       navigate("/login");
     }
@@ -108,7 +108,7 @@ useEffect(() => {
   setIsPostLoading(false);
 }
  useEffect(() => {
-   async function fetchPostData() {
+   async function fetchPostData() { //This function fetches the post data from the backend.
      const id = params.id.toString();
      const response = await fetch(`http://localhost:4000/listing/${params.id.toString()}`);
 
@@ -143,7 +143,7 @@ useEffect(() => {
    return;
  }, [params.id, navigate]);
  
- async function addToWishlist() {
+ async function addToWishlist() { //This function adds the item to the user's wishlist.
   async function addToWishlist() {
     if (userWishlist.includes(item._id) || itemWishlist.includes(profileUser._id)) {
       toast.error(`Listing is already in wishlist`, {
@@ -158,10 +158,10 @@ useEffect(() => {
         });
       return;
     } else{
-      const updatedOwnerWishlist = [...userWishlist, item._id];
-      const updatedPostWishlist = [...itemWishlist, profileUser._id]; //works correctly
+      const updatedOwnerWishlist = [...userWishlist, item._id]; //This is the updated owner wishlist that will be sent to the backend.
+      const updatedPostWishlist = [...itemWishlist, profileUser._id]; //This is the updated post wishlist that will be sent to the backend.
 
-      const editedUser = {
+      const editedUser = { //This is the edited user object that will be sent to the backend.
         email: profileUser.email,
         username: profileUser.username,
         password: profileUser.password,
@@ -176,7 +176,7 @@ useEffect(() => {
         postOwner: owner,
         item: item
       };
-      const editedPost = {
+      const editedPost = { //This is the edited post object that will be sent to the backend.
           postId: item._id,
           userId: profileUser._id,
           wishlist: updatedPostWishlist,
@@ -233,10 +233,10 @@ useEffect(() => {
   return;
  }
 
- async function requestContact() {
+ async function requestContact() { //This function sends an email to the owner of the post to request contact.
      async function sendRequestContact() {
 
-         const contact = {
+         const contact = { //This is the contact object that will be sent to the backend.
              viewingUser: profileUser,
              post: item
          }
@@ -288,7 +288,7 @@ useEffect(() => {
      return;
  }
 
- async function removeFromWishlist() {
+ async function removeFromWishlist() { //This function removes the item from the user's wishlist.
       async function removeFromWishlist() {
         if (userWishlist.includes(item._id)) {
 
@@ -300,7 +300,7 @@ useEffect(() => {
         }
         const updatedPostWishlist = list;
 
-          const editedUser = {
+          const editedUser = { //This is the edited user object that will be sent to the backend.
             email: profileUser.email,
             username: profileUser.username,
             password: profileUser.password,
@@ -314,7 +314,7 @@ useEffect(() => {
             createdAt: profileUser.createdAt
           };
 
-          const editedPost = {
+          const editedPost = { //This is the edited post object that will be sent to the backend.
                 postId: item._id,
                 userId: profileUser._id,
                 wishlist: updatedPostWishlist,
@@ -337,7 +337,7 @@ useEffect(() => {
             return;
           }
           const result = await response.json();
-          if (!result) {
+          if (!result) { 
             toast.error(`Listing couldn't be removed from wishlist`, {
             position: "top-center",
             autoClose: 1500,
@@ -382,7 +382,7 @@ useEffect(() => {
 
      return;
  }
- async function callReportPost() {
+ async function callReportPost() { //This function calls the reportPost function and closes the modal.
   async function reportPost() {
     const report = {
       reporter: profileUser,
@@ -437,7 +437,7 @@ useEffect(() => {
     return;
   }
  }
- function ReportModal() {
+ function ReportModal() { //This is the modal that pops up when the user clicks the report button.
   const [localReportText, setLocalReportText] = useState("");
   return (
     <Modal show={showModal} onHide={handleClose} centered>
@@ -466,7 +466,7 @@ useEffect(() => {
   </Modal>
   );
 }
- function itemPhotos() {
+ function itemPhotos() { //This function maps the images of the item to the Carousel.Item component.
     return item.images.map((source) => {
         return(
         <Carousel.Item>
@@ -477,12 +477,12 @@ useEffect(() => {
         );
     });
  }
- // This following section will display the form that takes input from the user to update the data.
+//This is the Item's page
  return (
   <div className="primary-color">
    <NavBar />
    <div>
-   {(isPostLoading || isUserLoading) ? (
+   {(isPostLoading || isUserLoading) ? ( //According to the loading state, either display the loading screen or the Item's page.
       <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
