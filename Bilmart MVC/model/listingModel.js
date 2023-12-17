@@ -29,11 +29,24 @@ async function getAllListings() {
   return result;
 }
 
- async function getAllTags() {
+ /* async function getAllTags() {
   let collection = await db.collection('Tags'); //name of collection
   let result = await collection.find({}).toArray();
   return result;
+}  */
+/* async function getAllTags() {
+  let collection = await db.collection('Tags'); //name of collection
+  let result = await collection.distinct('name');
+  return result;
+}  */
+async function getAllTags() {
+  let collection = await db.collection('Tags'); //name of collection
+  let collection2 = await db.collection('Posts'); //name of collection
+  let result2 = await collection2.distinct('tags');
+  let result = await collection.find({}).toArray();
+  return result;
 } 
+
 async function getPostAllTags() {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.distinct('tags');
@@ -117,7 +130,7 @@ const result = await collection.find({
       "$or": [
         { "title": { $regex: searchQuery.text, $options: "i" } },
         { "description": { $regex: searchQuery.text, $options: "i" } },
-        { "tags": { $in: inputTagsArray } } // Check if any of the input tags are in the post's tags
+        { "tags": { $elemMatch: { $in: inputTagsArray } } } // Check if any of the input tags are in the post's tags
       ]
     }
   ]
