@@ -9,6 +9,8 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Carousel from 'react-bootstrap/Carousel';
 import Button from "react-bootstrap/esm/Button";
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LogoBar from "./LogoBar";
@@ -20,6 +22,10 @@ export default function Item() {
  setToggleState2(false);
  console.log("Toggle state 2 in Item: ", toggleState2);
  const navigate = useNavigate();
+ const [showModal, setShowModal] = useState(false);
+ let reportText = "";
+ const handleClose = () => setShowModal(false);
+ const handleShow = () => setShowModal(true);
  const [isPostLoading, setIsPostLoading] = useState(true);
  const [isUserLoading, setIsUserLoading] = useState(true);
  const [cookies, removeCookie] = useCookies([]);
@@ -173,9 +179,9 @@ useEffect(() => {
       const editedPost = {
           postId: item._id,
           userId: profileUser._id,
-          wishlist: updatedPostWishlist
+          wishlist: updatedPostWishlist,
+          wishlistCount: updatedPostWishlist.length
       };
-
       const edits = {editedUser, editedPost}
 
       const response = await fetch(`http://localhost:4000/user/wishlist/${profileUser.username}`, {
@@ -311,7 +317,8 @@ useEffect(() => {
           const editedPost = {
                 postId: item._id,
                 userId: profileUser._id,
-                wishlist: updatedPostWishlist
+                wishlist: updatedPostWishlist,
+                wishlistCount: updatedPostWishlist.length
           }
 
           const edits = {editedUser, editedPost};
@@ -375,6 +382,90 @@ useEffect(() => {
 
      return;
  }
+ async function callReportPost() {
+  async function reportPost() {
+    const report = {
+      reporter: profileUser,
+      reportedPost: item,
+      reportReason: reportText
+    }
+    const response = await fetch(`http://localhost:4000/listing/report/${item._id}`, {
+      method: "POST",
+      body: JSON.stringify(report),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    if (!response.ok) {
+      const message = `An error has occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+    const result = await response.json();
+    if (!result.success) {
+      toast.error(`Listing couldn't be reported`, {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+      return;
+    } else{
+      toast.success(`${result.message}`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+        return;
+    }
+  }
+  if(showModal){
+    await reportPost();
+    setShowModal(false);
+    return;
+  }
+  else {
+    return;
+  }
+ }
+ function ReportModal() {
+  const [localReportText, setLocalReportText] = useState("");
+  return (
+    <Modal show={showModal} onHide={handleClose} centered>
+    <Modal.Header closeButton>
+      <Modal.Title>Report Post</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <Form>
+        <Form.Group
+          className="mb-3"
+          controlId="exampleForm.ControlTextarea1"
+        >
+          <Form.Label>Please write your reasons for reporting this post</Form.Label>
+          <Form.Control as="textarea" value={localReportText} onChange={(e) => setLocalReportText(e.target.value)} rows={3} />
+        </Form.Group>
+      </Form>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="outline-danger" onClick={handleClose}>
+        Cancel
+      </Button>
+      <Button variant="secondary" onClick={(reportText = localReportText, callReportPost)}>
+        Report
+      </Button>
+    </Modal.Footer>
+  </Modal>
+  );
+}
  function itemPhotos() {
     return item.images.map((source) => {
         return(
@@ -414,8 +505,8 @@ useEffect(() => {
                     {owner.username !== profileUser.username ? <div style={{display: "flex", alignItems: "center"}}>
                       {item.type === "Donation" && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
                       {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>{item.typeSpecific.price}₺</h1>}
-                      {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
-                      {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
+                      {item.type === "Lost Item" && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>Lost Item</h1>}
+                      {item.type === "Found Item" && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>Found Item</h1>}
                       {userWishlist.includes(item._id) ? <Button className="primary-accent" variant="secondary" style={{position: "absolute", right: "45px", backgroundColor: "var(--text-color3)"}} onClick={removeFromWishlist}>
                         <div className="text" style={{alignItems: "center"}}>Remove from Wishlist <span><svg style={{marginBottom: "5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                             <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
@@ -428,10 +519,10 @@ useEffect(() => {
                         </div>
                       </Button>}
                     </div> : <div style={{display: "flex", alignItems: "center"}}>
-                      {item.type === "Donation" && <h1 className="itemPrice">{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
-                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice">{item.typeSpecific.price}₺</h1>}
-                      {item.type === "Lost Item" && <h1 className="itemPrice">Lost Item</h1>}
-                      {item.type === "Found Item" && <h1 className="itemPrice">Found Item</h1>}
+                      {item.type === "Donation" && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>{item.typeSpecific.monetaryTarget + "₺ Goal"}</h1>}
+                      {(item.type === "Sale Item" || item.type === "Borrowal Item") && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>{item.typeSpecific.price}₺</h1>}
+                      {item.type === "Lost Item" && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>Lost Item</h1>}
+                      {item.type === "Found Item" && <h1 className="itemPrice" style={{color: "var(--text-color)"}}>Found Item</h1>}
                     </div>}
                     <hr style={{border: "1px solid #544C4C", marginTop: "-2px", marginLeft: "15px", marginRight: "15px"}}/>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
@@ -484,7 +575,7 @@ useEffect(() => {
                         {(item.type === "Lost Item" || item.type === "Found Item") && <h3 style={{color: "var(--text-color2)", marginLeft: "10px"}}>{item.typeSpecific.status === true ? "Found" : "Still Lost"}</h3>}
                         {item.type === "Donation" && <h3 style={{color: "var(--text-color)"}}>Progress: </h3>}
                         {item.type === "Donation" && <ProgressBar variant="secondary" className="text" style={{marginBottom: "5px", marginLeft: "15px", width: "915px", height: "30px"}} now={item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100} label={`${(item.typeSpecific.monetaryTarget/item.typeSpecific.monetaryTarget*100)}% Reached`} animated/>}
-                        {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}}>Report Post</Button>}
+                        {owner.username === profileUser.username ? <div></div> : <Button variant="outline-danger" style={{position: "absolute", right: "45px", marginBottom: "15px"}} onClick={handleShow}>Report Post</Button>}
                     </div>
                   </div>
                   <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px", marginTop: "-1px"}}/>
@@ -513,6 +604,7 @@ useEffect(() => {
               </Col>
           </Row>
       </Container>
+      <ReportModal />
       <ToastContainer />
     </Container>
     )}

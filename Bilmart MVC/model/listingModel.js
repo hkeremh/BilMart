@@ -23,7 +23,6 @@ async function getUserListings(query) {
   let result = await collection.find({postOwner: query}).toArray();
   return result;
 }
-
 async function getAllListings() {
   let collection = await db.collection('Posts'); //name of collection
   let result = await collection.find({}).toArray();

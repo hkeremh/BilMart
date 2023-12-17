@@ -31,8 +31,14 @@ exports.wishlistNotification = (posterMail, itemName, wishlister, wishlistCount)
     "Wish-listing",
     `<h1>BilMart</h1><h2>Your item "${itemName}" has been wishlisted by ${wishlister}.</h2><h2>It has been wishlisted ${wishlistCount} times.</h2>`)
 }
+exports.reportListing = (reporter, reportedPost, reportReason) => {
+  exports.sendMail(bilmartMail,
+    "Reported Post",
+    `<h1>BilMart</h1><h2>The user "${reporter.username}" has reported the post <a href="http://localhost:3000/item/${reportedPost._id}">${reportedPost.title}</a> for the following reason:</h2><h3>"${reportReason}"</h3>`)
+
+}
 exports.wishlistNotificationToViewer = (user, post) => {
-  const email = user.email
+  const email = user.email;
 
   exports.sendMail(email,
       "Update to a wish-listed item",

@@ -93,7 +93,7 @@ router.patch('/wishlist/:username', async (req, res) => {
       $set: {wishList: req.body.editedUser.wishList}
     };
     const updatesPost = {
-      $set: {wishlist: req.body.editedPost.wishlist}
+      $set: {wishlist: req.body.editedPost.wishlist, wishlistCount: req.body.editedPost.wishlistCount}
     }
 
     const resultUser = await userModel.addToWishlist(username, updatesUser) //access model func.

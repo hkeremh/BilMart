@@ -385,13 +385,10 @@ export default function Create() {
                             </div>
                         </div>
                     </div>
-
-
                     <div class="d-flex flex-row align-items-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-journal-richtext fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                          <path d="M7.5 3.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047L11 4.75V7a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 7v-.5s1.54-1.274 1.639-1.208M5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-                          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
-                          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text-color)" class="bi bi-tags-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                          <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                          <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
                         </svg>
                         <div class="form-outline flex-fill mb-0">
                           <label className="form-label fw-bold text" htmlFor="password">Tags</label>
@@ -434,9 +431,8 @@ export default function Create() {
                                 </div>
                             </div>
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-cash-stack fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                                  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                                  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text-color)" class="bi bi-patch-check-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                                  <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
                                 <label className="form-label fw-bold text" htmlFor="quality">Select Item's Condition</label>
@@ -445,8 +441,8 @@ export default function Create() {
                                   {form.typeSpecific.quality || "Select Condition"}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item eventKey="Brand New">Brand New</Dropdown.Item>
-                                  <Dropdown.Item eventKey="Used">Used</Dropdown.Item>
+                                  <Dropdown.Item eventKey="Brand New" className="text">Brand New</Dropdown.Item>
+                                  <Dropdown.Item eventKey="Used" className="text">Used</Dropdown.Item>
                                 </Dropdown.Menu>
                               </Dropdown>
                               </div>
@@ -479,9 +475,8 @@ export default function Create() {
                                 </div>
                             </div>
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-cash-stack fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                                  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                                  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text-color)" class="bi bi-patch-check-fill fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                                  <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
                                 <label className="form-label fw-bold text" htmlFor="quality">Select Item's Condition</label>
@@ -490,16 +485,16 @@ export default function Create() {
                                   {form.typeSpecific.quality || "Select Condition"}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                  <Dropdown.Item eventKey="Brand New">Brand New</Dropdown.Item>
-                                  <Dropdown.Item eventKey="Used">Used</Dropdown.Item>
+                                  <Dropdown.Item eventKey="Brand New" className="text">Brand New</Dropdown.Item>
+                                  <Dropdown.Item eventKey="Used" className="text">Used</Dropdown.Item>
                                 </Dropdown.Menu>
                               </Dropdown>
                               </div>
                             </div>
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-cash-stack fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                                  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                                  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text-color)" class="bi bi-calendar-week fa-lg me-3" viewBox="0 0 16 16">
+                                  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                                 </svg>
                                 <div class="form-outline flex-fill mb-0">
                                 <label className="form-label fw-bold text" htmlFor="password">Lending Duration (days)</label>
@@ -523,12 +518,10 @@ export default function Create() {
                         {form.type ===  "Donation" && 
                             <div>
                               <div class="d-flex flex-row align-items-center mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-cash-coin fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
-                                  <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
-                                  <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
-                                  <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
-                                </svg>                            
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text-color)" class="bi bi-microsoft-teams fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                                <path d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0m-2.238 9.488c-.04 0-.08 0-.12-.002a5.19 5.19 0 0 0 .381-2.07V6.306a1.692 1.692 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.598 2.598 0 0 1-2.598 2.598h-.013Z"/>
+                                <path d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.682.682 0 0 1-.682.682H.682A.682.682 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945h1.363Z"/>
+                              </svg>                             
                                 <div class="form-outline flex-fill mb-0">
                                 <label className="form-label fw-bold text" htmlFor="name">Organization Name</label>
                                 <input 
@@ -569,12 +562,9 @@ export default function Create() {
                                 </div>
                               </div>
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-cash-coin fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
-                                  <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
-                                  <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
-                                  <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
-                                </svg>                            
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text-color)" class="bi bi-bank fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                                  <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"/>
+                                </svg>                             
                                 <div class="form-outline flex-fill mb-0">
                                 <label className="form-label fw-bold text" htmlFor="password">IBAN</label>
                                 <input 
@@ -593,12 +583,10 @@ export default function Create() {
                                 </div>
                             </div>
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" color="var(--text-color)" width="32" height="32" fill="currentColor" class="bi bi-cash-coin fa-lg me-3 fa-fw" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
-                                  <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
-                                  <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
-                                  <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
-                                </svg>                            
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text-color)" class="bi bi-link-45deg fa-lg me-3 fa-fw" viewBox="0 0 16 16">
+                                  <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                                  <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243z"/>
+                                </svg>                       
                                 <div class="form-outline flex-fill mb-0">
                                 <label className="form-label fw-bold text" htmlFor="password">Enter a link to your website</label>
                                 <input 
@@ -640,7 +628,7 @@ export default function Create() {
                           }}
                         />
                         <div style={{marginTop: "10px"}}>
-                          <Button className="text" variant="secondary" onClick={() => {setSources([])}}>Clear Selected Pictures <img width={23} height={23} src={deleteIcon}/></Button>
+                          <Button className="text" variant="secondary" onClick={() => {setSources([])}}><span className="text">Clear Selected Pictures</span> <img width={23} height={23} src={deleteIcon}/></Button>
                         </div>
                       </div>
                     </div>

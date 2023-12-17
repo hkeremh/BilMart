@@ -163,7 +163,21 @@ router.get('/:id', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
-
+router.post('/report/:id', async (req, res) => {
+  try {
+    const query = {_id: new ObjectId(req.params.id)};
+    const listing = await listingModel.getListing(query) //access model func.
+    if(listing === "Listing not found") {
+      res.status(404).send('Listing not found')
+    } else {
+      const result = await mailer.reportListing(req.body.reporter, req.body.reportedPost, req.body.reportReason) //access model func.
+      res.status(200).send({success: true, message: "Listing reported successfully"}) //return value
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+})
 
 router.get('/proxy/:id', async (req, res) => {
   try {
