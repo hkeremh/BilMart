@@ -373,7 +373,7 @@ function Home() {
             </Spinner>
           </div>
         ) : (
-          <Container fluid style={{ marginTop: "15px" }}>
+          <Container fluid style={{ marginTop: "15px", marginBottom: "15px" }}>
             <Container style={{ marginTop: "15px" }} fluid>
               <Row>
                 <Col xl={3} md={4}>
