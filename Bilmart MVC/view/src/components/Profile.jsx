@@ -119,10 +119,10 @@ function Profile(){
                       </svg> : <img className="profilePhoto" src={profileUser.profileImage} style={{backgroundColor: "lightgray"}}/>}
                       <h1>{profileUser.username}</h1>
                       <h4>{profileUser.description || "Description"}</h4>
-                      <hr/>
+                      <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                       <h1>{userPosts.length}</h1>
                       <h3>Posts</h3>
-                      <hr/>
+                      <hr style={{border: "1px solid #544C4C", marginLeft: "15px", marginRight: "15px"}}/>
                       <Link to={`/create`}><Button className="createListing primary-accent" variant="secondary" style={{backgroundColor: "var(--text-color3)"}}><div className="text" style={{fontSize: "20px"}}>New Post <img width={20} height={20} src={createIcon}/></div></Button></Link>
                     </div>
                     </Container>

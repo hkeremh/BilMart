@@ -34,7 +34,7 @@ function About(){
             </div>
             <h3 className="fs-2 text-body-emphasis text" style={{color: "black", fontWeight: "bolder"}}>Design Goal 1</h3>
             <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" className="icon-link">
+            <a href="/login" className="icon-link">
               Call to action
               <img src="./chevron-right.svg" alt=""/>
             </a>
@@ -45,7 +45,7 @@ function About(){
             </div>
             <h3 className="fs-2 text-body-emphasis text" style={{color: "black", fontWeight: "bolder"}}>Design Goal 2</h3>
             <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" className="icon-link">
+            <a href="/login" className="icon-link">
               Call to action
               <img src="./chevron-right.svg" alt=""/>
             </a>
@@ -56,7 +56,7 @@ function About(){
             </div>
             <h3 className="fs-2 text-body-emphasis text" style={{color: "black", fontWeight: "bolder"}}>Design Goal 3</h3>
             <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" className="icon-link">
+            <a href="/login" className="icon-link">
               Call to action
               <img src="./chevron-right.svg" alt=""/>
             </a>

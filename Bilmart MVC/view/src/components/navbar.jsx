@@ -31,7 +31,7 @@ function NavBar(props) {
       const { status, user } = data;
       return status
         ?  (setDisabled(false), setUsername(user))
-        : (removeCookie("userToken"));
+        : (removeCookie("userToken"), navigate("/login"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
@@ -52,7 +52,7 @@ function NavBar(props) {
   return (
     <Navbar className="navbar-dark" style={{backgroundColor: "var(--text-color3)"}} expand="lg">
       <Container fluid>
-        <Navbar.Brand href="/home?pageNumber=1" disabled={disabled}><img src={logo} width={150} height={36}/></Navbar.Brand>
+        {disabled === true ? <Navbar.Brand><img src={logo} width={150} height={36}/></Navbar.Brand> : <Navbar.Brand href="/home?pageNumber=1"><img src={logo} width={150} height={36}/></Navbar.Brand>}
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px'}} navbarScroll>
