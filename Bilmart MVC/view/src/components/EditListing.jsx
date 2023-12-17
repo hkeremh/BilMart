@@ -266,7 +266,7 @@ const handleSuccess = (msg) =>
 
  // This following section will display the form that takes input from the user to update the data.
  return (
-  <div style={{color: "black"}}>
+  <div style={{backgroundColor: "var(--primary-color)"}}>
   <NavBar />
   <div style={{marginTop: "-30px"}}>
   {(isUserLoading || isPostLoading) ? (

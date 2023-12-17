@@ -86,8 +86,7 @@ const handleSuccess = (msg) =>
   //setForm({username: "", email: "", password: ""});
  }
     return(
-      <div className="gradient-background-2" style={{position: "relative", width: "100%", height: "100vh", overflow: "auto"}}>
-      <NavBar />
+      <div style={{position: "relative", width: "100%", height: "100vh", overflow: "auto", backgroundColor: "#15191f"}}>
     <div className="container" style={{marginTop: "8rem"}}>
       <div className="row d-flex justify-content-center align-items-center h-100">
         <div className="col-lg-12 col-xl-11">
