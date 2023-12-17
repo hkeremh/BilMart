@@ -19,7 +19,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 let toggleState2 = true;
 function setToggleState2(bool) {
   toggleState2 = bool;
-
 }
 function Home() {
   const navigate = useNavigate();

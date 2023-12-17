@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import logo from '../img/BilMart-logos_transparent.png';
+import logo from '../img/2.png';
 import "../CSS/general.css"
 
 function NavBar(props) {
@@ -52,7 +52,7 @@ function NavBar(props) {
   return (
     <Navbar className="navbar-dark" style={{backgroundColor: "var(--text-color3)"}} expand="lg">
       <Container fluid>
-        <Navbar.Brand href="/home?pageNumber=1" disabled={disabled}><img src={logo} width={170} height={36}/></Navbar.Brand>
+        <Navbar.Brand href="/home?pageNumber=1" disabled={disabled}><img src={logo} width={150} height={36}/></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px'}} navbarScroll>
