@@ -63,12 +63,12 @@
 .sale-background {
     /*background-color: #ff3b3b; !* Red *!*/
     /*box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5); !* Adjusted glow color for red *!*/
-    background-color: #ff0000; /* Red */
+    background-color: rgba(255, 74, 74, 0.91); /* Red */
     box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5); /* Adjusted glow color for red */
 }
 
 .borrowal-background {
-    background-color: #0a9f17; /* Green */
+    background-color: #21912b; /* Green */
     box-shadow: 0 0 10px 5px rgba(10, 159, 23, 0.5); /* Adjusted glow color for green */
 }
 
@@ -79,7 +79,7 @@
 
 .lostFound-background {
     background-color: #1192d2; /* Blue */
-    box-shadow: 0 0 20px 10px rgba(123, 123, 255, 0.5);
+    box-shadow: 0 0 20px 10px rgba(123, 189, 255, 0.5);
 }
 
 .other-background {

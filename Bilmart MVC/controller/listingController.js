@@ -29,6 +29,13 @@ import ProxyPost from "../model/Classes/ProxyPostClass.js";
 import mailer from "./mailController.js";
 //-----------------------
 
+/**
+ * Validates a web link by checking DNS resolution and HTTP response status.
+ *
+ * @param {string} link - The web link to be validated.
+ * @returns {Promise<boolean>} - A Promise that resolves to a boolean indicating the validity of the web link.
+ * @throws {Error} - If there are network errors or non-2xx HTTP responses during the validation process.
+ */
 async function isValidWebLink(link) {
   try {
     const formattedLink = link.startsWith('http') ? link : `https://${link}`;
@@ -50,6 +57,14 @@ async function isValidWebLink(link) {
   }
 
 }
+
+/**
+ * Sends notifications to users in a wishlist about a new post.
+ *
+ * @param {Array<string>} wishlist - An array of user IDs representing the wishlist.
+ * @param {object} post - The post object for which notifications are sent.
+ * @throws {Error} - If there are errors during
+ */
 async function sendNotification(wishlist, post) {
   for (const id of wishlist) {
     try {
@@ -61,7 +76,13 @@ async function sendNotification(wishlist, post) {
   }
 }
 
-//from the model.
+/**
+ * Route handler for retrieving all listings.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.get('/', async (req, res) => {
     try {
       //const listings = await listingModel.getAllListings() //access model func.
@@ -73,55 +94,18 @@ router.get('/', async (req, res) => {
       res.status(500).send({ error: 'Internal Server Error' })
     }
 })
+
+/**
+ * Route handler for retrieving a paginated list of records for the home page.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.get("/home", async (req, res) => {
   try {
     const pageNumber = Number(req.query.pageNumber) || 1;
     const records = await proxyListingModel.getPageListings(pageNumber);
-    //console.log(records); //displays all posts loaded in json
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //vvvvvvvvvvvvvvvvvvvvvvvvvv
-    //DONT DELETE THE CODE BELOW
-    //^^^^^^^^^^^^^^^^^^^^^^^^^^
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    /*
-    //-----------
-
-    const sellItem = new TransactionalItem(4, 7, true);
-    const lendItem = new LendItem(5, 9, true, 4);
-    const donationItem = new Donation("097N78", "www.weblink.com", "stray dogs", 100000)
-    const LFItem = new LostFound(false);
-
-    const object = new Post(
-        "Title is This",
-        new Date(),
-        ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-        "Descrion is this",
-        ['tag1', 'tag2'],
-        '123456789012345678901234', // MongoDB user ID
-        'sale',
-        LFItem
-    );
-
-    const jsonString = JSON.stringify(object.toJSON());
-
-    console.log("-----------JSON--------------")
-    console.log(jsonString);
-    console.log("-----------------------------")
-
-    console.log("get:" + JSON.stringify(object.getProperties()));
-
-    //------------
-    */
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //vvvvvvvvvvvvvvvvvvvvvvvvvv
-    //DONT DELETE THE CODE ABOVE
-    //^^^^^^^^^^^^^^^^^^^^^^^^^^
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
     res.json(records);
   } catch (error) {
     console.error(error)
@@ -139,6 +123,13 @@ router.get("/home", async (req, res) => {
 //   }
 // });
 
+/**
+ * Route handler for retrieving all tags.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.get('/tags', async (req, res) => {
   try {
     const tags = await listingModel.getAllTags() //access model func.
@@ -149,6 +140,13 @@ router.get('/tags', async (req, res) => {
   }
 })
 
+/**
+ * Route handler for retrieving a listing by ID.
+ *
+ * @param {object} req - Express request object with the listing ID as a parameter.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.get('/:id', async (req, res) => {
   try {
     const query = {_id: new ObjectId(req.params.id)};
@@ -163,6 +161,14 @@ router.get('/:id', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
+
+/**
+ * Route handler for reporting a listing by ID.
+ *
+ * @param {object} req - Express request object with the listing ID as a parameter and report details in the request body.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.post('/report/:id', async (req, res) => {
   try {
     const query = {_id: new ObjectId(req.params.id)};
@@ -179,6 +185,13 @@ router.post('/report/:id', async (req, res) => {
   }
 })
 
+/**
+ * Route handler for retrieving a proxy listing by its real ID.
+ *
+ * @param {object} req - Express request object with the real listing ID as a parameter.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.get('/proxy/:id', async (req, res) => {
   try {
     const query = {realID: new ObjectId(req.params.id)};
@@ -193,7 +206,14 @@ router.get('/proxy/:id', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
-//returns posts by a user
+
+/**
+ * Route handler for retrieving listings associated with a specific user.
+ *
+ * @param {object} req - Express request object with the user ID as a parameter.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.get('/userPosts/:id', async (req, res) => {
   try {
     const listing = await proxyListingModel.getUserListings(req.params.id); //access model func.
@@ -204,7 +224,13 @@ router.get('/userPosts/:id', async (req, res) => {
   }
 })
 
-//creates new listing
+/**
+ * Route handler for creating a new post and its corresponding proxy with a compressed image.
+ *
+ * @param {object} req - Express request object containing post details in the request body.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.post("/", async (req, res) => {
   try {
 
@@ -370,6 +396,13 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * Route handler for updating an existing post and its corresponding proxy.
+ *
+ * @param {object} req - Express request object containing post details in the request body.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.patch("/:id", async (req, res) => {
   try {
     //check cookkie validity
@@ -511,6 +544,13 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+/**
+ * Route handler for deleting a post and its corresponding proxy by ID.
+ *
+ * @param {object} req - Express request object with the post ID as a parameter.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.delete("/:id", async (req, res) => {
   let query = { _id: new ObjectId(req.params.id) };
   const result = await listingModel.deleteListing(query) //access model func.
@@ -520,6 +560,13 @@ router.delete("/:id", async (req, res) => {
   res.send(result).status(200);
 });
 
+/**
+ * Route handler for searching listings based on various criteria.
+ *
+ * @param {object} req - Express request object with search parameters in the request body.
+ * @param {object} res - Express response object.
+ * @returns {Promise<void>} - Promise resolving to the response being sent.
+ */
 router.post('/search', async (req, res) => {
   try {
     console.log(req.body);
@@ -542,7 +589,8 @@ router.post('/search', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 
-}) 
+})
+
 /* router.post('/search', async (req, res) => {
   try {
     console.log(req.body);

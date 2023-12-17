@@ -28,6 +28,11 @@ const mailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 const bilkentMailRegex = /^[\w-\.]+@([\w-]+\.)+bilkent\.edu\.tr$/
 const usernameRegex = /^[\w-\.]+$/
 
+/**
+ * Generates a 6-digit verification code.
+ *
+ * @returns {string} - The generated 6-digit verification code.
+ */
 function getVerificationCode() {
   //create 6 digit verification code
   const verificationLength = 6;
@@ -42,8 +47,14 @@ function getVerificationCode() {
   }
   return verificationCode;
 }
-//this is an example of a specific route which calls a "getAllListings" function
-//from the model.
+
+/**
+ * Retrieves a user by their username.
+ *
+ * @param {string} req.params.username - The username of the user to retrieve.
+ * @returns {object} - The user object if found; otherwise, returns a 404 response.
+ * @throws {object} - Internal Server Error if there is an issue with the server.
+ */
 router.get('/username/:username', async (req, res) => {
     try {
       let user = await userModel.getUserByUserName(req.params.username);
@@ -57,6 +68,14 @@ router.get('/username/:username', async (req, res) => {
       res.status(500).send({ error: 'Internal Server Error' })
     }
 })
+
+/**
+ * Retrieves a user by their ID.
+ *
+ * @param {string} req.params.id - The ID of the user to retrieve.
+ * @returns {object} - The user object if found; otherwise, returns a 404 response.
+ * @throws {object} - Internal Server Error if there is an issue with the server.
+ */
 router.get('/id/:id', async (req, res) => {
   try {
     const id = req.params.id.toString();
@@ -71,6 +90,14 @@ router.get('/id/:id', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
+
+/**
+ * Retrieves the wishlist of a user by their username.
+ *
+ * @param {string} req.params.username - The username of the user whose wishlist to retrieve.
+ * @returns {array} - The wishlist of the user if found; otherwise, returns a 404 response.
+ * @throws {object} - Internal Server Error if there is an issue with the server.
+ */
 router.get('/wishlist/:username', async (req, res) => {
   try {
     let user = await userModel.getUserByUserName(req.params.username);
@@ -84,6 +111,16 @@ router.get('/wishlist/:username', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' })
   }
 })
+
+/**
+ * Updates the wishlist of a user by their username.
+ *
+ * @param {string} req.params.username - The username of the user whose wishlist to update.
+ * @param {object} req.body.editedUser - The updated user information, including the wishlist.
+ * @param {object} req.body.editedPost - The updated post information, including the wishlist and wishlistCount.
+ * @returns {object} - The result of the wishlist update operation.
+ * @throws {object} - Internal Server Error if there is an issue with the server.
+ */
 router.patch('/wishlist/:username', async (req, res) => {
   try {
     const username = req.params.username;
@@ -121,6 +158,14 @@ router.patch('/wishlist/:username', async (req, res) => {
   }
 })
 
+/**
+ * Edits the profile information of a user by their username.
+ *
+ * @param {string} req.params.username - The username of the user whose profile to edit.
+ * @param {object} req.body - The updated user profile information.
+ * @returns {object} - The result of the profile edit operation.
+ * @throws {object} - Internal Server Error if there is an issue with the server.
+ */
 router.patch('/editprofile/:username', async (req, res) => {
   try {
     const oldUsername = req.params.username;
@@ -380,6 +425,13 @@ router.post("/verify", async (req, res, next) => {
     return res.json({ message: "Email verification failed" });
   }
 })
+
+/**
+ * Sends a password reset email to the user's email address.
+ *
+ * @param {string} req.body.email - The email address of the user requesting a password reset.
+ * @returns {object} - JSON response indicating the success or failure of the email sending process.
+ */
 router.post("/forgotpassword", async (req, res, next) => { 
   const email = req.body.email;
   const user = await userModel.getUserByEmail(email);
@@ -397,6 +449,16 @@ router.post("/forgotpassword", async (req, res, next) => {
   }
 })
 
+/**
+ * Handles a user's request for contact information regarding a specific item.
+ *
+ * @param {Object} req.body.post - The details of the item for which contact information is requested.
+ * @param {string} req.body.viewingUser.email - The email address of the user making the request.
+ * @param {string} req.body.viewingUser.phoneNumber - The phone number of the user making the request.
+ * @param {string} req.body.viewingUser.username - The username of the user making the request.
+ * @param {ObjectId} req.body.viewingUser._id - The ID of the user making the request.
+ * @returns {object} - JSON response indicating the success or failure of the process.
+ */
 router.post('/request-contact/:id', async (req, res) => {
 
   const item = req.body.post;
@@ -428,6 +490,13 @@ router.post('/request-contact/:id', async (req, res) => {
   }
 })
 
+/**
+ * Handles the change of password using a temporary token.
+ *
+ * @param {string} req.params.changePasswordToken - The temporary token used for verification.
+ * @param {string} req.body.password - The new password to be set.
+ * @returns {object} - JSON response indicating the success or failure of the password change process.
+ */
 router.patch('/changePassword/:changePasswordToken', async (req, res) => {
   jwt.verify(req.params.changePasswordToken, process.env.TEMP_USER_TOKEN_KEY, async (err, data) => {
     if (err) {
@@ -455,13 +524,7 @@ router.patch('/changePassword/:changePasswordToken', async (req, res) => {
       console.error(error)
       res.status(500).send({ error: 'Internal Server Error' })
     }
-  
-
-
-    
   })
-
-  
 })
 
  export default router; //allows other files to access the routes
